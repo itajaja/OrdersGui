@@ -4,9 +4,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ignore="http://www.ignore.com"
-             mc:Ignorable="d ignore" d:DesignWidth="300" d:DesignHeight="300"
+             mc:Ignorable="d ignore"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              >
-<!--    DataContext="{Binding ViewModelName, Source={StaticResource Locator}}"-->
+    <!--    DataContext="{Binding ViewModelName, Source={StaticResource Locator}}"-->
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <sdk:Label Style="{StaticResource TitleStyle}" Content="{Binding LoadOrderManagerTitle, Source={StaticResource Strings}}" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                    <Setter Property="Margin" Value="5,0"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <sdk:Label Content="{Binding OrderNumberFilter, Source={StaticResource Strings}}" Style="{StaticResource BasicLabelStyle}"></sdk:Label>
+            <sdk:AutoCompleteBox Margin="5,0"/>
+            <Button Name="OrderStatusFilterButton" Content="{Binding OrderStatusFilter, Source={StaticResource Strings}}"/>
+            <Button Name="DateFilterButton" Content="{Binding DateFilter, Source={StaticResource Strings}}"/>
+            <Button Name="CreateOrderButton" Content="{Binding CreateOrder, Source={StaticResource Strings}}"/>
+            <Button Name="ReportsButton" Content="{Binding Reports, Source={StaticResource Strings}}"/>
+            <Button Name="PrintButton">
+                <Image Source="/OrdersGui;component/Resources/Images/Print.png"></Image>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

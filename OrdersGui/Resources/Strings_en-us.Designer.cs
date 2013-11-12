@@ -142,6 +142,15 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OPC:.
+        /// </summary>
+        public static string OPCConnStatus {
+            get {
+                return ResourceManager.GetString("OPCConnStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Order Number:.
         /// </summary>
         public static string OrderNumberFilter {
@@ -156,6 +165,15 @@ namespace Hylasoft.OrdersGui.Resources {
         public static string OrderNumberHeader {
             get {
                 return ResourceManager.GetString("OrderNumberHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order Status.
+        /// </summary>
+        public static string OrderStatus {
+            get {
+                return ResourceManager.GetString("OrderStatus", resourceCulture);
             }
         }
         
@@ -205,20 +223,20 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SLOM Server:.
+        /// </summary>
+        public static string SLOMConnStatus {
+            get {
+                return ResourceManager.GetString("SLOMConnStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start Time.
         /// </summary>
         public static string StartTimeHeader {
             get {
                 return ResourceManager.GetString("StartTimeHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Order Status.
-        /// </summary>
-        public static string String1OrderStatus {
-            get {
-                return ResourceManager.GetString("String1OrderStatus", resourceCulture);
             }
         }
         

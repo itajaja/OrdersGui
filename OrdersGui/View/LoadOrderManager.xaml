@@ -6,8 +6,8 @@
              xmlns:ignore="http://www.ignore.com"
              mc:Ignorable="d ignore"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             DataContext="{Binding LoadOrderManagerVM, Source={StaticResource Locator}}"
              >
-    <!--    DataContext="{Binding ViewModelName, Source={StaticResource Locator}}"-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -16,15 +16,15 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <sdk:Label Style="{StaticResource TitleStyle}" Content="{Binding LoadOrderManagerTitle, Source={StaticResource Strings}}" />
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <StackPanel.Resources>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5">
+           <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
                     <Setter Property="Margin" Value="5,0"></Setter>
                 </Style>
             </StackPanel.Resources>
             <sdk:Label Content="{Binding OrderNumberFilter, Source={StaticResource Strings}}" Style="{StaticResource BasicLabelStyle}"></sdk:Label>
-            <sdk:AutoCompleteBox Margin="5,0"/>
-            <Button Name="OrderStatusFilterButton" Content="{Binding OrderStatusFilter, Source={StaticResource Strings}}"/>
+            <sdk:AutoCompleteBox Margin="5,0" Width="110"/>
+            <Button Name="OrderStatusFilterButton" Content="{Binding OrderStatusFilter, Source={StaticResource Strings}}" />
             <Button Name="DateFilterButton" Content="{Binding DateFilter, Source={StaticResource Strings}}"/>
             <Button Name="CreateOrderButton" Content="{Binding CreateOrder, Source={StaticResource Strings}}"/>
             <Button Name="ReportsButton" Content="{Binding Reports, Source={StaticResource Strings}}"/>
@@ -32,5 +32,23 @@
                 <Image Source="/OrdersGui;component/Resources/Images/Print.png"></Image>
             </Button>
         </StackPanel>
+        <sdk:DataGrid Grid.Row="2" >
+            
+        </sdk:DataGrid>
+        <Grid Grid.Row="3" Name="FooterGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <sdk:Label Content="{Binding User, Source={StaticResource Strings}}"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <sdk:Label Content="{Binding OPCConnStatus, Source={StaticResource Strings}}" Margin="10,0,0,0"/>
+                <sdk:Label Content="Connected" Foreground="ForestGreen"/>
+                <sdk:Label Content="{Binding SLOMConnStatus, Source={StaticResource Strings}}" Margin="10,0,0,0"/>
+                <sdk:Label Content="Connected" Foreground="ForestGreen" />
+            </StackPanel>
+            <sdk:Label Grid.Column="2" Content="{Binding NoOfOrders, Source={StaticResource Strings}}"/>
+        </Grid>
     </Grid>
 </UserControl>

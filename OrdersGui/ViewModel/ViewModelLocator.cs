@@ -55,6 +55,11 @@ namespace Hylasoft.OrdersGui.ViewModel
             }
         }
 
+        public LoadOrderManagerVM LoadOrderManagerVM
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
         /// <summary>
         /// Cleans up all the resources.
         /// </summary>

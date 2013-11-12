@@ -144,11 +144,17 @@
   <data name="NoOfOrders" xml:space="preserve">
     <value>Number of Orders: {0}</value>
   </data>
+  <data name="OPCConnStatus" xml:space="preserve">
+    <value>OPC:</value>
+  </data>
   <data name="OrderNumberFilter" xml:space="preserve">
     <value>Order Number:</value>
   </data>
   <data name="OrderNumberHeader" xml:space="preserve">
     <value>Order No.</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>Order Status</value>
   </data>
   <data name="OrderStatusFilter" xml:space="preserve">
     <value>Order Status Filter</value>
@@ -165,11 +171,11 @@
   <data name="ShipRefHeader" xml:space="preserve">
     <value>Ship Ref.</value>
   </data>
+  <data name="SLOMConnStatus" xml:space="preserve">
+    <value>SLOM Server:</value>
+  </data>
   <data name="StartTimeHeader" xml:space="preserve">
     <value>Start Time</value>
-  </data>
-  <data name="String1OrderStatus" xml:space="preserve">
-    <value>Order Status</value>
   </data>
   <data name="TimeHeader" xml:space="preserve">
     <value>Time Scheduled</value>

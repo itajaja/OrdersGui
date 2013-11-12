@@ -11,10 +11,10 @@
 
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using Hylasoft.OrdersGui.Model;
 using Microsoft.Practices.ServiceLocation;
-using OrdersGui.Model;
 
-namespace OrdersGui.ViewModel
+namespace Hylasoft.OrdersGui.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the

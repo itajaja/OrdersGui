@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
-using OrdersGui.Model;
+using Hylasoft.OrdersGui.Model;
 
-namespace OrdersGui.ViewModel
+namespace Hylasoft.OrdersGui.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

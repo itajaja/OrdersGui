@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OrdersGui.Model
+namespace Hylasoft.OrdersGui.Model
 {
     public class DataService : IDataService
     {

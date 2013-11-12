@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows;
 using GalaSoft.MvvmLight.Threading;
-using OrdersGui.ViewModel;
+using Hylasoft.OrdersGui.ViewModel;
 
-namespace OrdersGui
+namespace Hylasoft.OrdersGui
 {
-    public partial class App : Application
+    public partial class App
     {
         public App()
         {

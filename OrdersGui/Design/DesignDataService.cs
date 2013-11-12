@@ -1,7 +1,7 @@
 ﻿using System;
-using OrdersGui.Model;
+using Hylasoft.OrdersGui.Model;
 
-namespace OrdersGui.Design
+namespace Hylasoft.OrdersGui.Design
 {
     public class DesignDataService : IDataService
     {

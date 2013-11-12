@@ -58,7 +58,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                         return;
                     }
 
-                    WelcomeTitle = item.Title;
+                    WelcomeTitle = "Test";
                 });
         }
 

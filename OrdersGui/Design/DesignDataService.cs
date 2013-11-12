@@ -5,11 +5,11 @@ namespace Hylasoft.OrdersGui.Design
 {
     public class DesignDataService : IDataService
     {
-        public void GetData(Action<DataItem, Exception> callback)
+        public void GetData(Action<object, Exception> callback)
         {
             // Use this to create design time data
 
-            var item = new DataItem("Welcome to MVVM Light [design]");
+            var item = "Welcome to MVVM Light [design]";
             callback(item, null);
         }
     }

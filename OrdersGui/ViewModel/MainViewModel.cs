@@ -3,43 +3,35 @@ using Hylasoft.OrdersGui.Model;
 
 namespace Hylasoft.OrdersGui.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class MainViewModel : ViewModelBase
     {
         private readonly IDataService _dataService;
 
         /// <summary>
-        /// The <see cref="WelcomeTitle" /> property's name.
+        /// The <see cref="SessionData" /> property's name.
         /// </summary>
-        public const string WelcomeTitlePropertyName = "WelcomeTitle";
+        public const string SessionDataPropertyName = "SessionData";
 
-        private string _welcomeTitle = string.Empty;
+        private SessionData _sessionData;
 
         /// <summary>
-        /// Gets the WelcomeTitle property.
+        /// Sets and gets the SessionData property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public string WelcomeTitle
+        public SessionData SessionData
         {
             get
-            {
-                return _welcomeTitle;
-            }
-
+            { return _sessionData;}
             set
             {
-                if (_welcomeTitle == value)
+                if (_sessionData == value)
                 {
                     return;
                 }
 
-                _welcomeTitle = value;
-                RaisePropertyChanged(WelcomeTitlePropertyName);
+                RaisePropertyChanging(SessionDataPropertyName);
+                _sessionData = value;
+                RaisePropertyChanged(SessionDataPropertyName);
             }
         }
 
@@ -49,7 +41,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         public MainViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            _dataService.GetData(
+            _dataService.GetSessionData(
                 (item, error) =>
                 {
                     if (error != null)
@@ -58,7 +50,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                         return;
                     }
 
-                    WelcomeTitle = "Test";
+                    SessionData = item;
                 });
         }
 

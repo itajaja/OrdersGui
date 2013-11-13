@@ -4,12 +4,16 @@ namespace Hylasoft.OrdersGui.Model
 {
     public class DataService : IDataService
     {
-        public void GetData(Action<object, Exception> callback)
-        {
-            // Use this to connect to the actual data service
+        private readonly SessionData _sessionData = new SessionData();
 
-            var item = "Welcome to MVVM Light";
-            callback(item, null);
+        public DataService()
+        {
+            //todo initialize sessiondata, start timers, etc
+        }
+
+        public void GetSessionData(Action<SessionData, Exception> callback)
+        {
+            callback(_sessionData, null);
         }
     }
 }

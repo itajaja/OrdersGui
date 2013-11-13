@@ -169,20 +169,20 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Order Status.
-        /// </summary>
-        public static string OrderStatus {
-            get {
-                return ResourceManager.GetString("OrderStatus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Order Status Filter.
         /// </summary>
         public static string OrderStatusFilter {
             get {
                 return ResourceManager.GetString("OrderStatusFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order Status.
+        /// </summary>
+        public static string OrderStatusHeader {
+            get {
+                return ResourceManager.GetString("OrderStatusHeader", resourceCulture);
             }
         }
         

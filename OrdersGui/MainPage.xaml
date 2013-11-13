@@ -7,9 +7,10 @@
              xmlns:view="clr-namespace:Hylasoft.OrdersGui.View"
              x:Class="Hylasoft.OrdersGui.MainPage"
              mc:Ignorable="d ignore"
+             d:DesignHeight="400" d:DesignWidth="1100"
              DataContext="{Binding Main, Source={StaticResource Locator}}">
 
-    <Grid x:Name="LayoutRoot">
-        <view:LoadOrderManager/>
+    <Grid x:Name="LayoutRoot"  Background="{StaticResource BackgroundBrush}">
+        <view:LoadOrderManager Margin="50,0"/>
     </Grid>
 </UserControl>

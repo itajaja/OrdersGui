@@ -31,5 +31,10 @@ namespace Hylasoft.OrdersGui.View
             OrdersGrid.Columns[10].Header = Strings_en_us.ShipRefHeader;
             OrdersGrid.Columns[11].Header = Strings_en_us.OrderStatusHeader;
         }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

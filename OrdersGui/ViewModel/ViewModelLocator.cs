@@ -22,6 +22,7 @@ namespace Hylasoft.OrdersGui.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoadOrderManagerVM>();
+            SimpleIoc.Default.Register<LoadOrderDetailsVM>();
         }
 
         /// <summary>
@@ -38,6 +39,11 @@ namespace Hylasoft.OrdersGui.ViewModel
         public LoadOrderManagerVM LoadOrderManagerVM
         {
             get { return ServiceLocator.Current.GetInstance<LoadOrderManagerVM>(); }
+        }
+
+        public LoadOrderDetailsVM LoadOrderDetailsVM
+        {
+            get { return ServiceLocator.Current.GetInstance<LoadOrderDetailsVM>(); }
         }
 
         /// <summary>

@@ -132,9 +132,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\LoadOrderDetailsVM.cs" />
     <Compile Include="ViewModel\LoadOrderManagerVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\LoadOrderDetails.xaml.cs">
+      <DependentUpon>LoadOrderDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoadOrderManager.xaml.cs">
       <DependentUpon>LoadOrderManager.xaml</DependentUpon>
     </Compile>
@@ -151,6 +155,10 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\LoadOrderDetails.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoadOrderManager.xaml">
       <SubType>Form</SubType>

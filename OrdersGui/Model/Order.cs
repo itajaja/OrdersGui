@@ -39,11 +39,11 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _endDate, value, "EndDate"); }
         }
 
-        private int _loadRackId;
-        public int LoadRackId //todo model
+        private Rack _loadRack;
+        public Rack LoadRack
         {
-            get { return _loadRackId; }
-            set { SetField(ref _loadRackId, value, "LoadRackId"); }
+            get { return _loadRack; }
+            set { SetField(ref _loadRack, value, "LoadRack"); }
         }
 
         private DeliveryMethod _methodOfDelivery;

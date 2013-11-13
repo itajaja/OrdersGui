@@ -12,6 +12,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Hylasoft.OrdersGui.Model;
+using Hylasoft.OrdersGui.Model.Service;
 using Microsoft.Practices.ServiceLocation;
 
 namespace Hylasoft.OrdersGui.ViewModel
@@ -39,6 +40,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<LoadOrderManagerVM>();
         }
 
         /// <summary>
@@ -49,15 +51,12 @@ namespace Hylasoft.OrdersGui.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public MainViewModel Main
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
+            get { return ServiceLocator.Current.GetInstance<MainViewModel>(); }
         }
 
         public LoadOrderManagerVM LoadOrderManagerVM
         {
-            get { throw new System.NotImplementedException(); }
+            get { return ServiceLocator.Current.GetInstance<LoadOrderManagerVM>(); }
         }
 
         /// <summary>

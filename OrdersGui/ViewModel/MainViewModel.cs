@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using Hylasoft.OrdersGui.Model;
+using Hylasoft.OrdersGui.Model.Service;
 
 namespace Hylasoft.OrdersGui.ViewModel
 {

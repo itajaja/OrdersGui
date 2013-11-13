@@ -1,7 +1,7 @@
 ﻿namespace Hylasoft.OrdersGui.Model
 {
     public class Rack : NotifyPropertyChanged
-    {
+    { //todo iequatable for id!
         private int _rackId;
         public int RackId
         {

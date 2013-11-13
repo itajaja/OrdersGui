@@ -1,6 +1,6 @@
 ﻿namespace Hylasoft.OrdersGui.Model
 {
-    public class System : NotifyPropertyChanged
+    public class SystemInfo : NotifyPropertyChanged
     {
 
         private string _projectTitleLine1;

@@ -1,4 +1,5 @@
 ﻿using System;
+using Hylasoft.OrdersGui.Model.Service;
 
 namespace Hylasoft.OrdersGui.Model
 {
@@ -129,6 +130,48 @@ namespace Hylasoft.OrdersGui.Model
             get { return _truckNo; }
             set { SetField(ref _truckNo, value, "TruckNo"); }
         }
+
+        #region Equality code
+
+        public override int GetHashCode()
+        {
+            return OrderId.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((Order)obj);
+        }
+
+        public bool Equals(Order other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return _orderId == other._orderId;
+        }
+
+        public static bool operator ==(Order left, Order right)
+        {
+            if (ReferenceEquals(left, right))
+                return true;
+            if (ReferenceEquals(left, null))
+                return false;
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Order left, Order right)
+        {
+            if (ReferenceEquals(left, right))
+                return false;
+            if (ReferenceEquals(left, null))
+                return true;
+            return !left.Equals(right);
+        }
+
+        #endregion
     }
 
 

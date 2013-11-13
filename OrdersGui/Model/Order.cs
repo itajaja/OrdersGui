@@ -54,13 +54,6 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _methodOfDelivery, value, "MethodOfDelivery"); }
         }
 
-        private string _methodOfDeliveryDescription;
-        public string MethodOfDeliveryDescription
-        {
-            get { return _methodOfDeliveryDescription; }
-            set { SetField(ref _methodOfDeliveryDescription, value, "MethodOfDeliveryDescription"); }
-        }
-
         private string _note;
         public string Note
         {

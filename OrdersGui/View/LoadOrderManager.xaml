@@ -58,7 +58,8 @@
                 <sdk:DataGridTextColumn Width="*" Binding="{Binding StartDate}"/>
                 <sdk:DataGridTextColumn Width="*" Binding="{Binding EndDate}"/>
                 <sdk:DataGridTextColumn Width="*" Binding="{Binding OrderType}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding MethodOfDelivery}"/>
+<!--                todo this should be shipref. Where do i take it?-->
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding MethodOfDelivery}"/> 
                 <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}"/>
                 <sdk:DataGridTextColumn Binding="{Binding OrderStatus}"/>
             </sdk:DataGrid.Columns>

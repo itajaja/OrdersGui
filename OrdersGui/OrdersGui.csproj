@@ -103,6 +103,7 @@
     <Compile Include="Model\Service\NotifyPropertyChanged.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Rack.cs" />
+    <Compile Include="Model\Service\ServiceToModel.cs" />
     <Compile Include="Model\SessionData.cs" />
     <Compile Include="Model\System.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

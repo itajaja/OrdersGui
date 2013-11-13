@@ -12,7 +12,7 @@ namespace Hylasoft.OrdersGui.Design
         private readonly IList<Order> _orders;
         private readonly SystemInfo _data;
 
-        private DesignDataService()
+        public DesignDataService()
         {
             _data = new SystemInfo
             {

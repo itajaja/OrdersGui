@@ -18,7 +18,7 @@ namespace Hylasoft.OrdersGui.Design
 
         public void GetSystemData(Action<Model.SystemInfo, Exception> callback)
         {
-            
+
             callback(_data, null);
         }
 
@@ -34,7 +34,6 @@ namespace Hylasoft.OrdersGui.Design
 
         public void GetOrders(Action<IList<Order>, Exception> callback)
         {
-           
             callback(_orders, null);
         }
     }

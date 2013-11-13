@@ -73,12 +73,6 @@
     <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Input.Toolkit">
-      <HintPath>..\packages\SilverlightToolkit-Input.4.2010.4\lib\sl4\System.Windows.Controls.Input.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.Toolkit">
-      <HintPath>..\packages\SilverlightToolkit-Core.4.2010.4\lib\sl4\System.Windows.Controls.Toolkit.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Interactivity">
       <SpecificVersion>False</SpecificVersion>

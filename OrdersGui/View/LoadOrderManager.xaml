@@ -7,8 +7,8 @@
              mc:Ignorable="d ignore"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              DataContext="{Binding LoadOrderManagerVM, Source={StaticResource Locator}}"
-             d:DesignWidth="1000" d:DesignHeight="300" Loaded="LoadOrderManager_OnLoaded">
-    <Grid>
+             d:DesignWidth="1000" d:DesignHeight="400" Loaded="LoadOrderManager_OnLoaded">
+    <Grid Background="{StaticResource BackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto"/>
@@ -43,20 +43,24 @@
                 <Image Source="/OrdersGui;component/Resources/Images/Gear.png" />
             </Button>
         </Grid>
-        <sdk:DataGrid Grid.Row="2" AutoGenerateColumns="False" Name="OrdersGrid">
+        <sdk:DataGrid Grid.Row="2" AutoGenerateColumns="False" Name="OrdersGrid" ItemsSource="{Binding Orders}">
+            <sdk:DataGrid.Resources>
+                <Style TargetType="TextBlock">
+                </Style>
+            </sdk:DataGrid.Resources>
             <sdk:DataGrid.Columns>
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
-                <sdk:DataGridTextColumn Width="*" />
+                <sdk:DataGridTextColumn Binding="{Binding OrderNo}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding LoadRack.RackName}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding CustomerName}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding ScheduleDate, Mode=OneWay}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding ScheduleDate}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding StartDate}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding EndDate}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding OrderType}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding MethodOfDelivery}"/>
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}"/>
+                <sdk:DataGridTextColumn Binding="{Binding OrderStatus}"/>
             </sdk:DataGrid.Columns>
 
         </sdk:DataGrid>
@@ -66,14 +70,18 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <sdk:Label Content="{Binding User, Source={StaticResource Strings}}"/>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
+            <sdk:Label Content="{Binding User, Source={StaticResource Strings}}" />
+			<TextBlock Text="{Binding SessionData.User}" />
                 <sdk:Label Content="{Binding OPCConnStatus, Source={StaticResource Strings}}" Margin="10,0,0,0"/>
-                <sdk:Label Content="Connected" Foreground="ForestGreen"/>
+                <TextBlock Text="{Binding SessionData.OpcStatus}" Foreground="ForestGreen"/>
                 <sdk:Label Content="{Binding SLOMConnStatus, Source={StaticResource Strings}}" Margin="10,0,0,0"/>
-                <sdk:Label Content="Connected" Foreground="ForestGreen" />
+                <TextBlock Text="{Binding SessionData.SlomStatus}" Foreground="ForestGreen" />
             </StackPanel>
-            <sdk:Label Grid.Column="2" Content="{Binding NoOfOrders, Source={StaticResource Strings}}"/>
+			<StackPanel Grid.Column="2" Orientation="Horizontal">
+				<sdk:Label Content="{Binding NoOfOrders, Source={StaticResource Strings}}"/>
+			<TextBlock Text="{Binding Path=Orders.Count}"/>
+			</StackPanel>
         </Grid>
     </Grid>
 </UserControl>

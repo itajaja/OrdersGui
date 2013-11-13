@@ -38,8 +38,27 @@ namespace Hylasoft.OrdersGui.ViewModel
                         // Report error here
                         return;
                     }
-
                     SessionData = item;
+                });
+            dataService.GetSystemData(
+                (item, error) =>
+                {
+                    if (error != null)
+                    {
+                        // Report error here
+                        return;
+                    }
+                    SystemInfo = item;
+                });
+            dataService.GetOrders(
+                (item, error) =>
+                {
+                    if (error != null)
+                    {
+                        // Report error here
+                        return;
+                    }
+                    Orders = item;
                 });
         }
     }

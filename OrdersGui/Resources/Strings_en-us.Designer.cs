@@ -133,7 +133,7 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number of Orders: {0}.
+        ///   Looks up a localized string similar to Number of Orders:.
         /// </summary>
         public static string NoOfOrders {
             get {
@@ -250,7 +250,7 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User: {0}.
+        ///   Looks up a localized string similar to User:.
         /// </summary>
         public static string User {
             get {

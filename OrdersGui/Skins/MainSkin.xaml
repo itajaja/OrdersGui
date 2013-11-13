@@ -3,13 +3,15 @@
                     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
 
     <!--    Colors and Brushes-->
-	<Color x:Key="BlackColor">#3A3A30</Color>
-	<Color x:Key="DarkGrayColor">#86816B</Color>
+    <Color x:Key="BlackColor">#3A3A30</Color>
+    <Color x:Key="BackgroundColor">WhiteSmoke</Color>
+    <Color x:Key="DarkGrayColor">#86816B</Color>
 	<Color x:Key="BlueColor">#7691B8</Color>
 	<Color x:Key="YellowColor">#BBBE25</Color>
-	<Color x:Key="BrownColor">#AB4930</Color>
-	<SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" />
-	<SolidColorBrush x:Key="DarkGrayBrush" Color="{StaticResource DarkGrayColor}" />
+    <Color x:Key="BrownColor">#AB4930</Color>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
+    <SolidColorBrush x:Key="DarkGrayBrush" Color="{StaticResource DarkGrayColor}" />
 	<SolidColorBrush x:Key="BlueBrush" Color="{StaticResource BlueColor}" />
 	<SolidColorBrush x:Key="YellowBrush" Color="{StaticResource YellowColor}" />
 	<SolidColorBrush x:Key="BrownBrush" Color="{StaticResource BrownColor}" />

@@ -142,7 +142,7 @@
     <value>Load Order Manager</value>
   </data>
   <data name="NoOfOrders" xml:space="preserve">
-    <value>Number of Orders: {0}</value>
+    <value>Number of Orders:</value>
   </data>
   <data name="OPCConnStatus" xml:space="preserve">
     <value>OPC:</value>
@@ -181,6 +181,6 @@
     <value>Time Scheduled</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>User: {0}</value>
+    <value>User:</value>
   </data>
 </root>

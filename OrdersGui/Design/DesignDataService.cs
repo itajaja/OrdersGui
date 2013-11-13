@@ -12,7 +12,7 @@ namespace Hylasoft.OrdersGui.Design
         {
             // Use this to create design time data
             var data = new SessionData{ConnectionString = "localhost", OpcStatus = ConnectionStatus.Connected,
-                SlomStatus = ConnectionStatus.Disconnected, User = User.User0};
+                SlomStatus = ConnectionStatus.Disconnected, User = User.User2};
             callback(data, null);
         }
 

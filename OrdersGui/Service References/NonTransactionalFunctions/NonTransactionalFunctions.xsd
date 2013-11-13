@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/EventMonitorService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EventMonitorService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:64463/NonTransactionalFunctions.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ArrayOfLoadOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LoadOrder" nillable="true" type="tns:LoadOrder" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLoadOrder" nillable="true" type="tns:ArrayOfLoadOrder" />
+  <xs:complexType name="LoadOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CarrierInstruction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CarrierName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FontColor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoadRackId" type="xs:int" />
+      <xs:element minOccurs="0" name="LoadRackName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MethodOfDelivery" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MethodOfDeliveryDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Note" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      <xs:element minOccurs="0" name="OrderKey" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderStatus" type="tns:LoadOrderStatus" />
+      <xs:element minOccurs="0" name="OrderType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PONumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ScheduleDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TruckNo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoadOrder" nillable="true" type="tns:LoadOrder" />
+  <xs:simpleType name="LoadOrderStatus">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="IDLE">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="READY">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TRUCK_ARRIVED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="READY_FOR_RELEASE">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RELEASE_IN_PROGRESS">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RELEASED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RELEASE_ERROR">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RUNNING">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="STOPPED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="COMPLETED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ABORTED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CANCELLED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SUSPENDED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">12</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="APPROVED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">13</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="REJECTED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">14</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="WAITING_FOR_SEALS">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">15</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="END_FILLING">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="REPORT_READY">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">17</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="REPORT_RETRY">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">18</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="UPDATE_DONE">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">19</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SETUP">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">20</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="INSPECTION_FAILED">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">21</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PENDING_APPROVAL">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">22</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SAP_UPDATE_DONE">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">23</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:element name="LoadOrderStatus" nillable="true" type="tns:LoadOrderStatus" />
+  <xs:complexType name="UserException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExceptionMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserException" nillable="true" type="tns:UserException" />
+  <xs:complexType name="ArrayOfLoadRackArm">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LoadRackArm" nillable="true" type="tns:LoadRackArm" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLoadRackArm" nillable="true" type="tns:ArrayOfLoadRackArm" />
+  <xs:complexType name="LoadRackArm">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LoadArmId" type="xs:int" />
+      <xs:element minOccurs="0" name="LoadArmName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoadArmNo" type="xs:int" />
+      <xs:element minOccurs="0" name="LoadRackId" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialFamily" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoadRackArm" nillable="true" type="tns:LoadRackArm" />
+  <xs:complexType name="ArrayOfLoadOrderDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LoadOrderDetails" nillable="true" type="tns:LoadOrderDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLoadOrderDetails" nillable="true" type="tns:ArrayOfLoadOrderDetails" />
+  <xs:complexType name="LoadOrderDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Compartments" type="xs:int" />
+      <xs:element minOccurs="0" name="ContainerId" type="xs:long" />
+      <xs:element minOccurs="0" name="ContainerNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      <xs:element minOccurs="0" name="OrderNo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoadOrderDetails" nillable="true" type="tns:LoadOrderDetails" />
+  <xs:complexType name="ArrayOfLoadOrderDetailsCompartments">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LoadOrderDetailsCompartments" nillable="true" type="tns:LoadOrderDetailsCompartments" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLoadOrderDetailsCompartments" nillable="true" type="tns:ArrayOfLoadOrderDetailsCompartments" />
+  <xs:complexType name="LoadOrderDetailsCompartments">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="APIGravity" type="xs:double" />
+      <xs:element minOccurs="0" name="ActualQty" type="xs:double" />
+      <xs:element minOccurs="0" name="Capacity" type="xs:int" />
+      <xs:element minOccurs="0" name="CompartmentNo" type="xs:int" />
+      <xs:element minOccurs="0" name="CompartmentStatus" type="xs:int" />
+      <xs:element minOccurs="0" name="ContainerId" type="xs:long" />
+      <xs:element minOccurs="0" name="ContainerNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoadArmId" type="xs:int" />
+      <xs:element minOccurs="0" name="LoadArmName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoadArmNo" type="xs:int" />
+      <xs:element minOccurs="0" name="LoadRackId" type="xs:int" />
+      <xs:element minOccurs="0" name="LoadRackName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoadRackStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NetWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      <xs:element minOccurs="0" name="OrderNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SeqNo" type="xs:int" />
+      <xs:element minOccurs="0" name="SourceTank" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TankAvailabilityStatus" type="xs:int" />
+      <xs:element minOccurs="0" name="TankId" type="xs:int" />
+      <xs:element minOccurs="0" name="TankMaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TankMaterialId" type="xs:int" />
+      <xs:element minOccurs="0" name="TankName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TargetQty" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoadOrderDetailsCompartments" nillable="true" type="tns:LoadOrderDetailsCompartments" />
+  <xs:complexType name="ArrayOfContainer">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Container" nillable="true" type="tns:Container" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfContainer" nillable="true" type="tns:ArrayOfContainer" />
+  <xs:complexType name="Container">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Capacity" type="xs:int" />
+      <xs:element minOccurs="0" name="Compartments" type="xs:int" />
+      <xs:element minOccurs="0" name="ContainerId" type="xs:long" />
+      <xs:element minOccurs="0" name="ContainerNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GrossWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="Type" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Container" nillable="true" type="tns:Container" />
+  <xs:complexType name="ArrayOfCompartment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Compartment" nillable="true" type="tns:Compartment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCompartment" nillable="true" type="tns:ArrayOfCompartment" />
+  <xs:complexType name="Compartment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Capacity" type="xs:int" />
+      <xs:element minOccurs="0" name="CompartmentNo" type="xs:int" />
+      <xs:element minOccurs="0" name="ContainerID" type="xs:long" />
+      <xs:element minOccurs="0" name="ContainerNo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Compartment" nillable="true" type="tns:Compartment" />
+  <xs:complexType name="ArrayOfSAPMaterial">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SAPMaterial" nillable="true" type="tns:SAPMaterial" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSAPMaterial" nillable="true" type="tns:ArrayOfSAPMaterial" />
+  <xs:complexType name="SAPMaterial">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SAPMaterialType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SPGravity" type="xs:float" />
+      <xs:element minOccurs="0" name="UpdateRequest" type="xs:int" />
+      <xs:element minOccurs="0" name="Viscosity100" type="xs:float" />
+      <xs:element minOccurs="0" name="Viscosity40" type="xs:float" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SAPMaterial" nillable="true" type="tns:SAPMaterial" />
+  <xs:complexType name="ArrayOfMaterial">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Material" nillable="true" type="tns:Material" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMaterial" nillable="true" type="tns:ArrayOfMaterial" />
+  <xs:complexType name="Material">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CategoryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataEntryValue" type="xs:double" />
+      <xs:element minOccurs="0" name="MaterialCategory" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialFamily" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialId" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Material" nillable="true" type="tns:Material" />
+  <xs:complexType name="ArrayOfRebrandedProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RebrandedProduct" nillable="true" type="tns:RebrandedProduct" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRebrandedProduct" nillable="true" type="tns:ArrayOfRebrandedProduct" />
+  <xs:complexType name="RebrandedProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialId" type="xs:int" />
+      <xs:element minOccurs="0" name="ParentId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RebrandedProduct" nillable="true" type="tns:RebrandedProduct" />
+  <xs:complexType name="ArrayOfLoadOrderProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LoadOrderProduct" nillable="true" type="tns:LoadOrderProduct" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLoadOrderProduct" nillable="true" type="tns:ArrayOfLoadOrderProduct" />
+  <xs:complexType name="LoadOrderProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ContainerId" type="xs:long" />
+      <xs:element minOccurs="0" name="Density" type="xs:double" />
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialFamily" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      <xs:element minOccurs="0" name="OriginalTargetQty" type="xs:double" />
+      <xs:element minOccurs="0" name="SourceTank" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SpecificGravity" type="xs:double" />
+      <xs:element minOccurs="0" name="TargetQty" type="xs:double" />
+      <xs:element minOccurs="0" name="UoM" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoadOrderProduct" nillable="true" type="tns:LoadOrderProduct" />
+  <xs:complexType name="ArrayOfSAPLoadOrderCompartmentSeal">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SAPLoadOrderCompartmentSeal" nillable="true" type="tns:SAPLoadOrderCompartmentSeal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSAPLoadOrderCompartmentSeal" nillable="true" type="tns:ArrayOfSAPLoadOrderCompartmentSeal" />
+  <xs:complexType name="SAPLoadOrderCompartmentSeal">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompartmentNo" type="xs:int" />
+      <xs:element minOccurs="0" name="ContainerId" type="xs:long" />
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      <xs:element minOccurs="0" name="SealNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoEight" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoElleven" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoFive" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoFour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoNine" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoOne" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoSeven" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoSix" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoTen" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoThree" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoTwelve" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoTwo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SeqNo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SAPLoadOrderCompartmentSeal" nillable="true" type="tns:SAPLoadOrderCompartmentSeal" />
+  <xs:complexType name="Wb7System">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AutoPrint" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BatchApiVersion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateFormat" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LegacyOrder" type="xs:int" />
+      <xs:element minOccurs="0" name="LogoPath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaxTruckWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="PlantFileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlantName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectTitleLine1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectTitleLine2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SapiaMode" type="xs:int" />
+      <xs:element minOccurs="0" name="SbArchivePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SftpArchive" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SftpEnabled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SftpHost" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SftpInbox" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SftpUsername" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SimaticBatchVer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SomDensityUnit" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SomLoggingLevel" type="xs:int" />
+      <xs:element minOccurs="0" name="SomMassUnit" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SomMeasurementType" type="xs:int" />
+      <xs:element minOccurs="0" name="SomPollingFreq" type="xs:int" />
+      <xs:element minOccurs="0" name="SomTempUnit" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SomViscTempUom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SomViscosityUom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SomVolumeUnit" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeFormat" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Wb7ArchivePath" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Wb7System" nillable="true" type="tns:Wb7System" />
+  <xs:complexType name="ArrayOfTank">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Tank" nillable="true" type="tns:Tank" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTank" nillable="true" type="tns:ArrayOfTank" />
+  <xs:complexType name="Tank">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="APIGravity" type="xs:double" />
+      <xs:element minOccurs="0" name="AvailabilityStatus" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialId" type="xs:int" />
+      <xs:element minOccurs="0" name="TankId" type="xs:int" />
+      <xs:element minOccurs="0" name="TankName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="isVisible" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Tank" nillable="true" type="tns:Tank" />
+</xs:schema>

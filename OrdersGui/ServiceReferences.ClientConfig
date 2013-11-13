@@ -1,0 +1,25 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_IEventMonitor" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+                <binding name="BasicHttpBinding_INonTransactionalFunctions" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:64463/EventMonitor.svc" binding="basicHttpBinding"
+                bindingConfiguration="BasicHttpBinding_IEventMonitor" contract="EventMonitor.IEventMonitor"
+                name="BasicHttpBinding_IEventMonitor" />
+            <endpoint address="http://localhost:64463/NonTransactionalFunctions.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_INonTransactionalFunctions"
+                contract="NonTransactionalFunctions.INonTransactionalFunctions"
+                name="BasicHttpBinding_INonTransactionalFunctions" />
+        </client>
+    </system.serviceModel>
+</configuration>

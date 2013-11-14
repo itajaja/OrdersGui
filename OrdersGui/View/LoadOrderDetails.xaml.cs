@@ -1,12 +1,13 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
+using GalaSoft.MvvmLight.Messaging;
+using Hylasoft.OrdersGui.Messages;
 
 namespace Hylasoft.OrdersGui.View
 {
     /// <summary>
     /// Description for LoadOrderDetails.
     /// </summary>
-    public partial class LoadOrderDetails : UserControl
+    public partial class LoadOrderDetails
     {
         /// <summary>
         /// Initializes a new instance of the LoadOrderDetails class.
@@ -14,6 +15,11 @@ namespace Hylasoft.OrdersGui.View
         public LoadOrderDetails()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send(new GoToLomMessage());
         }
     }
 }

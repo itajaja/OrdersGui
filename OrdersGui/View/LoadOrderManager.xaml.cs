@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using GalaSoft.MvvmLight.Messaging;
+using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.Resources;
 
 namespace Hylasoft.OrdersGui.View
@@ -34,7 +36,7 @@ namespace Hylasoft.OrdersGui.View
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Messenger.Default.Send(new GoToLodMessage(){OrderId = 0});
         }
     }
 }

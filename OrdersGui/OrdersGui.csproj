@@ -97,6 +97,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Messages\GoToLodMessage.cs" />
+    <Compile Include="Messages\GoToLomMessage.cs" />
     <Compile Include="Model\Arm.cs" />
     <Compile Include="Model\Service\DataService.cs" />
     <Compile Include="Model\Service\IDataService.cs" />
@@ -281,6 +283,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

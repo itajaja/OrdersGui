@@ -12,7 +12,7 @@
     <Grid Background="{StaticResource BackgroundBrush}">
         <Grid x:Name="LayoutRoot" Margin="50,0">
             <view:LoadOrderManager Name="LoadOrderManagerView" />
-            <view:LoadOrderDetails Name="OrderDetailsView" Visibility="Collapsed" />
+            <view:LoadOrderDetails Name="LoadOrderDetailsView" Visibility="Collapsed" />
         </Grid>
     </Grid>
 </UserControl>

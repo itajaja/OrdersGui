@@ -4,15 +4,15 @@ namespace Hylasoft.OrdersGui.Model
 {
     public class SessionData : NotifyPropertyChanged
     {
-        private ConnectionStatus _opcStatus;
-        public ConnectionStatus OpcStatus
+        private OpcConnectionStatus _opcStatus;
+        public OpcConnectionStatus OpcStatus
         {
             get { return _opcStatus; }
             set { SetField(ref _opcStatus, value, "OpcStatus"); }
         }
 
-        private ConnectionStatus _slomStatus;
-        public ConnectionStatus SlomStatus
+        private SlomConnectionStatus _slomStatus;
+        public SlomConnectionStatus SlomStatus
         {
             get { return _slomStatus; }
             set { SetField(ref _slomStatus, value, "SlomStatus"); }
@@ -25,11 +25,18 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _user, value, "User"); }
         }
 
-        private string _connectionString;
-        public string ConnectionString
+        private string _ntfConnectionString;
+        public string NtfConnectionString
         {
-            get { return _connectionString; }
-            set { SetField(ref _connectionString, value, "ConnectionString"); }
+            get { return _ntfConnectionString; }
+            set { SetField(ref _ntfConnectionString, value, "NtfConnectionString"); }
+        }
+
+        private string _emConnectionString;
+        public string EmConnectionString
+        {
+            get { return _emConnectionString; }
+            set { SetField(ref _emConnectionString, value, "EmConnectionString"); }
         }
     }
 
@@ -40,9 +47,20 @@ namespace Hylasoft.OrdersGui.Model
         User2 //no limits
     }
 
-    public enum ConnectionStatus
+    public enum SlomConnectionStatus
     {
         Connected,
+        Disconnected,
+        Unknown
+    }
+
+    public enum OpcConnectionStatus
+    {
+        Running,
+        Failed,
+        NoConfiguration,
+        Suspended,
+        Test,
         Disconnected,
         Unknown
     }

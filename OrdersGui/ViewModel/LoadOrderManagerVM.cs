@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ServiceModel;
+using System.Windows;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
@@ -27,7 +31,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             get { return _orders; }
             set { Set("Orders", ref _orders, value); }
         }
-        
+
         public LoadOrderManagerVM(IDataService dataService)
         {
             dataService.GetSessionData(
@@ -60,6 +64,33 @@ namespace Hylasoft.OrdersGui.ViewModel
                     }
                     Orders = item;
                 });
+            var updateTimer = new DispatcherTimer();
+            updateTimer.Interval = TimeSpan.FromSeconds(5); //todo resourcify
+            updateTimer.Tick += (_, __) =>
+            {
+                dataService.GetOpcStatus(
+                    (item, error) =>
+                    {
+                        if (error != null)
+                        {
+                            _sessionData.OpcStatus = OpcConnectionStatus.Unknown;
+                            _sessionData.SlomStatus = SlomConnectionStatus.Disconnected;
+                            return;
+                        }
+                        _sessionData.OpcStatus = item;
+                        _sessionData.SlomStatus = SlomConnectionStatus.Connected;
+                    });
+                dataService.GetOrders(
+                    (item, error) =>
+                    {
+                        if (error != null)
+                        {
+                            return;
+                        }
+                        Orders = item;
+                    });
+            };
+            updateTimer.Start();
         }
     }
 }

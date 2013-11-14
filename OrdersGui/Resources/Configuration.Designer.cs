@@ -61,11 +61,20 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to localhost.
+        ///   Looks up a localized string similar to http://localhost:64463/EventMonitor.svc.
         /// </summary>
-        public static string ConnectionString {
+        public static string EmConnectionString {
             get {
-                return ResourceManager.GetString("ConnectionString", resourceCulture);
+                return ResourceManager.GetString("EmConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://localhost:64463/NonTransactionalFunctions.svc.
+        /// </summary>
+        public static string NtfConnectionString {
+            get {
+                return ResourceManager.GetString("NtfConnectionString", resourceCulture);
             }
         }
     }

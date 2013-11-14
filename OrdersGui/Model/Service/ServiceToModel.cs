@@ -154,5 +154,28 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             return (DeliveryMethod)Enum.Parse(typeof(DeliveryMethod), method, true);
         }
+
+        private OpcConnectionStatus ConvertOpcConnectionStatus(string status)
+        {
+            switch (status)
+            {
+                case "OPCRunning" :
+                    return OpcConnectionStatus.Running;
+                case "OPCFailed" :
+                    return OpcConnectionStatus.Failed;
+                case "OPCNoConfig" :
+                    return OpcConnectionStatus.NoConfiguration;
+                case "OPCSuspended" :
+                    return OpcConnectionStatus.Suspended;
+                case "OPCTest" :
+                    return OpcConnectionStatus.Test;
+                case "OPCDisconnected" :
+                    return OpcConnectionStatus.Disconnected;
+                case "OPCUnkown" :
+                    return OpcConnectionStatus.Unknown;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }

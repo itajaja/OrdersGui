@@ -10,5 +10,6 @@ namespace Hylasoft.OrdersGui.Model.Service
         void GetRacks(Action<IList<Rack>, Exception> callback);
         void GetArms(Action<IList<Arm>, Exception> callback);
         void GetOrders(Action<IList<Order>, Exception> callback);
+        void GetOpcStatus(Action<OpcConnectionStatus, Exception> callback);
     }
 }

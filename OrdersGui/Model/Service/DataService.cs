@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hylasoft.OrdersGui.EventMonitor;
+using Hylasoft.OrdersGui.NonTransactionalFunctions;
 using Hylasoft.OrdersGui.Resources;
 
 namespace Hylasoft.OrdersGui.Model.Service
@@ -23,12 +25,13 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             //setup connections and configurations
             _sessionData = new SessionData();
-            _sessionData.ConnectionString = Configuration.ConnectionString;
+            _sessionData.EmConnectionString = Configuration.EmConnectionString;
+            _sessionData.NtfConnectionString = Configuration.NtfConnectionString;
             _sessionData.User = User.User2; //todo parametric
-            _sessionData.OpcStatus = ConnectionStatus.Unknown;
-            _sessionData.SlomStatus = ConnectionStatus.Unknown;
-            _emClient = new EventMonitor.EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.ConnectionString);
-            _ntfClient = new NonTransactionalFunctions.NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions");
+            _sessionData.OpcStatus = OpcConnectionStatus.Unknown;
+            _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
+            _emClient = new EventMonitor.EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
+            _ntfClient = new NonTransactionalFunctions.NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
             
             //initialize racks, arms, tanks, sysInfo, etc. everything that should be initialized and supposedly not modified
             _ntfClient.GetSystemInfoCompleted += (sender, args) => { _systemInfo = ConvertSystemInfo(args.Result); };
@@ -68,12 +71,26 @@ namespace Hylasoft.OrdersGui.Model.Service
 
         public void GetOrders(Action<IList<Order>, Exception> callback)
         {
-            _ntfClient.GetLoadOrdersCompleted += (sender, args) =>
+            EventHandler<GetLoadOrdersCompletedEventArgs> handler = (sender, args) =>
             {
                 IList<Order> orders = ConvertOrders(args.Result);
                 callback(orders, null);
             };
+             _ntfClient.GetLoadOrdersCompleted -= handler;
+             _ntfClient.GetLoadOrdersCompleted += handler;
             _ntfClient.GetLoadOrdersAsync();
+        }
+
+        public void GetOpcStatus(Action<OpcConnectionStatus, Exception> callback)
+        {
+            EventHandler<GetOpcServerStateCompletedEventArgs> handler = (sender, args) =>
+            {
+                var status = ConvertOpcConnectionStatus(args.Result);
+                callback(status, null);
+            };
+            _emClient.GetOpcServerStateCompleted -= handler;
+            _emClient.GetOpcServerStateCompleted += handler;
+            _emClient.GetOpcServerStateAsync();
         }
     }
 }

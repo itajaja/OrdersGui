@@ -11,12 +11,12 @@ namespace Hylasoft.OrdersGui.Design
         public void GetSessionData(Action<SessionData, Exception> callback)
         {
             // Use this to create design time data
-            var data = new SessionData{ConnectionString = "localhost", OpcStatus = ConnectionStatus.Connected,
-                SlomStatus = ConnectionStatus.Disconnected, User = User.User2};
+            var data = new SessionData{EmConnectionString = "localhost", NtfConnectionString = "localhost", OpcStatus = OpcConnectionStatus.Running,
+                SlomStatus = SlomConnectionStatus.Disconnected, User = User.User2};
             callback(data, null);
         }
 
-        public void GetSystemData(Action<Model.SystemInfo, Exception> callback)
+        public void GetSystemData(Action<SystemInfo, Exception> callback)
         {
 
             callback(_data, null);
@@ -35,6 +35,11 @@ namespace Hylasoft.OrdersGui.Design
         public void GetOrders(Action<IList<Order>, Exception> callback)
         {
             callback(_orders, null);
+        }
+
+        public void GetOpcStatus(Action<OpcConnectionStatus, Exception> callback)
+        {
+            callback(OpcConnectionStatus.Suspended, null);
         }
     }
 }

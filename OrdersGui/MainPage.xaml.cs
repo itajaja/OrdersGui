@@ -13,11 +13,13 @@ namespace Hylasoft.OrdersGui
             InitializeComponent();
             Messenger.Default.Register<GoToLodMessage>(this, o =>
             {
+//                ToLod.Begin();
                 LoadOrderDetailsView.Visibility = Visibility.Visible;
                 LoadOrderManagerView.Visibility = Visibility.Collapsed;
             });
             Messenger.Default.Register<GoToLomMessage>(this, o =>
             {
+//                ToLom.Begin();
                 LoadOrderDetailsView.Visibility = Visibility.Collapsed;
                 LoadOrderManagerView.Visibility = Visibility.Visible;
             });

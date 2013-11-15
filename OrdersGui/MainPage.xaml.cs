@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
 using Hylasoft.OrdersGui.Messages;
-using Hylasoft.OrdersGui.NonTransactionalFunctions;
 
 namespace Hylasoft.OrdersGui
 {

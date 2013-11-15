@@ -142,7 +142,7 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OPC:.
+        ///   Looks up a localized string similar to OPC Server:.
         /// </summary>
         public static string OPCConnStatus {
             get {

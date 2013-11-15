@@ -145,7 +145,7 @@
     <value>Number of Orders:</value>
   </data>
   <data name="OPCConnStatus" xml:space="preserve">
-    <value>OPC:</value>
+    <value>OPC Server:</value>
   </data>
   <data name="OrderNumberFilter" xml:space="preserve">
     <value>Order Number:</value>

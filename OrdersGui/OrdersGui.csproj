@@ -69,9 +69,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\Silverlight5\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\sl4\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\sl4\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Silverlight">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.0.19\lib\sl5\System.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.0.19\lib\sl5\System.Threading.Tasks.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -128,16 +143,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings_en-us.resx</DependentUpon>
     </Compile>
-    <Compile Include="Service References\EventMonitor\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\NonTransactionalFunctions\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\LoadOrderDetailsVM.cs" />
     <Compile Include="ViewModel\LoadOrderManagerVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -175,80 +180,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
-    <None Include="Service References\EventMonitor\EventMonitor.wsdl" />
-    <None Include="Service References\EventMonitor\EventMonitor.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\EventMonitor\EventMonitor1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\EventMonitor\EventMonitor2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\EventMonitor\Hylasoft.OrdersGui.EventMonitor.ErrorObject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.Compartment.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.Container.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.LoadOrder.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.LoadOrderDetails.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.LoadOrderDetailsCompartments.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.LoadOrderProduct.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.LoadRackArm.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.Material.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.RebrandedProduct.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.SAPLoadOrderCompartmentSeal.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.SAPMaterial.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.Tank.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\Hylasoft.OrdersGui.NonTransactionalFunctions.Wb7System.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.disco" />
-    <None Include="Service References\NonTransactionalFunctions\configuration91.svcinfo" />
-    <None Include="Service References\NonTransactionalFunctions\configuration.svcinfo" />
-    <None Include="Service References\NonTransactionalFunctions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Resource Include="Resources\Images\back.png" />
     <Content Include="ServiceReferences.ClientConfig" />
-    <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.wsdl" />
-    <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions3.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
@@ -268,21 +201,8 @@
     <Resource Include="Resources\Images\gear.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\EventMonitor\EventMonitor.disco" />
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EventMonitor\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EventMonitor\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EventMonitor\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -298,4 +218,9 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
 </Project>

@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Hylasoft.OrdersGui.ViewModel"
              xmlns:res="clr-namespace:Hylasoft.OrdersGui.Resources"
+             xmlns:utils="clr-namespace:Hylasoft.OrdersGui.View.Utils"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              mc:Ignorable="d">
     <Application.Resources>
@@ -18,6 +19,8 @@
             <Style TargetType="sdk:Label" BasedOn="{StaticResource BasicLabelStyle}"></Style>
             <res:Strings_en_us x:Key="Strings"/>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+            <utils:OpcConnectionStatusToColorConverter x:Key="OpcConnectionStatusToColor" />
+            <utils:SlomConnectionStatusToColorConverter x:Key="SlomConnectionStatusToColor" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -74,9 +74,9 @@
             <sdk:Label Content="{Binding User, Source={StaticResource Strings}}" />
 			<TextBlock Text="{Binding SessionData.User}" />
                 <sdk:Label Content="{Binding OPCConnStatus, Source={StaticResource Strings}}" Margin="10,0,0,0"/>
-                <TextBlock Text="{Binding SessionData.OpcStatus}" Foreground="ForestGreen"/>
+                <TextBlock Text="{Binding SessionData.OpcStatus}" Foreground="{Binding SessionData.OpcStatus, Converter={StaticResource OpcConnectionStatusToColor}}"/>
                 <sdk:Label Content="{Binding SLOMConnStatus, Source={StaticResource Strings}}" Margin="10,0,0,0"/>
-                <TextBlock Text="{Binding SessionData.SlomStatus}" Foreground="ForestGreen" />
+                <TextBlock Text="{Binding SessionData.SlomStatus}" Foreground="{Binding SessionData.SlomStatus, Converter={StaticResource SlomConnectionStatusToColor}}" />
             </StackPanel>
 			<StackPanel Grid.Column="2" Orientation="Horizontal">
 				<sdk:Label Content="{Binding NoOfOrders, Source={StaticResource Strings}}"/>

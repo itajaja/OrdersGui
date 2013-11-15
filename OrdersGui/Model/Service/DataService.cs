@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
-using GalaSoft.MvvmLight.Threading;
+using System.Threading;
+using System.Threading.Tasks;
 using Hylasoft.OrdersGui.EventMonitor;
 using Hylasoft.OrdersGui.NonTransactionalFunctions;
 using Hylasoft.OrdersGui.Resources;
@@ -25,65 +25,86 @@ namespace Hylasoft.OrdersGui.Model.Service
 
         public DataService()
         {
-            try
-            {
-                //setup connections and configurations
-                _sessionData = new SessionData();
-                _sessionData.EmConnectionString = Configuration.EmConnectionString;
-                _sessionData.NtfConnectionString = Configuration.NtfConnectionString;
-                _sessionData.User = User.User2; //todo parametric
-                _sessionData.OpcStatus = OpcConnectionStatus.Unknown;
-                _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
-                _emClient = new EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
-                _ntfClient = new NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
-
-                //initialize racks, arms, tanks, sysInfo, etc. everything that should be initialized and supposedly not modified
-                _ntfClient.GetSystemInfoCompleted += (sender, args) =>
-                {
-                    HandleError(args.Error);
-                    _systemInfo = ConvertSystemInfo(args.Result);
-                };
-                _ntfClient.GetSystemInfoAsync();
-
-                //todo this should be pulled from server, the method must be created
-                _racks = new List<Rack>{
-                    new Rack{RackId = 0, RackName = "None", RackStatus = 0},
-                    new Rack{RackId = 1, RackName = "North", RackStatus = 0},
-                    new Rack{RackId = 2, RackName = "South", RackStatus = 0},
-                    new Rack{RackId = 3, RackName = "East", RackStatus = 0}
-                };
-
-                _ntfClient.getLoadRackArmsCompleted += (sender, args) =>
-                {
-                    HandleError(args.Error);
-                    _arms = ConvertArms(args.Result);
-                };
-                _ntfClient.getLoadRackArmsAsync();
-            }
-            catch (Exception e)
-            {
-                HandleError(e);
-            }
+            _sessionData = new SessionData();
+            _sessionData.EmConnectionString = Configuration.EmConnectionString;
+            _sessionData.NtfConnectionString = Configuration.NtfConnectionString;
+            _sessionData.User = User.User2; //todo parametric
+            _sessionData.OpcStatus = OpcConnectionStatus.Unknown;
+            _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
+            _emClient = new EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
+            _ntfClient = new NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
+            GetSystemData((info, exception) =>
+                GetRacks((a,b) =>
+                    GetArms((c, d) => { })));
         }
 
         public void GetSessionData(Action<SessionData, Exception> callback)
         {
-            callback(_sessionData, null);
+                callback(_sessionData, null);
         }
 
         public void GetSystemData(Action<SystemInfo, Exception> callback)
         {
-            callback(_systemInfo, null);
+            if (_systemInfo != null)
+            {
+                callback(_systemInfo, null);
+                return;
+            }
+            _ntfClient.GetSystemInfoCompleted += (sender, args) =>
+            {
+                try
+                {
+                    CheckAndRethrow(args.Error);
+                    _systemInfo = ConvertSystemInfo(args.Result);
+                    callback(_systemInfo, null);
+                }
+                catch
+                (Exception e)
+                {
+                    callback(null, e);
+                }
+            };
+            _ntfClient.GetSystemInfoAsync();
         }
 
         public void GetRacks(Action<IList<Rack>, Exception> callback)
         {
+            if (_racks != null)
+            {
+                callback(_racks, null);
+                return;
+            }
+            _racks = new List<Rack>{
+                new Rack{RackId = 0, RackName = "None", RackStatus = 0},
+                new Rack{RackId = 1, RackName = "North", RackStatus = 0},
+                new Rack{RackId = 2, RackName = "South", RackStatus = 0},
+                new Rack{RackId = 3, RackName = "East", RackStatus = 0}
+            };
             callback(_racks, null);
         }
 
         public void GetArms(Action<IList<Arm>, Exception> callback)
         {
-            callback(_arms, null);
+            if (_arms != null)
+            {
+                callback(_arms, null);
+                return;
+            }
+            _ntfClient.getLoadRackArmsCompleted += (sender, args) =>
+            {
+                try
+                {
+                    CheckAndRethrow(args.Error);
+                    _arms = ConvertArms(args.Result);
+                    callback(_arms, null);
+                }
+                catch
+                (Exception e)
+                {
+                    callback(null, e);
+                }
+            };
+            _ntfClient.getLoadRackArmsAsync();
         }
 
         public void GetOrders(Action<IList<Order>, Exception> callback)
@@ -94,13 +115,13 @@ namespace Hylasoft.OrdersGui.Model.Service
                 try
                 {
                     _ntfClient.GetLoadOrdersCompleted -= handler;
-                    HandleError(args.Error);
+                    CheckAndRethrow(args.Error);
                     IList<Order> orders = ConvertOrders(args.Result);
                     callback(orders, null);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    callback(null, args.Error);
+                    callback(null, e);
                 }
             };
             _ntfClient.GetLoadOrdersCompleted += handler;
@@ -115,28 +136,23 @@ namespace Hylasoft.OrdersGui.Model.Service
                 try
                 {
                     _emClient.GetOpcServerStateCompleted -= handler;
-                    HandleError(args.Error);
+                    CheckAndRethrow(args.Error);
                     OpcConnectionStatus status = ConvertOpcConnectionStatus(args.Result);
                     callback(status, null);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    callback(OpcConnectionStatus.Unknown, args.Error);
+                    callback(OpcConnectionStatus.Unknown, e);
                 }
             };
             _emClient.GetOpcServerStateCompleted += handler;
             _emClient.GetOpcServerStateAsync();
         }
 
-        private void HandleError(Exception exception)
+        private void CheckAndRethrow(Exception exception)
         {
             if (exception != null)
             {
-                DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                {
-                    _sessionData.OpcStatus = OpcConnectionStatus.Unknown;
-                    _sessionData.SlomStatus = SlomConnectionStatus.Disconnected;
-                });
                 throw exception;
             }
         }

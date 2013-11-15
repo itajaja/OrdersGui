@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1b9d2c10-17bb-46c0-bf39-cbe2d85722a0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:64463/NonTransactionalFunctions.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="NonTransactionalFunctions.wsdl" MetadataType="Wsdl" ID="7981f42e-14d8-4a26-aab1-bcc10c7701b1" SourceId="1" SourceUrl="http://localhost:64463/NonTransactionalFunctions.svc?wsdl" />
+    <MetadataFile FileName="NonTransactionalFunctions.xsd" MetadataType="Schema" ID="105373f5-d74a-4ab4-b62f-6dd367735f6b" SourceId="1" SourceUrl="http://localhost:64463/NonTransactionalFunctions.svc?xsd=xsd2" />
+    <MetadataFile FileName="NonTransactionalFunctions1.xsd" MetadataType="Schema" ID="e022fcc5-68bd-45c2-b1c5-3b0b646a15ee" SourceId="1" SourceUrl="http://localhost:64463/NonTransactionalFunctions.svc?xsd=xsd3" />
+    <MetadataFile FileName="NonTransactionalFunctions2.xsd" MetadataType="Schema" ID="a5e92214-7840-41d5-9171-b4e2169bc3f1" SourceId="1" SourceUrl="http://localhost:64463/NonTransactionalFunctions.svc?xsd=xsd0" />
+    <MetadataFile FileName="NonTransactionalFunctions3.xsd" MetadataType="Schema" ID="6499d1f9-f509-4985-816d-51b70aff9dd6" SourceId="1" SourceUrl="http://localhost:64463/NonTransactionalFunctions.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

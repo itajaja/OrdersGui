@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="NonTransactionalFunctions" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:64463/NonTransactionalFunctions.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:64463/NonTransactionalFunctions.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EventMonitorService" />
+      <xsd:import schemaLocation="http://localhost:64463/NonTransactionalFunctions.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:64463/NonTransactionalFunctions.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="INonTransactionalFunctions_GetLoadOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadOrders" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetLoadOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetLoadOrders_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q1:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getLoadRackArms_InputMessage">
+    <wsdl:part name="parameters" element="tns:getLoadRackArms" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getLoadRackArms_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getLoadRackArmsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getLoadRackArms_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q2:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetFinishedProducts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFinishedProducts" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetFinishedProducts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFinishedProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetFinishedProducts_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q3:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:getLoadOrderDetails" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getLoadOrderDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetails_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q4:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetailsCompartments_InputMessage">
+    <wsdl:part name="parameters" element="tns:getLoadOrderDetailsCompartments" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetailsCompartments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getLoadOrderDetailsCompartmentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetailsCompartments_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q5:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetAssignCompartmentsNosAndCapacityFromDb_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignCompartmentsNosAndCapacityFromDb" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetAssignCompartmentsNosAndCapacityFromDb_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignCompartmentsNosAndCapacityFromDbResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetAssignCompartmentsNosAndCapacityFromDb_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q6:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetContainers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetContainers" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetContainers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetContainersResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetContainers_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q7:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetContainer_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetContainer" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetContainer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetContainerResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetContainer_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q8:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getContainerCompartments_InputMessage">
+    <wsdl:part name="parameters" element="tns:getContainerCompartments" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getContainerCompartments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getContainerCompartmentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getContainerCompartments_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q9:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetSAPMaterials_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSAPMaterials" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetSAPMaterials_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSAPMaterialsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetSAPMaterials_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q10:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetMaterials_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMaterials" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetMaterials_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMaterialsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetMaterials_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q11:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetRebrandedProducts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRebrandedProducts" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetRebrandedProducts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRebrandedProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetRebrandedProducts_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q12:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetLoadOrderProducts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadOrderProducts" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetLoadOrderProducts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadOrderProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetLoadOrderProducts_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q13:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getCompletedSAPLoadOrderCompartmentSeals_InputMessage">
+    <wsdl:part name="parameters" element="tns:getCompletedSAPLoadOrderCompartmentSeals" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getCompletedSAPLoadOrderCompartmentSeals_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getCompletedSAPLoadOrderCompartmentSealsResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_getCompletedSAPLoadOrderCompartmentSeals_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q14:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetSystemInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemInfo" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetSystemInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetSystemInfo_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q15:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_InsertLoadOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertLoadOrder" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_InsertLoadOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertLoadOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_InsertLoadOrder_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q16:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetLoadOrderTruckNo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadOrderTruckNo" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetLoadOrderTruckNo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadOrderTruckNoResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetLoadOrderTruckNo_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q17:UserException" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetWinblendTanks_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWinblendTanks" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetWinblendTanks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWinblendTanksResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetWinblendTanks_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q18:UserException" />
+  </wsdl:message>
+  <wsdl:portType name="INonTransactionalFunctions">
+    <wsdl:operation name="GetLoadOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetLoadOrders" message="tns:INonTransactionalFunctions_GetLoadOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetLoadOrdersResponse" message="tns:INonTransactionalFunctions_GetLoadOrders_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetLoadOrdersUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetLoadOrders_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getLoadRackArms">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadRackArms" message="tns:INonTransactionalFunctions_getLoadRackArms_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadRackArmsResponse" message="tns:INonTransactionalFunctions_getLoadRackArms_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadRackArmsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_getLoadRackArms_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFinishedProducts">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetFinishedProducts" message="tns:INonTransactionalFunctions_GetFinishedProducts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetFinishedProductsResponse" message="tns:INonTransactionalFunctions_GetFinishedProducts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetFinishedProductsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetFinishedProducts_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getLoadOrderDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadOrderDetails" message="tns:INonTransactionalFunctions_getLoadOrderDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadOrderDetailsResponse" message="tns:INonTransactionalFunctions_getLoadOrderDetails_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadOrderDetailsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_getLoadOrderDetails_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getLoadOrderDetailsCompartments">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadOrderDetailsCompartments" message="tns:INonTransactionalFunctions_getLoadOrderDetailsCompartments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadOrderDetailsCompartmentsResponse" message="tns:INonTransactionalFunctions_getLoadOrderDetailsCompartments_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadOrderDetailsCompartmentsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_getLoadOrderDetailsCompartments_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignCompartmentsNosAndCapacityFromDb">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetAssignCompartmentsNosAndCapacityFromDb" message="tns:INonTransactionalFunctions_GetAssignCompartmentsNosAndCapacityFromDb_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetAssignCompartmentsNosAndCapacityFromDbResponse" message="tns:INonTransactionalFunctions_GetAssignCompartmentsNosAndCapacityFromDb_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetAssignCompartmentsNosAndCapacityFromDbUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetAssignCompartmentsNosAndCapacityFromDb_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContainers">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetContainers" message="tns:INonTransactionalFunctions_GetContainers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetContainersResponse" message="tns:INonTransactionalFunctions_GetContainers_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetContainersUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetContainers_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContainer">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetContainer" message="tns:INonTransactionalFunctions_GetContainer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetContainerResponse" message="tns:INonTransactionalFunctions_GetContainer_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetContainerUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetContainer_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getContainerCompartments">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getContainerCompartments" message="tns:INonTransactionalFunctions_getContainerCompartments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getContainerCompartmentsResponse" message="tns:INonTransactionalFunctions_getContainerCompartments_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getContainerCompartmentsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_getContainerCompartments_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPMaterials">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetSAPMaterials" message="tns:INonTransactionalFunctions_GetSAPMaterials_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetSAPMaterialsResponse" message="tns:INonTransactionalFunctions_GetSAPMaterials_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetSAPMaterialsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetSAPMaterials_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMaterials">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetMaterials" message="tns:INonTransactionalFunctions_GetMaterials_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetMaterialsResponse" message="tns:INonTransactionalFunctions_GetMaterials_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetMaterialsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetMaterials_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRebrandedProducts">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetRebrandedProducts" message="tns:INonTransactionalFunctions_GetRebrandedProducts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetRebrandedProductsResponse" message="tns:INonTransactionalFunctions_GetRebrandedProducts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetRebrandedProductsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetRebrandedProducts_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadOrderProducts">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetLoadOrderProducts" message="tns:INonTransactionalFunctions_GetLoadOrderProducts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetLoadOrderProductsResponse" message="tns:INonTransactionalFunctions_GetLoadOrderProducts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetLoadOrderProductsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetLoadOrderProducts_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getCompletedSAPLoadOrderCompartmentSeals">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getCompletedSAPLoadOrderCompartmentSeals" message="tns:INonTransactionalFunctions_getCompletedSAPLoadOrderCompartmentSeals_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getCompletedSAPLoadOrderCompartmentSealsResponse" message="tns:INonTransactionalFunctions_getCompletedSAPLoadOrderCompartmentSeals_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getCompletedSAPLoadOrderCompartmentSealsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_getCompletedSAPLoadOrderCompartmentSeals_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetSystemInfo" message="tns:INonTransactionalFunctions_GetSystemInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetSystemInfoResponse" message="tns:INonTransactionalFunctions_GetSystemInfo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetSystemInfoUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetSystemInfo_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertLoadOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/InsertLoadOrder" message="tns:INonTransactionalFunctions_InsertLoadOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/InsertLoadOrderResponse" message="tns:INonTransactionalFunctions_InsertLoadOrder_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/InsertLoadOrderUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_InsertLoadOrder_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadOrderTruckNo">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetLoadOrderTruckNo" message="tns:INonTransactionalFunctions_GetLoadOrderTruckNo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetLoadOrderTruckNoResponse" message="tns:INonTransactionalFunctions_GetLoadOrderTruckNo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetLoadOrderTruckNoUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetLoadOrderTruckNo_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWinblendTanks">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetWinblendTanks" message="tns:INonTransactionalFunctions_GetWinblendTanks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetWinblendTanksResponse" message="tns:INonTransactionalFunctions_GetWinblendTanks_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetWinblendTanksUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetWinblendTanks_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_INonTransactionalFunctions" type="tns:INonTransactionalFunctions">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLoadOrders">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetLoadOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLoadRackArms">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/getLoadRackArms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetFinishedProducts">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetFinishedProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLoadOrderDetails">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/getLoadOrderDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLoadOrderDetailsCompartments">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/getLoadOrderDetailsCompartments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignCompartmentsNosAndCapacityFromDb">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetAssignCompartmentsNosAndCapacityFromDb" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetContainers">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetContainers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetContainer">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetContainer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getContainerCompartments">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/getContainerCompartments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPMaterials">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetSAPMaterials" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMaterials">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetMaterials" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRebrandedProducts">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetRebrandedProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadOrderProducts">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetLoadOrderProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCompletedSAPLoadOrderCompartmentSeals">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/getCompletedSAPLoadOrderCompartmentSeals" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemInfo">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetSystemInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertLoadOrder">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/InsertLoadOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadOrderTruckNo">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetLoadOrderTruckNo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetWinblendTanks">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetWinblendTanks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="NonTransactionalFunctions">
+    <wsdl:port name="BasicHttpBinding_INonTransactionalFunctions" binding="tns:BasicHttpBinding_INonTransactionalFunctions">
+      <soap:address location="http://localhost:64463/NonTransactionalFunctions.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

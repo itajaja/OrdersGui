@@ -29,9 +29,39 @@
                     </Style>
                 </StackPanel.Resources>
                 <sdk:Label Content="{Binding OrderNumberFilter, Source={StaticResource Strings}}" />
-                <sdk:AutoCompleteBox Margin="5,0" Width="110" />
-                <Button Name="OrderStatusFilterButton"
-                        Content="{Binding OrderStatusFilter, Source={StaticResource Strings}}" />
+                <sdk:AutoCompleteBox Margin="5,0" Width="110" Text="{Binding OrderNoFilter, Mode=TwoWay}"/>
+                <Button Name="OrderStatusFilterButton" >
+                    <StackPanel>
+                        <TextBlock Style="{x:Null}" Text="{Binding OrderStatusFilter, Source={StaticResource Strings}}" />
+                        <Popup IsOpen="{Binding ElementName=ToggleButtonStatus, Path=IsChecked, Mode=TwoWay}"  HorizontalOffset="-15" VerticalOffset="0">
+                            <Border BorderBrush="{Binding ElementName=ToggleButtonStatus, Path=BorderBrush}" Background="White" Padding="15" CornerRadius="10" Margin="0 15 0 0" BorderThickness="1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Button Name="AllStatusesButton" Content="All"/>
+                                    <Button Name="ClearStatusesButton" Content="Clear"
+                                                Grid.Row="0" Grid.Column="1"/>
+                                    <ItemsControl ItemsSource="{Binding Path=Statuses}" Margin="0,5,0,0" Name="StatusesChecks" Grid.Row="1" Grid.ColumnSpan="2"
+                                                      Grid.Column="0">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <CheckBox Content="{Binding Converter={StaticResource statusToString}, Path=Status}" IsChecked="{Binding Mode=TwoWay, Path=IsChecked, UpdateSourceTrigger=Explicit}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </Border>
+                        </Popup>
+                    </StackPanel>
+                </Button>
                 <Button Name="DateFilterButton" Content="{Binding DateFilter, Source={StaticResource Strings}}" />
                 <Button Name="CreateOrderButton" Content="{Binding CreateOrder, Source={StaticResource Strings}}" />
                 <Button Name="ReportsButton" Content="{Binding Reports, Source={StaticResource Strings}}" />
@@ -43,7 +73,7 @@
                 <Image Source="/OrdersGui;component/Resources/Images/Gear.png" />
             </Button>
         </Grid>
-        <sdk:DataGrid Grid.Row="2" AutoGenerateColumns="False" Name="OrdersGrid" ItemsSource="{Binding Orders}" IsReadOnly="True">
+        <sdk:DataGrid Grid.Row="2" AutoGenerateColumns="False" Name="OrdersGrid" ItemsSource="{Binding OrdersView}" IsReadOnly="True">
             <sdk:DataGrid.Resources>
                 <Style TargetType="TextBlock" />
             </sdk:DataGrid.Resources>
@@ -57,8 +87,8 @@
                 <sdk:DataGridTextColumn Width="*" Binding="{Binding StartDate}"/>
                 <sdk:DataGridTextColumn Width="*" Binding="{Binding EndDate}"/>
                 <sdk:DataGridTextColumn Width="*" Binding="{Binding OrderType}"/>
-<!--                todo this should be shipref. Where do i take it?-->
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding MethodOfDelivery}"/> 
+                <!--                todo this should be shipref. Where do i take it?-->
+                <sdk:DataGridTextColumn Width="*" Binding="{Binding MethodOfDelivery}"/>
                 <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}"/>
                 <sdk:DataGridTextColumn Binding="{Binding OrderStatus}"/>
             </sdk:DataGrid.Columns>
@@ -71,17 +101,17 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-            <sdk:Label Content="{Binding User, Source={StaticResource Strings}}" />
-			<TextBlock Text="{Binding SessionData.User}" />
+                <sdk:Label Content="{Binding User, Source={StaticResource Strings}}" />
+                <TextBlock Text="{Binding SessionData.User}" />
                 <sdk:Label Content="{Binding OPCConnStatus, Source={StaticResource Strings}}" Margin="10,0,0,0"/>
                 <TextBlock Text="{Binding SessionData.OpcStatus}" Foreground="{Binding SessionData.OpcStatus, Converter={StaticResource OpcConnectionStatusToColor}}"/>
                 <sdk:Label Content="{Binding SLOMConnStatus, Source={StaticResource Strings}}" Margin="10,0,0,0"/>
                 <TextBlock Text="{Binding SessionData.SlomStatus}" Foreground="{Binding SessionData.SlomStatus, Converter={StaticResource SlomConnectionStatusToColor}}" />
             </StackPanel>
-			<StackPanel Grid.Column="2" Orientation="Horizontal">
-				<sdk:Label Content="{Binding NoOfOrders, Source={StaticResource Strings}}"/>
-			<TextBlock Text="{Binding Path=Orders.Count}"/>
-			</StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <sdk:Label Content="{Binding NoOfOrders, Source={StaticResource Strings}}"/>
+                <TextBlock Text="{Binding Path=Orders.Count}"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

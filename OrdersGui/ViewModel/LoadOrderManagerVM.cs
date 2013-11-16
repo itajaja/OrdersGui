@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using Hylasoft.OrdersGui.Model;
@@ -37,7 +38,54 @@ namespace Hylasoft.OrdersGui.ViewModel
         public IList<Order> Orders
         {
             get { return _orders; }
-            set { Set("Orders", ref _orders, value); }
+            set
+            {
+                Set("Orders", ref _orders, value);
+                OrdersView = new PagedCollectionView(_orders);
+                OrdersView.Filter = o =>
+                {
+                    var order = (Order)o;
+                    if (!order.OrderNo.Contains(OrderNoFilter??""))
+                        return false;
+                    if (!_orderStatusFilter.Contains(order.OrderStatus))
+                        return false;
+                    if (DateFilter.HasValue && DateFilter.Value.Date.Equals(order.ScheduleDate.Date))
+                        return false;
+                    return true;
+                };
+            }
+        }
+
+        private PagedCollectionView _ordersView;
+        public PagedCollectionView OrdersView
+        {
+            get { return _ordersView; }
+            set { Set("OrdersView", ref _ordersView, value); }
+        }
+
+        private string _orderNoFilter;
+        public string OrderNoFilter
+        {
+            get { return _orderNoFilter; }
+            set
+            {
+                Set("OrderNoFilter", ref _orderNoFilter, value);
+                OrdersView.Refresh();
+            }
+        }
+
+        private IList<OrderStatus> _orderStatusFilter;
+        public IList<OrderStatus> OrderStatusFilter
+        {
+            get { return _orderStatusFilter; }
+            set { Set("OrderStatusFilter", ref _orderStatusFilter, value); }
+        }
+
+        private DateTime? _dateFilter;
+        public DateTime? DateFilter
+        {
+            get { return _dateFilter; }
+            set { Set("DateFilter", ref _dateFilter, value); }
         }
 
         public LoadOrderManagerVM(IDataService ds)

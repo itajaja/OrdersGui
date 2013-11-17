@@ -6,7 +6,7 @@ namespace Hylasoft.OrdersGui.View
     /// <summary>
     /// Description for CreateOrder.
     /// </summary>
-    public partial class CreateOrder
+    public partial class CreateOrder : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the CreateOrder class.

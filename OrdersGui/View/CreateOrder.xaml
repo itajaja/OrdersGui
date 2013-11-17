@@ -6,7 +6,7 @@
              xmlns:ignore="http://www.ignore.com"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              mc:Ignorable="d ignore"
-             DataContext="{Binding CreateOrderVM, Source={StaticResource Locator}}" d:DesignHeight="500" d:DesignWidth="800">
+             DataContext="{Binding CreateOrderVM, Source={StaticResource Locator}}" d:DesignHeight="500" d:DesignWidth="1100">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -68,13 +68,18 @@
             <ComboBox Grid.Row="6" Grid.Column="1" SelectedItem="{Binding Order.MethodOfDelivery}" ItemsSource="{Binding Methods}"/>
             <sdk:Calendar Grid.Row="7" Grid.Column="1"></sdk:Calendar>
         </Grid>
-        <sdk:DataGrid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Top">
+        <sdk:DataGrid Grid.Row="1" Grid.Column="1" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" CanUserResizeColumns="False"
+                      ItemsSource="{Binding OrderProducts}" AutoGenerateColumns="False" SelectionMode="Single">
+            <sdk:DataGrid.Resources>
+                <Style TargetType="TextBlock" />
+                <Style TargetType="TextBox" />
+            </sdk:DataGrid.Resources>
             <sdk:DataGrid.Columns>
-                <sdk:DataGridTextColumn Header="Material Code"></sdk:DataGridTextColumn>
-                <sdk:DataGridTextColumn Header="Material Name"></sdk:DataGridTextColumn>
-                <sdk:DataGridTextColumn Header="Target Quantity"></sdk:DataGridTextColumn>
-                <sdk:DataGridTextColumn Header="UoM"></sdk:DataGridTextColumn>
-                <sdk:DataGridTextColumn Header="Source Tank"></sdk:DataGridTextColumn>
+                <sdk:DataGridTextColumn Width="150" Header="Material Code" Binding="{Binding Material.MaterialCode}"></sdk:DataGridTextColumn>
+                <sdk:DataGridTextColumn Width="150" Header="Material Name" Binding="{Binding Material.MaterialName}"></sdk:DataGridTextColumn>
+                <sdk:DataGridTextColumn Header="Target Qty" Binding="{Binding TargetQty}"></sdk:DataGridTextColumn>
+                <sdk:DataGridTextColumn Header="UoM" Binding="{Binding Uom}"></sdk:DataGridTextColumn>
+                <sdk:DataGridTextColumn Header="Source Tank" Binding="{Binding SourceTank.SapTankName}"></sdk:DataGridTextColumn>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">

@@ -59,8 +59,7 @@
             </Button>
         </Grid>
         <Border Grid.Row="2" Grid.RowSpan="2" BorderThickness="0,2,0,0" BorderBrush="{StaticResource DarkGrayBrush}">
-            <sdk:DataGrid  AutoGenerateColumns="False" Name="OrdersGrid"
-                          ItemsSource="{Binding OrdersView}" IsReadOnly="True" SelectionMode="Single">
+            <sdk:DataGrid  AutoGenerateColumns="False" Name="OrdersGrid" ItemsSource="{Binding OrdersView}" IsReadOnly="True" SelectionMode="Single">
                 <sdk:DataGrid.Resources>
                     <Style TargetType="TextBlock" />
                 </sdk:DataGrid.Resources>

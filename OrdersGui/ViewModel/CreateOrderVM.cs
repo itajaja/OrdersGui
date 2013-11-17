@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GalaSoft.MvvmLight;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
@@ -7,7 +6,7 @@ using Hylasoft.OrdersGui.Utils;
 
 namespace Hylasoft.OrdersGui.ViewModel
 {
-    public class CreateOrderVM : ViewModelBase
+    public sealed class CreateOrderVM : ViewModelBase
     {
         private readonly IDataService _dataService;
 
@@ -56,15 +55,21 @@ namespace Hylasoft.OrdersGui.ViewModel
         public CreateOrderVM(IDataService ds)
         {
             _dataService = ds;
-            Order = new Order();
-            OrderProducts = new List<OrderProduct>();
+            Cleanup();
         }
 
         public override void Cleanup()
         {
             base.Cleanup();
             Order = new Order();
-            OrderProducts = new List<OrderProduct>();
+            //initialize with 5 empty products
+            OrderProducts = new List<OrderProduct>{
+                new OrderProduct{Material = new Material(), SourceTank = new Tank()},
+                new OrderProduct{Material = new Material(), SourceTank = new Tank()},
+                new OrderProduct{Material = new Material(), SourceTank = new Tank()},
+                new OrderProduct{Material = new Material(), SourceTank = new Tank()},
+                new OrderProduct{SourceTank = new Tank()}
+            };
         }
     }
 }

@@ -13,7 +13,7 @@ using Hylasoft.OrdersGui.Utils;
 
 namespace Hylasoft.OrdersGui.ViewModel
 {
-    public class LoadOrderManagerVM : ViewModelBase
+    public sealed class LoadOrderManagerVM : ViewModelBase
     {
         private readonly IDataService _dataService;
 

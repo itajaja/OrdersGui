@@ -18,18 +18,11 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _availabilityStatus, value, "AvailabilityStatus"); }
         }
 
-        private string _materialCode;
-        public string MaterialCode
+        private Material _material;
+        public Material Material
         {
-            get { return _materialCode; }
-            set { SetField(ref _materialCode, value, "MaterialCode"); }
-        }
-
-        private int _materialId;
-        public int MaterialId
-        {
-            get { return _materialId; }
-            set { SetField(ref _materialId, value, "MaterialId"); }
+            get { return _material; }
+            set { SetField(ref _material, value, "Material"); }
         }
 
         private string _sapTankName;

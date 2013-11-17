@@ -18,7 +18,6 @@ namespace Hylasoft.OrdersGui.Design
 
         public void GetSystemData(Action<SystemInfo, Exception> callback)
         {
-
             callback(_data, null);
         }
 
@@ -40,6 +39,26 @@ namespace Hylasoft.OrdersGui.Design
         public void GetOpcStatus(Action<OpcConnectionStatus, Exception> callback)
         {
             callback(OpcConnectionStatus.Suspended, null);
+        }
+
+        public void GetMaterials(Action<IList<Material>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetTanks(Action<IList<Tank>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetCompartments(Action<IList<Compartment>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetContainers(Action<IList<Container>, Exception> callback)
+        {
+            throw new NotImplementedException();
         }
     }
 }

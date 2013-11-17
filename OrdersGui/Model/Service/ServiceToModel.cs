@@ -176,5 +176,25 @@ namespace Hylasoft.OrdersGui.Model.Service
                     return OpcConnectionStatus.Unknown;
             }
         }
+
+        public void GetMaterials(Action<IList<Material>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetTanks(Action<IList<Tank>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetCompartments(Action<IList<Compartment>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetContainers(Action<IList<Container>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

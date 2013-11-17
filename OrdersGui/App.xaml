@@ -9,10 +9,13 @@
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              mc:Ignorable="d">
     <Application.Resources>
-
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
+                <ResourceDictionary Source="Skins/ButtonSkin.xaml" />
+                <ResourceDictionary Source="Skins/PopupSkin.xaml" />
+                <ResourceDictionary Source="Skins/ComboBoxSkin.xaml" />
+                <ResourceDictionary Source="Skins/DataGridSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" />
             <Style TargetType="TextBlock" BasedOn="{StaticResource BasicTextBlockStyle}" />
@@ -20,6 +23,7 @@
             <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxStyle}" />
             <Style TargetType="TextBox" BasedOn="{StaticResource BasicTextBoxStyle}" />
             <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}" />
+            <Style TargetType="sdk:DataGrid" BasedOn="{StaticResource DataGridStyle}" />
             <res:Strings_en_us x:Key="Strings"/>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <utils:OpcConnectionStatusToColorConverter x:Key="OpcConnectionStatusToColor" />

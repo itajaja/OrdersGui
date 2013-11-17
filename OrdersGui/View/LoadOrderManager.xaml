@@ -96,7 +96,7 @@
                 BorderThickness="2,0,2,2" x:Name="FilterBorder" Height="0" Grid.Row="2" Width="300" 
                 HorizontalAlignment="Left" Margin="250,0,0,0">
             <Border.Effect>
-                <DropShadowEffect Direction="270" BlurRadius="5" ShadowDepth="10" Color="{StaticResource BlackColor}"/>
+                <DropShadowEffect Direction="250" BlurRadius="8" ShadowDepth="8" Opacity="1" Color="{StaticResource BlackColor}"/>
             </Border.Effect>
             <Grid >
                 <Grid.RowDefinitions>

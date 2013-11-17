@@ -91,12 +91,12 @@
                 <CompositeTransform  TranslateX="10"/>
             </Grid.RenderTransform>
             <view:LoadOrderManager x:Name="LoadOrderManagerView" />
-            <view:CreateOrder x:Name="CreateOrderView" Visibility="Collapsed">
+            <view:CreateOrder x:Name="CreateOrderView">
                 <view:CreateOrder.RenderTransform>
                     <CompositeTransform TranslateX="{Binding ElementName=MainPageControl, Path=Width}"/>
                 </view:CreateOrder.RenderTransform>
             </view:CreateOrder>
-            <view:LoadOrderDetails x:Name="LoadOrderDetailsView" Visibility="Collapsed">
+            <view:LoadOrderDetails x:Name="LoadOrderDetailsView">
                 <view:LoadOrderDetails.RenderTransform>
                     <CompositeTransform TranslateX="{Binding ElementName=MainPageControl, Path=Width}"/>
                 </view:LoadOrderDetails.RenderTransform>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Hylasoft.OrdersGui.NonTransactionalFunctions;
 
 //This file contains all the method to convert from the service types to the model types. All the Logic for this task should reside here, so that the service are not used outside this class

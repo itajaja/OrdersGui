@@ -20,30 +20,27 @@ namespace Hylasoft.OrdersGui.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
-            SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoadOrderManagerVM>();
             SimpleIoc.Default.Register<LoadOrderDetailsVM>();
+            SimpleIoc.Default.Register<CreateOrderVM>();
         }
 
-        /// <summary>
-        /// Gets the Main property.
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-            "CA1822:MarkMembersAsStatic",
-            Justification = "This non-static member is needed for data binding purposes.")]
-        public MainViewModel Main
-        {
-            get { return ServiceLocator.Current.GetInstance<MainViewModel>(); }
-        }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public LoadOrderManagerVM LoadOrderManagerVM
         {
             get { return ServiceLocator.Current.GetInstance<LoadOrderManagerVM>(); }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public LoadOrderDetailsVM LoadOrderDetailsVM
         {
             get { return ServiceLocator.Current.GetInstance<LoadOrderDetailsVM>(); }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public CreateOrderVM CreateOrderVM
+        {
+            get { return ServiceLocator.Current.GetInstance<CreateOrderVM>(); }
         }
 
         /// <summary>

@@ -18,6 +18,8 @@
             <Style TargetType="TextBlock" BasedOn="{StaticResource BasicTextBlockStyle}" />
             <Style TargetType="sdk:Label" BasedOn="{StaticResource BasicLabelStyle}" />
             <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxStyle}" />
+            <Style TargetType="TextBox" BasedOn="{StaticResource BasicTextBoxStyle}" />
+            <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}" />
             <res:Strings_en_us x:Key="Strings"/>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <utils:OpcConnectionStatusToColorConverter x:Key="OpcConnectionStatusToColor" />

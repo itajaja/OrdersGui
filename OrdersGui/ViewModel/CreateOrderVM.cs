@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GalaSoft.MvvmLight;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
+using Hylasoft.OrdersGui.Utils;
 
 namespace Hylasoft.OrdersGui.ViewModel
 {
@@ -37,9 +39,32 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("Materials", ref _materials, value); }
         }
 
+        private IList<DeliveryMethod> _methods = EnumList.GetEnumValues<DeliveryMethod>();
+        public IList<DeliveryMethod> Methods
+        {
+            get { return _methods; }
+            set { Set("Methods", ref _methods, value); }
+        }
+
+        private IList<OrderType> _types = EnumList.GetEnumValues<OrderType>();
+        public IList<OrderType> Types
+        {
+            get { return _types; }
+            set { Set("Types", ref _types, value); }
+        }
+
         public CreateOrderVM(IDataService ds)
         {
             _dataService = ds;
+            Order = new Order();
+            OrderProducts = new List<OrderProduct>();
+        }
+
+        public override void Cleanup()
+        {
+            base.Cleanup();
+            Order = new Order();
+            OrderProducts = new List<OrderProduct>();
         }
     }
 }

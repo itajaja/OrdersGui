@@ -6,21 +6,79 @@
              xmlns:ignore="http://www.ignore.com"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              mc:Ignorable="d ignore"
-             DataContext="{Binding CreateOrderVM, Source={StaticResource Locator}}" d:DesignHeight="300" d:DesignWidth="800">
+             DataContext="{Binding CreateOrderVM, Source={StaticResource Locator}}" d:DesignHeight="500" d:DesignWidth="800">
     <Grid>
-        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+            <Button Margin="0,0,15,0" Click="ButtonBack_Click">
+                <Image Source="/OrdersGui;component/Resources/Images/back.png"/>
+            </Button>
+            <sdk:Label Style="{StaticResource TitleStyle}" Content="Create new order" />
+        </StackPanel>
+        <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch">
+            <Grid.Resources>
+                <Style TargetType="sdk:Label" BasedOn="{StaticResource BasicLabelStyle}">
+                    <Setter Property="Margin" Value="15,4,5,4" />
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                </Style>
+                <Style TargetType="TextBox" BasedOn="{StaticResource BasicTextBoxStyle}">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Width" Value="200" />
+                </Style>
+                <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"/>
-                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal">
-                <Button Margin="0,0,15,0" Click="ButtonBack_Click">
-                    <Image Source="/OrdersGui;component/Resources/Images/back.png"/>
-                </Button>
-                <sdk:Label Style="{StaticResource TitleStyle}" Content="Create new order" />
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <sdk:Label>Order Number</sdk:Label>
+            <sdk:Label Grid.Row="1" Grid.Column="0">Customer Name</sdk:Label>
+            <sdk:Label Grid.Row="2" Grid.Column="0">Customer Number</sdk:Label>
+            <sdk:Label Grid.Row="3" Grid.Column="0">Carrier Number</sdk:Label>
+            <sdk:Label Grid.Row="4" Grid.Column="0">PO Number</sdk:Label>
+            <sdk:Label Grid.Row="5" Grid.Column="0">Order Type</sdk:Label>
+            <sdk:Label Grid.Row="6" Grid.Column="0">Delivery Method</sdk:Label>
+            <sdk:Label Grid.Row="7" Grid.Column="0">Schedule Date</sdk:Label>
+            <TextBox Grid.Row="0" Grid.Column="1" />
+            <TextBox Grid.Row="1" Grid.Column="1" />
+            <TextBox Grid.Row="2" Grid.Column="1" />
+            <TextBox Grid.Row="3" Grid.Column="1" />
+            <TextBox Grid.Row="4" Grid.Column="1" />
+            <ComboBox Grid.Row="5" Grid.Column="1" SelectedItem="{Binding Order.OrderType}" ItemsSource="{Binding Types}"/>
+            <ComboBox Grid.Row="6" Grid.Column="1" SelectedItem="{Binding Order.MethodOfDelivery}" ItemsSource="{Binding Methods}"/>
+            <sdk:Calendar Grid.Row="7" Grid.Column="1"></sdk:Calendar>
+        </Grid>
+        <sdk:DataGrid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Top">
+            <sdk:DataGrid.Columns>
+                <sdk:DataGridTextColumn Header="Material Code"></sdk:DataGridTextColumn>
+                <sdk:DataGridTextColumn Header="Material Name"></sdk:DataGridTextColumn>
+                <sdk:DataGridTextColumn Header="Target Quantity"></sdk:DataGridTextColumn>
+                <sdk:DataGridTextColumn Header="UoM"></sdk:DataGridTextColumn>
+                <sdk:DataGridTextColumn Header="Source Tank"></sdk:DataGridTextColumn>
+            </sdk:DataGrid.Columns>
+        </sdk:DataGrid>
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button HorizontalAlignment="Center" Margin="10,5">Create</Button>
         </Grid>
     </Grid>
 </UserControl>

@@ -12,14 +12,20 @@
         <Storyboard x:Name="OpenStatusFilter">
             <DoubleAnimation Duration="0:0:.2" To="420" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrderStatusFilterGrid" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="DateFilterGrid" d:IsOptimized="True"/>
         </Storyboard>
         <Storyboard x:Name="OpenDateFilter">
             <DoubleAnimation Duration="0:0:.2" To="198" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrderStatusFilterGrid" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="DateFilterGrid" d:IsOptimized="True"/>
         </Storyboard>
         <Storyboard x:Name="CloseFilter">
             <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
-            <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrderStatusFilterGrid" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="DateFilterGrid" d:IsOptimized="True"/>
         </Storyboard>
     </UserControl.Resources>
     <Grid>
@@ -89,14 +95,14 @@
                 <Button Click="CollapseFilters_Click" HorizontalAlignment="Right">
                     <Image Source="../Resources/Images/up.png"/>
                 </Button>
-                <StackPanel Grid.Row="0" Grid.RowSpan="2" Name="DateFilterGrid" >
+                <StackPanel Grid.Row="0" Grid.RowSpan="2" Name="DateFilterGrid" Opacity="0">
                     <sdk:Calendar SelectedDate="{Binding DateFilter, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Today" HorizontalAlignment="Left" Command="{Binding SetTodayFilterCommand}"/>
                         <Button Content="Clear" HorizontalAlignment="Left" Command="{Binding ClearDateFilterCommand}"/>
                     </StackPanel>
                 </StackPanel>
-                <Grid Grid.Row="0" Grid.RowSpan="2" Name="OrderStatusFilterGrid" Visibility="Collapsed">
+                <Grid Grid.Row="0" Grid.RowSpan="2" Name="OrderStatusFilterGrid" Opacity="0">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition Height="Auto"/>

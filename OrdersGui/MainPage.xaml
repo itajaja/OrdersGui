@@ -5,33 +5,57 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ignore="http://www.ignore.com"
              xmlns:view="clr-namespace:Hylasoft.OrdersGui.View"
-             xmlns:utils="clr-namespace:Hylasoft.OrdersGui.View.Utils"
              x:Class="Hylasoft.OrdersGui.MainPage"
              mc:Ignorable="d ignore"
-             d:DesignHeight="400" d:DesignWidth="1100"
-             >
+             d:DesignHeight="400" d:DesignWidth="1100" SizeChanged="OnSizeChanged" >
     <UserControl.Resources>
         <Storyboard x:Name="ToLod">
-            <DoubleAnimation Duration="0:0:0.25" To="-1000" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="LoadOrderDetailsView" d:IsOptimized="True"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadOrderManagerView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00.2">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Collapsed</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadOrderDetailsView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation x:Name="SlideAnimation" Duration="0:0:00.2"  To="{Binding ElementName=MainPageControl, Path=Width}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="LayoutRoot"  d:IsOptimized="True" />
         </Storyboard>
         <Storyboard x:Name="ToLom">
-            <!--            <DoubleAnimation Duration="0:0:0.25" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="LoadOrderManagerView" d:IsOptimized="True"/>-->
-            <DoubleAnimation Duration="0:0:0.25" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="LoadOrderDetailsView" d:IsOptimized="True"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadOrderManagerView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadOrderDetailsView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00.2">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Collapsed</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:00.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="LayoutRoot"  d:IsOptimized="True" />
         </Storyboard>
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Path="Main" Source="{StaticResource Locator}"/>
     </UserControl.DataContext>
-    <Grid x:Name="grid" Background="{StaticResource BackgroundBrush}">
+    <Grid x:Name="Rootgrid" Background="{StaticResource BackgroundBrush}" >
         <Grid x:Name="LayoutRoot" Margin="50,0">
-            <view:LoadOrderManager x:Name="LoadOrderManagerView" >
-                <view:LoadOrderManager.RenderTransform>
-                    <CompositeTransform/>
-                </view:LoadOrderManager.RenderTransform>
-            </view:LoadOrderManager>
+            <Grid.RenderTransform>
+                <CompositeTransform  TranslateX="10"/>
+            </Grid.RenderTransform>
+            <view:LoadOrderManager x:Name="LoadOrderManagerView" />
             <view:LoadOrderDetails x:Name="LoadOrderDetailsView" Visibility="Collapsed">
                 <view:LoadOrderDetails.RenderTransform>
-                    <CompositeTransform/>
+                    <CompositeTransform TranslateX="{Binding ElementName=MainPageControl, Path=Width}"/>
                 </view:LoadOrderDetails.RenderTransform>
             </view:LoadOrderDetails>
         </Grid>

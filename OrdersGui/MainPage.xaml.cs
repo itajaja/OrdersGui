@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
 using Hylasoft.OrdersGui.Messages;
 
@@ -11,16 +12,19 @@ namespace Hylasoft.OrdersGui
             InitializeComponent();
             Messenger.Default.Register<GoToLodMessage>(this, o =>
             {
-//                ToLod.Begin();
-                LoadOrderDetailsView.Visibility = Visibility.Visible;
-                LoadOrderManagerView.Visibility = Visibility.Collapsed;
+                SlideAnimation.To = -Width;
+                ToLod.Begin();
             });
             Messenger.Default.Register<GoToLomMessage>(this, o =>
             {
-//                ToLom.Begin();
-                LoadOrderDetailsView.Visibility = Visibility.Collapsed;
-                LoadOrderManagerView.Visibility = Visibility.Visible;
+                ToLom.Begin();
             });
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Width = ActualWidth;
+            SizeChanged -= OnSizeChanged;
         }
     }
 }

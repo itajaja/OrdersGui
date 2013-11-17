@@ -77,7 +77,18 @@
                     <!--                todo this should be shipref. Where do i take it?-->
                     <sdk:DataGridTextColumn Width="*" Binding="{Binding MethodOfDelivery}" />
                     <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}" />
-                    <sdk:DataGridTextColumn Binding="{Binding OrderStatus}" />
+                    <sdk:DataGridTextColumn Binding="{Binding OrderStatus}" >
+                        <sdk:DataGridTextColumn.CellStyle>
+                            <Style TargetType="sdk:DataGridCell">
+                                <Setter Property="Background" Value="{Binding Path=OrderStatus, Converter={StaticResource OrderStatusToBackground}}" />
+                            </Style>
+                        </sdk:DataGridTextColumn.CellStyle>
+                         <sdk:DataGridTextColumn.ElementStyle>
+                                <Style TargetType ="TextBlock">
+                                    <Setter Property="Foreground" Value="{Binding Path=OrderStatus, Converter={StaticResource OrderStatusToForeground}}" />
+                                </Style>
+                            </sdk:DataGridTextColumn.ElementStyle>
+                    </sdk:DataGridTextColumn>
                 </sdk:DataGrid.Columns>
             </sdk:DataGrid>
         </Border>

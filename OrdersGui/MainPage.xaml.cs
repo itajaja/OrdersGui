@@ -9,20 +9,16 @@ namespace Hylasoft.OrdersGui
         public MainPage()
         {
             InitializeComponent();
-            Messenger.Default.Register<GoToLodMessage>(this, o =>
-            {
-                SlideAnimation.To = -Width;
-                ToLod.Begin();
-            });
-            Messenger.Default.Register<GoToLomMessage>(this, o =>
-            {
-                ToLom.Begin();
-            });
+            Messenger.Default.Register<GoToLodMessage>(this, o => ToLod.Begin());
+            Messenger.Default.Register<GoToCreateOrderMessage>(this, o => ToCreate.Begin());
+            Messenger.Default.Register<GoToLomMessage>(this, o => ToLom.Begin());
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             Width = ActualWidth;
+            SlideAnimation1.To = -ActualWidth;
+            SlideAnimation2.To = -ActualWidth;
             SizeChanged -= OnSizeChanged;
         }
     }

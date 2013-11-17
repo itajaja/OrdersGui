@@ -36,6 +36,7 @@ namespace Hylasoft.OrdersGui.View
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
+            //todo this should be command
             Messenger.Default.Send(new GoToLodMessage{OrderId = 0}); //todo we don't like order id here, of course!
         }
 
@@ -58,6 +59,11 @@ namespace Hylasoft.OrdersGui.View
         private void CollapseFilters_Click(object sender, RoutedEventArgs e)
         {
             CloseFilter.Begin();
+        }
+
+        private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send(new GoToCreateOrderMessage()); //todo this should be command
         }
     }
 }

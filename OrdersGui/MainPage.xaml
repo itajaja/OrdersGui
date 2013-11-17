@@ -10,6 +10,13 @@
              d:DesignHeight="400" d:DesignWidth="1100" SizeChanged="OnSizeChanged" >
     <UserControl.Resources>
         <Storyboard x:Name="ToLod">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CreateOrderView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Collapsed</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadOrderManagerView" Storyboard.TargetProperty="(UIElement.Visibility)">
                 <DiscreteObjectKeyFrame KeyTime="0:0:00.2">
                     <DiscreteObjectKeyFrame.Value>
@@ -24,9 +31,40 @@
                     </DiscreteObjectKeyFrame.Value>
                 </DiscreteObjectKeyFrame>
             </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimation x:Name="SlideAnimation" Duration="0:0:00.2"  To="{Binding ElementName=MainPageControl, Path=Width}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="LayoutRoot"  d:IsOptimized="True" />
+            <DoubleAnimation x:Name="SlideAnimation1" Duration="0:0:00.2"  To="{Binding ElementName=MainPageControl, Path=Width}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="LayoutRoot"  d:IsOptimized="True" />
+        </Storyboard>
+        <Storyboard x:Name="ToCreate">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CreateOrderView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadOrderManagerView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00.2">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Collapsed</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadOrderDetailsView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Collapsed</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation x:Name="SlideAnimation2" Duration="0:0:00.2"  To="{Binding ElementName=MainPageControl, Path=Width}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="LayoutRoot"  d:IsOptimized="True" />
         </Storyboard>
         <Storyboard x:Name="ToLom">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CreateOrderView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00.2">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Collapsed</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadOrderManagerView" Storyboard.TargetProperty="(UIElement.Visibility)">
                 <DiscreteObjectKeyFrame KeyTime="0:0:00">
                     <DiscreteObjectKeyFrame.Value>
@@ -53,6 +91,11 @@
                 <CompositeTransform  TranslateX="10"/>
             </Grid.RenderTransform>
             <view:LoadOrderManager x:Name="LoadOrderManagerView" />
+            <view:CreateOrder x:Name="CreateOrderView" Visibility="Collapsed">
+                <view:CreateOrder.RenderTransform>
+                    <CompositeTransform TranslateX="{Binding ElementName=MainPageControl, Path=Width}"/>
+                </view:CreateOrder.RenderTransform>
+            </view:CreateOrder>
             <view:LoadOrderDetails x:Name="LoadOrderDetailsView" Visibility="Collapsed">
                 <view:LoadOrderDetails.RenderTransform>
                     <CompositeTransform TranslateX="{Binding ElementName=MainPageControl, Path=Width}"/>

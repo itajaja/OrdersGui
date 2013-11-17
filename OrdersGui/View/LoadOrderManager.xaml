@@ -48,7 +48,7 @@
                 <sdk:AutoCompleteBox Margin="5,0,10,0" Width="110" Text="{Binding OrderNoFilter, Mode=TwoWay}"/>
                 <Button Name="OrderStatusFilterButton" Content="{Binding OrderStatusFilter, Source={StaticResource Strings}}" Click="OrderStatusFilterButton_Click" />
                 <Button Name="DateFilterButton" Content="{Binding DateFilter, Source={StaticResource Strings}}" Click="DateFilterButton_Click" />
-                <Button Name="CreateOrderButton" Content="{Binding CreateOrder, Source={StaticResource Strings}}" />
+                <Button Name="CreateOrderButton" Content="{Binding CreateOrder, Source={StaticResource Strings}}" Click="CreateOrderButton_Click" />
                 <Button Name="ReportsButton" Content="{Binding Reports, Source={StaticResource Strings}}" />
                 <Button Name="PrintButton">
                     <Image Source="/OrdersGui;component/Resources/Images/Print.png" />

@@ -107,6 +107,7 @@
     <Compile Include="Model\Compartment.cs" />
     <Compile Include="Model\Container.cs" />
     <Compile Include="Model\Material.cs" />
+    <Compile Include="Model\OrderCompartment.cs" />
     <Compile Include="Model\OrderDetails.cs" />
     <Compile Include="Model\Service\DataService.cs" />
     <Compile Include="Model\Service\IDataService.cs" />

@@ -38,5 +38,24 @@ namespace Hylasoft.OrdersGui.View
         {
             Messenger.Default.Send(new GoToLodMessage(){OrderId = 0});
         }
+
+        private void OrderStatusFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenStatusFilter.Begin();
+            DateFilterGrid.Visibility = Visibility.Collapsed;
+            OrderStatusFilterGrid.Visibility = Visibility.Visible;
+        }
+
+        private void DateFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenDateFilter.Begin();
+            DateFilterGrid.Visibility = Visibility.Visible;
+            OrderStatusFilterGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void CollapseFilters_Click(object sender, RoutedEventArgs e)
+        {
+            CloseFilter.Begin();
+        }
     }
 }

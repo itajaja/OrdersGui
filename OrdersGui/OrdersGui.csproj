@@ -138,6 +138,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Utils\EnumList.cs" />
+    <Compile Include="Utils\TrulyObservableCollection.cs" />
     <Compile Include="ViewModel\LoadOrderDetailsVM.cs" />
     <Compile Include="ViewModel\LoadOrderManagerVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -148,7 +150,12 @@
     <Compile Include="View\LoadOrderManager.xaml.cs">
       <DependentUpon>LoadOrderManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Utils\Converters.cs" />
+    <Compile Include="View\Utils\BooleanToVisibilityConverter.cs" />
+    <Compile Include="View\Utils\OpcConnectionStatusToColorConverter.cs" />
+    <Compile Include="View\Utils\OrderStatusToBackgroundConverter.cs" />
+    <Compile Include="View\Utils\OrderStatusToForegroundConverter.cs" />
+    <Compile Include="View\Utils\SlomConnectionStatusToColorConverter.cs" />
+    <Compile Include="View\Utils\StatusToStringConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -233,6 +240,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Images\up.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.wsdl" />
     <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.xsd">

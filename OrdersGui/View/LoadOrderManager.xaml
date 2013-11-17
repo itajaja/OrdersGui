@@ -7,12 +7,27 @@
              mc:Ignorable="d ignore"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              DataContext="{Binding LoadOrderManagerVM, Source={StaticResource Locator}}"
-             d:DesignWidth="1000" d:DesignHeight="400" Loaded="LoadOrderManager_OnLoaded">
+             d:DesignWidth="1000" d:DesignHeight="600" Loaded="LoadOrderManager_OnLoaded">
+    <UserControl.Resources>
+        <Storyboard x:Name="OpenStatusFilter">
+            <DoubleAnimation Duration="0:0:.2" To="420" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+        </Storyboard>
+        <Storyboard x:Name="OpenDateFilter">
+            <DoubleAnimation Duration="0:0:.2" To="198" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+        </Storyboard>
+        <Storyboard x:Name="CloseFilter">
+            <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
+        </Storyboard>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto"/>
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <sdk:Label Style="{StaticResource TitleStyle}" Content="{Binding LoadOrderManagerTitle, Source={StaticResource Strings}}" />
@@ -23,46 +38,10 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel  Orientation="Horizontal">
-                <StackPanel.Resources>
-                    <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
-                        <Setter Property="Margin" Value="5,0" />
-                    </Style>
-                </StackPanel.Resources>
                 <sdk:Label Content="{Binding OrderNumberFilter, Source={StaticResource Strings}}" />
-                <sdk:AutoCompleteBox Margin="5,0" Width="110" Text="{Binding OrderNoFilter, Mode=TwoWay}"/>
-                <Button Name="OrderStatusFilterButton" >
-                    <StackPanel>
-                        <TextBlock Style="{x:Null}" Text="{Binding OrderStatusFilter, Source={StaticResource Strings}}" />
-                        <Popup IsOpen="{Binding ElementName=ToggleButtonStatus, Path=IsChecked, Mode=TwoWay}"  HorizontalOffset="-15" VerticalOffset="0">
-                            <Border BorderBrush="{Binding ElementName=ToggleButtonStatus, Path=BorderBrush}" Background="White" Padding="15" CornerRadius="10" Margin="0 15 0 0" BorderThickness="1">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Button Name="AllStatusesButton" Content="All"/>
-                                    <Button Name="ClearStatusesButton" Content="Clear"
-                                                Grid.Row="0" Grid.Column="1"/>
-                                    <ItemsControl ItemsSource="{Binding Path=Statuses}" Margin="0,5,0,0" Name="StatusesChecks" Grid.Row="1" Grid.ColumnSpan="2"
-                                                      Grid.Column="0">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <CheckBox Content="{Binding Converter={StaticResource statusToString}, Path=Status}" IsChecked="{Binding Mode=TwoWay, Path=IsChecked, UpdateSourceTrigger=Explicit}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </Grid>
-                            </Border>
-                        </Popup>
-                    </StackPanel>
-                </Button>
-                <Button Name="DateFilterButton" Content="{Binding DateFilter, Source={StaticResource Strings}}" />
+                <sdk:AutoCompleteBox Margin="5,0,10,0" Width="110" Text="{Binding OrderNoFilter, Mode=TwoWay}"/>
+                <Button Name="OrderStatusFilterButton" Content="{Binding OrderStatusFilter, Source={StaticResource Strings}}" Click="OrderStatusFilterButton_Click" />
+                <Button Name="DateFilterButton" Content="{Binding DateFilter, Source={StaticResource Strings}}" Click="DateFilterButton_Click" />
                 <Button Name="CreateOrderButton" Content="{Binding CreateOrder, Source={StaticResource Strings}}" />
                 <Button Name="ReportsButton" Content="{Binding Reports, Source={StaticResource Strings}}" />
                 <Button Name="PrintButton">
@@ -73,28 +52,73 @@
                 <Image Source="/OrdersGui;component/Resources/Images/Gear.png" />
             </Button>
         </Grid>
-        <sdk:DataGrid Grid.Row="2" AutoGenerateColumns="False" Name="OrdersGrid" ItemsSource="{Binding OrdersView}" IsReadOnly="True">
-            <sdk:DataGrid.Resources>
-                <Style TargetType="TextBlock" />
-            </sdk:DataGrid.Resources>
-            <sdk:DataGrid.Columns>
-                <sdk:DataGridTextColumn Binding="{Binding OrderNo}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding LoadRack.RackName}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding CustomerName}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding ScheduleDate, Mode=OneWay}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding ScheduleDate}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding StartDate}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding EndDate}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding OrderType}"/>
-                <!--                todo this should be shipref. Where do i take it?-->
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding MethodOfDelivery}"/>
-                <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}"/>
-                <sdk:DataGridTextColumn Binding="{Binding OrderStatus}"/>
-            </sdk:DataGrid.Columns>
+        <Border Grid.Row="2" Grid.RowSpan="2" BorderThickness="0,2,0,0" BorderBrush="{StaticResource DarkGrayBrush}">
+            <sdk:DataGrid  AutoGenerateColumns="False" Name="OrdersGrid"
+                          ItemsSource="{Binding OrdersView}" IsReadOnly="True">
+                <sdk:DataGrid.Resources>
+                    <Style TargetType="TextBlock" />
+                </sdk:DataGrid.Resources>
+                <sdk:DataGrid.Columns>
+                    <sdk:DataGridTextColumn Binding="{Binding OrderNo}" />
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding LoadRack.RackName}" />
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding CustomerName}" />
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}" />
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding ScheduleDate, Mode=OneWay}" />
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding ScheduleDate}" />
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding StartDate}" />
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding EndDate}" />
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding OrderType}" />
+                    <!--                todo this should be shipref. Where do i take it?-->
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding MethodOfDelivery}" />
+                    <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}" />
+                    <sdk:DataGridTextColumn Binding="{Binding OrderStatus}" />
+                </sdk:DataGrid.Columns>
+            </sdk:DataGrid>
+        </Border>
+        <Border Background="{StaticResource BackgroundBrush}" BorderBrush="{StaticResource DarkGrayBrush}"
+                BorderThickness="2,0,2,2" x:Name="FilterBorder" Height="0" Grid.Row="2" Width="300" 
+                HorizontalAlignment="Left" Margin="250,0,0,0">
+            <Border.Effect>
+                <DropShadowEffect Direction="270" BlurRadius="5" ShadowDepth="10" Color="{StaticResource BlackColor}"/>
+            </Border.Effect>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button Click="CollapseFilters_Click" HorizontalAlignment="Right">
+                    <Image Source="../Resources/Images/up.png"/>
+                </Button>
+                <StackPanel Grid.Row="0" Grid.RowSpan="2" Name="DateFilterGrid" >
+                    <sdk:Calendar SelectedDate="{Binding DateFilter, Mode=TwoWay}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Today" HorizontalAlignment="Left" Command="{Binding SetTodayFilterCommand}"/>
+                        <Button Content="Clear" HorizontalAlignment="Left" Command="{Binding ClearDateFilterCommand}"/>
+                    </StackPanel>
+                </StackPanel>
+                <Grid Grid.Row="0" Grid.RowSpan="2" Name="OrderStatusFilterGrid" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ItemsControl ItemsSource="{Binding Path=OrderStatusFilter}" Margin="0,5,0,0" Name="StatusesChecks">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="{Binding Status, Converter={StaticResource OrderStatusToString}}" IsChecked="{Binding Mode=TwoWay, Path=IsChecked}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <Button Name="AllStatusesButton" Content="All" Command="{Binding AddAllStatusFilterCommand}"/>
+                        <Button Name="ClearStatusesButton" Content="Clear" Command="{Binding ClearStatusFilerCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
 
-        </sdk:DataGrid>
-        <Grid Grid.Row="3" Name="FooterGrid" Margin="0,10,0,0">
+        <Grid Grid.Row="4" Name="FooterGrid" Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition />

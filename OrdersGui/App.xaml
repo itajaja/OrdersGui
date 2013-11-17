@@ -14,13 +14,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}"></Style>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" />
             <Style TargetType="TextBlock" BasedOn="{StaticResource BasicTextBlockStyle}" />
-            <Style TargetType="sdk:Label" BasedOn="{StaticResource BasicLabelStyle}"></Style>
+            <Style TargetType="sdk:Label" BasedOn="{StaticResource BasicLabelStyle}" />
+            <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxStyle}" />
             <res:Strings_en_us x:Key="Strings"/>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <utils:OpcConnectionStatusToColorConverter x:Key="OpcConnectionStatusToColor" />
             <utils:SlomConnectionStatusToColorConverter x:Key="SlomConnectionStatusToColor" />
+            <utils:OrderStatusToBackgroundConverter x:Key="OrderStatusToBackground" />
+            <utils:OrderStatusToForegroundConverter x:Key="OrderStatusToForeground" />
+            <utils:OrderStatusToStringConverter x:Key="OrderStatusToString" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

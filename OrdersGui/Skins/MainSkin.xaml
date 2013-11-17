@@ -22,6 +22,10 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
     </Style>
+    <Style TargetType="CheckBox" x:Key="CheckBoxStyle">
+        <Setter Property="FontFamily" Value="Segoe UI Light"/>
+        <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+    </Style>
     <Style TargetType="sdk:Label" x:Key="BasicLabelStyle">
 		<Setter Property="FontFamily" Value="Segoe UI Light"/>
         <Setter Property="FontSize" Value="20" />

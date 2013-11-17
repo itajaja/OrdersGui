@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
+using Hylasoft.OrdersGui.Utils;
 
 namespace Hylasoft.OrdersGui.ViewModel
 {
@@ -34,25 +38,15 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("SystemInfo", ref _systemInfo, value); }
         }
 
-        private IList<Order> _orders;
-        public IList<Order> Orders
+        private ObservableCollection<Order> _orders;
+        public ObservableCollection<Order> Orders
         {
             get { return _orders; }
             set
             {
                 Set("Orders", ref _orders, value);
                 OrdersView = new PagedCollectionView(_orders);
-                OrdersView.Filter = o =>
-                {
-                    var order = (Order)o;
-                    if (!order.OrderNo.Contains(OrderNoFilter??""))
-                        return false;
-                    if (!_orderStatusFilter.Contains(order.OrderStatus))
-                        return false;
-                    if (DateFilter.HasValue && DateFilter.Value.Date.Equals(order.ScheduleDate.Date))
-                        return false;
-                    return true;
-                };
+                OrdersView.Filter = OrderFilter;
             }
         }
 
@@ -70,23 +64,42 @@ namespace Hylasoft.OrdersGui.ViewModel
             set
             {
                 Set("OrderNoFilter", ref _orderNoFilter, value);
-                OrdersView.Refresh();
+                if (OrdersView != null)
+                    OrdersView.Refresh();
             }
         }
 
-        private IList<OrderStatus> _orderStatusFilter;
-        public IList<OrderStatus> OrderStatusFilter
+        private TrulyObservableCollection<OrderStatusCheck> _orderStatusFilter;
+        public TrulyObservableCollection<OrderStatusCheck> OrderStatusFilter
         {
             get { return _orderStatusFilter; }
-            set { Set("OrderStatusFilter", ref _orderStatusFilter, value); }
+            set
+            {
+                Set("OrderStatusFilter", ref _orderStatusFilter, value);
+                OrderStatusFilter.CollectionChanged += (sender, args) =>
+                {
+                    if (OrdersView != null)
+                        OrdersView.Refresh();
+                };
+            }
         }
 
         private DateTime? _dateFilter;
-        public DateTime? DateFilter
+        public DateTime DateFilter
         {
-            get { return _dateFilter; }
-            set { Set("DateFilter", ref _dateFilter, value); }
+            get { return _dateFilter??DateTime.Today; }
+            set
+            {
+                Set("DateFilter", ref _dateFilter, value);
+                if (OrdersView != null)
+                    OrdersView.Refresh();
+            }
         }
+
+        public RelayCommand ClearStatusFilerCommand { get; private set; }
+        public RelayCommand AddAllStatusFilterCommand { get; private set; }
+        public RelayCommand SetTodayFilterCommand { get; private set; }
+        public RelayCommand ClearDateFilterCommand { get; private set; }
 
         public LoadOrderManagerVM(IDataService ds)
         {
@@ -128,13 +141,17 @@ namespace Hylasoft.OrdersGui.ViewModel
                         {
                             if (error != null)
                                 throw error;
-                            Orders = item; //todo maybe add only the new ones?
+                            Orders = new ObservableCollection<Order>(item); //todo maybe add only the new ones?
                         }
                         catch (Exception e)
                         {
                             HandleException(e);
                         }
                     });
+                OrderStatusFilter = new TrulyObservableCollection<OrderStatusCheck>();
+                InitializeCommands();
+                foreach (var status in EnumList.GetEnumValues<OrderStatus>())
+                    OrderStatusFilter.Add(new OrderStatusCheck{Status = status, IsChecked = true});
                 var updateTimer = new DispatcherTimer();
                 updateTimer.Interval = TimeSpan.FromSeconds(5); //todo resourcify
                 updateTimer.Tick += Reload;
@@ -158,6 +175,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                         if (error != null) throw error;
                         _sessionData.OpcStatus = item;
                         _sessionData.SlomStatus = SlomConnectionStatus.Connected;
+                        RefreshCanExecuteCommands();
                     }
                     catch (Exception e)
                     {
@@ -179,7 +197,76 @@ namespace Hylasoft.OrdersGui.ViewModel
                 SlomStatus = SlomConnectionStatus.Disconnected,
                 User = User.User0
             };
-            throw exception;
+            throw new Exception(exception.Message,exception);
+        }
+
+        private bool OrderFilter(object o)
+        {
+            var order = (Order)o;
+            if (!order.OrderNo.Contains(OrderNoFilter ?? ""))
+                return false;
+            if (_orderStatusFilter != null && _orderStatusFilter.All(oc => !oc.IsChecked || oc.Status != order.OrderStatus))
+                return false;
+            if (_dateFilter.HasValue && !_dateFilter.Value.Date.Equals(order.ScheduleDate.Date))
+                return false;
+            return true;
+        }
+
+        private void InitializeCommands()
+        {
+            ClearStatusFilerCommand = new RelayCommand(() =>
+            {
+                foreach (var status in OrderStatusFilter)
+                    status.IsChecked = false;
+            }, CanExecute);
+            AddAllStatusFilterCommand = new RelayCommand(() =>
+            {
+                foreach (var status in OrderStatusFilter)
+                    status.IsChecked = true;
+            }, CanExecute);
+            ClearDateFilterCommand = new RelayCommand(() =>
+            {
+                _dateFilter = null;
+                if (OrdersView != null)
+                    OrdersView.Refresh();
+            }, CanExecute);
+            SetTodayFilterCommand = new RelayCommand(() =>
+            {
+                DateFilter = DateTime.Today;
+            }, CanExecute);
+            _commandList = new List<RelayCommand>{
+                ClearStatusFilerCommand, AddAllStatusFilterCommand,
+                SetTodayFilterCommand, ClearDateFilterCommand
+            };
+        }
+
+        private List<RelayCommand> _commandList; 
+        private void RefreshCanExecuteCommands()
+        {
+            foreach (var command in _commandList.Where(c => c!=null))
+                command.RaiseCanExecuteChanged();
+        }
+
+        private bool CanExecute()
+        {
+            return SessionData.SlomStatus == SlomConnectionStatus.Connected;
+        }
+    }
+
+    public class OrderStatusCheck : NotifyPropertyChanged
+    {
+        private bool _isChecked;
+        public bool IsChecked
+        {
+            get { return _isChecked; }
+            set { SetField(ref _isChecked, value, "IsChecked"); }
+        }
+
+        private OrderStatus _status;
+        public OrderStatus Status
+        {
+            get { return _status; }
+            set { SetField(ref _status, value, "Status"); }
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using GalaSoft.MvvmLight.Messaging;
-using Hylasoft.OrdersGui.Messages;
 
 namespace Hylasoft.OrdersGui.View
 {
@@ -15,11 +13,6 @@ namespace Hylasoft.OrdersGui.View
         public CreateOrder()
         {
             InitializeComponent();
-        }
-
-        private void ButtonBack_Click(object sender, RoutedEventArgs e)
-        {
-            Messenger.Default.Send(new GoToLomMessage());
         }
     }
 }

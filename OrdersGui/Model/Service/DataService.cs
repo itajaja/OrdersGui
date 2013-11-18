@@ -24,7 +24,6 @@ namespace Hylasoft.OrdersGui.Model.Service
         //        private readonly IList<Container> _containers; 
         //        private readonly IList<Compartment> _compartments;
 
-
         public DataService()
         {
             _sessionData = new SessionData();

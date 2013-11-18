@@ -1,15 +1,19 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Hylasoft.OrdersGui.Model.Service;
 
 namespace Hylasoft.OrdersGui.Model
 {
-    public class Order : NotifyPropertyChanged
+    public class Order : NotifyPropertyChanged, IEquatable<Order>
     {
         private string _carrierInstruction;
         public string CarrierInstruction
         {
             get { return _carrierInstruction; }
-            set { SetField(ref _carrierInstruction, value, "CarrierInstruction"); }
+            set
+            {
+                SetField(ref _carrierInstruction, value, "CarrierInstruction");
+            }
         }
 
         private string _carrierName;
@@ -143,7 +147,7 @@ namespace Hylasoft.OrdersGui.Model
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _orderId == other._orderId;
+            return _orderId != 0 && _orderId == other._orderId;
         }
 
         public static bool operator ==(Order left, Order right)

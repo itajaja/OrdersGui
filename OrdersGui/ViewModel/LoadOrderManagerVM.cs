@@ -104,51 +104,27 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         public LoadOrderManagerVM(IDataService ds)
         {
+//            DispatcherHelper.Initialize();
             try
             {
                 _dataService = ds;
                 _dataService.GetSessionData(
                     (item, error) =>
                     {
-                        try
-                        {
-                            if (error != null) throw error;
-                            DispatcherHelper.CheckBeginInvokeOnUI(() => SessionData = item);
-                        }
-                        catch (Exception e)
-                        {
-                            MessageBox.Show("Unhandled Error when opening LoadOrderManager. Please Restart the application.\n\n" + e);
-                            HandleException(e);
-                        }
+                        HandleException(error);
+                        DispatcherHelper.CheckBeginInvokeOnUI(() => SessionData = item);
                     });
                 _dataService.GetSystemData(
                     (item, error) =>
                     {
-                        try
-                        {
-                            if (error != null) throw error;
-                            DispatcherHelper.CheckBeginInvokeOnUI(() => SystemInfo = item);
-                        }
-                        catch (Exception e)
-                        {
-                            MessageBox.Show("Unhandled Error when opening LoadOrderManager. Please Restart the application.\n\n" + e);
-                            HandleException(e);
-                        }
+                        HandleException(error);
+                        DispatcherHelper.CheckBeginInvokeOnUI(() => SystemInfo = item);
                     });
                 _dataService.GetOrders(
                     (item, error) =>
                     {
-                        try
-                        {
-                            if (error != null)
-                                throw error;
-                            DispatcherHelper.CheckBeginInvokeOnUI(() => Orders = new ObservableCollection<Order>(item));
-                        }
-                        catch (Exception e)
-                        {
-                            MessageBox.Show("Unhandled Error when opening LoadOrderManager. Please Restart the application.\n\n" + e);
-                            HandleException(e);
-                        }
+                        HandleException(error);
+                        DispatcherHelper.CheckBeginInvokeOnUI(() => Orders = new ObservableCollection<Order>(item));
                     });
                 OrderStatusFilter = new TrulyObservableCollection<OrderStatusCheck>();
                 InitializeCommands();

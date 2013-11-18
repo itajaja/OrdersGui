@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Model;

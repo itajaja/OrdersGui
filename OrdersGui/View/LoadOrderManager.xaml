@@ -10,12 +10,40 @@
              d:DesignWidth="1000" d:DesignHeight="600" Loaded="LoadOrderManager_OnLoaded">
     <UserControl.Resources>
         <Storyboard x:Name="OpenStatusFilter">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DateFilterGrid" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:.2">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Collapsed</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OrderStatusFilterGrid" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Duration="0:0:.2" To="420" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrderStatusFilterGrid" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="DateFilterGrid" d:IsOptimized="True"/>
         </Storyboard>
         <Storyboard x:Name="OpenDateFilter">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DateFilterGrid" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:00">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OrderStatusFilterGrid" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0:0:.2">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Collapsed</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Duration="0:0:.2" To="198" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:.2" To="1" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="FilterBorder" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:.2" To="0" Storyboard.TargetProperty="(FrameworkElement.Opacity)" Storyboard.TargetName="OrderStatusFilterGrid" d:IsOptimized="True"/>

@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
 using Hylasoft.OrdersGui.Utils;
@@ -112,7 +113,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                         try
                         {
                             if (error != null) throw error;
-                            SessionData = item;
+                            DispatcherHelper.CheckBeginInvokeOnUI(() => SessionData = item);
                         }
                         catch (Exception e)
                         {
@@ -126,7 +127,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                         try
                         {
                             if (error != null) throw error;
-                            SystemInfo = item;
+                            DispatcherHelper.CheckBeginInvokeOnUI(() => SystemInfo = item);
                         }
                         catch (Exception e)
                         {
@@ -141,7 +142,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                         {
                             if (error != null)
                                 throw error;
-                            Orders = new ObservableCollection<Order>(item); //todo maybe add only the new ones?
+                            DispatcherHelper.CheckBeginInvokeOnUI(() => Orders = new ObservableCollection<Order>(item));
                         }
                         catch (Exception e)
                         {

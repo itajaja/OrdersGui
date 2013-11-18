@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
 using Hylasoft.OrdersGui.Utils;
@@ -56,18 +57,9 @@ namespace Hylasoft.OrdersGui.ViewModel
         public CreateOrderVM(IDataService ds)
         {
             _dataService = ds;
-            _dataService.GetMaterials(
-                (item, error) =>
-                {
-                    if (error != null) throw error;
-                    Materials = item;
-                });
-//            _dataService.GetSapTanks(
-//                (item, error) =>
-//                {
-//                    if (error != null) throw error;
-//                    Tanks = item;
-//                });
+            //todo need a smart way to handle errors
+            _dataService.GetMaterials((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Materials = item));
+            _dataService.GetSapTanks((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Tanks = item));
             Cleanup();
         }
 

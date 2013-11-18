@@ -18,8 +18,8 @@ namespace Hylasoft.OrdersGui
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            RootVisual = new MainPage();
             DispatcherHelper.Initialize();
+            RootVisual = new MainPage();
         }
 
         private void Application_Exit(object sender, EventArgs e)

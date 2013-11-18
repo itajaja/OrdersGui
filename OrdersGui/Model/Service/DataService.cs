@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Hylasoft.OrdersGui.EventMonitor;
 using Hylasoft.OrdersGui.NonTransactionalFunctions;
 using Hylasoft.OrdersGui.Resources;
@@ -34,10 +35,61 @@ namespace Hylasoft.OrdersGui.Model.Service
             _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
             _emClient = new EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
             _ntfClient = new NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
-            GetSystemData((a, b) => { });
-            GetRacks((a, b) => GetArms((c, d) => { }));
-            GetMaterials((a,b) => GetTanks((c, d) => GetSapTanks((e, f) => { })));
-//            GetContainers((a, b) => GetCompartments((c, d) => { }));
+            Initialize();
+        }
+
+        private readonly AutoResetEvent _systemInfoWaiter = new AutoResetEvent(false);
+        private readonly AutoResetEvent _racksWaiter = new AutoResetEvent(false);
+        private readonly AutoResetEvent _armsWaiter = new AutoResetEvent(false);
+        private readonly AutoResetEvent _tanksWaiter = new AutoResetEvent(false);
+        private readonly AutoResetEvent _sapTanksWaiter = new AutoResetEvent(false);
+        private readonly AutoResetEvent _containersWaiter = new AutoResetEvent(false);
+        private readonly AutoResetEvent _compartmentsWaiter = new AutoResetEvent(false);
+        private readonly AutoResetEvent _materialsWaiter = new AutoResetEvent(false);
+        private void Initialize()
+        {
+            _ntfClient.GetSystemInfoCompleted += (sender, args) =>
+            {
+                CheckAndRethrow(args.Error);
+                _systemInfo = ConvertSystemInfo(args.Result);
+                _systemInfoWaiter.Set();
+            };
+            _ntfClient.GetSystemInfoAsync();
+            _racks = new List<Rack>{
+                new Rack{RackId = 0, RackName = "None", RackStatus = 0},
+                new Rack{RackId = 1, RackName = "North", RackStatus = 0},
+                new Rack{RackId = 2, RackName = "South", RackStatus = 0},
+                new Rack{RackId = 3, RackName = "East", RackStatus = 0}};
+            _racksWaiter.Set();
+            _ntfClient.getLoadRackArmsCompleted += (sender, args) =>
+            {
+                CheckAndRethrow(args.Error);
+                _arms = ConvertArms(args.Result);
+                _armsWaiter.Set();
+            };
+            _ntfClient.getLoadRackArmsAsync();
+            _ntfClient.GetMaterialsCompleted += (sender, args) =>
+            {
+                CheckAndRethrow(args.Error);
+                _materials = ConvertMaterials(args.Result);
+                _materialsWaiter.Set();
+                _ntfClient.GetWinblendTanksCompleted += (sender2, args2) =>
+                {
+                    CheckAndRethrow(args.Error);
+                    _tanks = ConvertTanks(args2.Result);
+                    _tanksWaiter.Set();
+                };
+                _ntfClient.GetWinblendTanksAsync();
+                _ntfClient.GetSapTanksCompleted += (sender2, args2) =>
+                {
+                    CheckAndRethrow(args.Error);
+                    _sapTanks = ConvertTanks(args2.Result);
+                    _sapTanksWaiter.Set();
+                };
+                _ntfClient.GetSapTanksAsync();
+            };
+            _ntfClient.GetMaterialsAsync();
+            //            GetContainers((a, b) => GetCompartments((c, d) => { }));
         }
 
         public void GetSessionData(Action<SessionData, Exception> callback)
@@ -47,66 +99,29 @@ namespace Hylasoft.OrdersGui.Model.Service
 
         public void GetSystemData(Action<SystemInfo, Exception> callback)
         {
-            if (_systemInfo != null)
+            Task.Factory.StartNew(() =>
             {
+                _systemInfoWaiter.WaitOne();
                 callback(_systemInfo, null);
-                return;
-            }
-            _ntfClient.GetSystemInfoCompleted += (sender, args) =>
-            {
-                try
-                {
-                    CheckAndRethrow(args.Error);
-                    _systemInfo = ConvertSystemInfo(args.Result);
-                    callback(_systemInfo, null);
-                }
-                catch
-                (Exception e)
-                {
-                    callback(null, e);
-                }
-            };
-            _ntfClient.GetSystemInfoAsync();
+            });
         }
 
         public void GetRacks(Action<IList<Rack>, Exception> callback)
         {
-            if (_racks != null)
+            Task.Factory.StartNew(() =>
             {
+                _racksWaiter.WaitOne();
                 callback(_racks, null);
-                return;
-            }
-            _racks = new List<Rack>{
-                new Rack{RackId = 0, RackName = "None", RackStatus = 0},
-                new Rack{RackId = 1, RackName = "North", RackStatus = 0},
-                new Rack{RackId = 2, RackName = "South", RackStatus = 0},
-                new Rack{RackId = 3, RackName = "East", RackStatus = 0}
-            };
-            callback(_racks, null);
+            });
         }
 
         public void GetArms(Action<IList<Arm>, Exception> callback)
         {
-            if (_arms != null)
+            Task.Factory.StartNew(() =>
             {
+                _systemInfoWaiter.WaitOne();
                 callback(_arms, null);
-                return;
-            }
-            _ntfClient.getLoadRackArmsCompleted += (sender, args) =>
-            {
-                try
-                {
-                    CheckAndRethrow(args.Error);
-                    _arms = ConvertArms(args.Result);
-                    callback(_arms, null);
-                }
-                catch
-                (Exception e)
-                {
-                    callback(null, e);
-                }
-            };
-            _ntfClient.getLoadRackArmsAsync();
+            });
         }
 
         public void GetOrders(Action<IList<Order>, Exception> callback)
@@ -151,77 +166,31 @@ namespace Hylasoft.OrdersGui.Model.Service
             _emClient.GetOpcServerStateAsync();
         }
 
-
         public void GetMaterials(Action<IList<Material>, Exception> callback)
         {
-            if (_materials != null)
+            Task.Factory.StartNew(() =>
             {
+                _materialsWaiter.WaitOne();
                 callback(_materials, null);
-                return;
-            }
-            _ntfClient.GetMaterialsCompleted += (sender, args) =>
-            {
-                try
-                {
-                    CheckAndRethrow(args.Error);
-                    _materials = ConvertMaterials(args.Result);
-                    callback(_materials, null);
-                }
-                catch
-                (Exception e)
-                {
-                    callback(null, e);
-                }
-            };
-            _ntfClient.GetMaterialsAsync();
+            });
         }
 
         public void GetTanks(Action<IList<Tank>, Exception> callback)
         {
-            if (_tanks != null)
+            Task.Factory.StartNew(() =>
             {
+                _tanksWaiter.WaitOne();
                 callback(_tanks, null);
-                return;
-            }
-            _ntfClient.GetWinblendTanksCompleted += (sender, args) =>
-            {
-                try
-                {
-                    CheckAndRethrow(args.Error);
-                    _tanks = ConvertTanks(args.Result);
-                    callback(_tanks, null);
-                }
-                catch
-                (Exception e)
-                {
-                    callback(null, e);
-                }
-            };
-            _ntfClient.GetWinblendTanksAsync();
+            });
         }
 
         public void GetSapTanks(Action<IList<Tank>, Exception> callback)
         {
-            if (_sapTanks != null)
+            Task.Factory.StartNew(() =>
             {
+                _sapTanksWaiter.WaitOne();
                 callback(_sapTanks, null);
-                return;
-            }
-            _ntfClient.GetSapTanksCompleted += (sender, args) =>
-            {
-                try
-                {
-                    CheckAndRethrow(args.Error);
-                    _sapTanks = ConvertTanks(args.Result);
-                    callback(_sapTanks, null);
-                }
-                catch
-                (Exception e)
-                {
-                    callback(null, e);
-                }
-            };
-            _ntfClient.GetSapTanksAsync();
+            });
         }
 
         public void GetCompartments(Action<IList<Compartment>, Exception> callback)

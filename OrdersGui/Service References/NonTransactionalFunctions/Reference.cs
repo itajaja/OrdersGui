@@ -546,6 +546,141 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Tank", Namespace="http://schemas.datacontract.org/2004/07/EventMonitorService")]
+    public partial class Tank : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private double APIGravityField;
+        
+        private int AvailabilityStatusField;
+        
+        private string MaterialCodeField;
+        
+        private int MaterialIdField;
+        
+        private string SapTankNameField;
+        
+        private int TankIdField;
+        
+        private string TankNameField;
+        
+        private bool isVisibleField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double APIGravity {
+            get {
+                return this.APIGravityField;
+            }
+            set {
+                if ((this.APIGravityField.Equals(value) != true)) {
+                    this.APIGravityField = value;
+                    this.RaisePropertyChanged("APIGravity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int AvailabilityStatus {
+            get {
+                return this.AvailabilityStatusField;
+            }
+            set {
+                if ((this.AvailabilityStatusField.Equals(value) != true)) {
+                    this.AvailabilityStatusField = value;
+                    this.RaisePropertyChanged("AvailabilityStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MaterialCode {
+            get {
+                return this.MaterialCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MaterialCodeField, value) != true)) {
+                    this.MaterialCodeField = value;
+                    this.RaisePropertyChanged("MaterialCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MaterialId {
+            get {
+                return this.MaterialIdField;
+            }
+            set {
+                if ((this.MaterialIdField.Equals(value) != true)) {
+                    this.MaterialIdField = value;
+                    this.RaisePropertyChanged("MaterialId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SapTankName {
+            get {
+                return this.SapTankNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SapTankNameField, value) != true)) {
+                    this.SapTankNameField = value;
+                    this.RaisePropertyChanged("SapTankName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TankId {
+            get {
+                return this.TankIdField;
+            }
+            set {
+                if ((this.TankIdField.Equals(value) != true)) {
+                    this.TankIdField = value;
+                    this.RaisePropertyChanged("TankId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TankName {
+            get {
+                return this.TankNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TankNameField, value) != true)) {
+                    this.TankNameField = value;
+                    this.RaisePropertyChanged("TankName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool isVisible {
+            get {
+                return this.isVisibleField;
+            }
+            set {
+                if ((this.isVisibleField.Equals(value) != true)) {
+                    this.isVisibleField = value;
+                    this.RaisePropertyChanged("isVisible");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LoadOrderDetails", Namespace="http://schemas.datacontract.org/2004/07/EventMonitorService")]
     public partial class LoadOrderDetails : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -2464,126 +2599,6 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Tank", Namespace="http://schemas.datacontract.org/2004/07/EventMonitorService")]
-    public partial class Tank : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private double APIGravityField;
-        
-        private int AvailabilityStatusField;
-        
-        private string MaterialCodeField;
-        
-        private int MaterialIdField;
-        
-        private int TankIdField;
-        
-        private string TankNameField;
-        
-        private bool isVisibleField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double APIGravity {
-            get {
-                return this.APIGravityField;
-            }
-            set {
-                if ((this.APIGravityField.Equals(value) != true)) {
-                    this.APIGravityField = value;
-                    this.RaisePropertyChanged("APIGravity");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int AvailabilityStatus {
-            get {
-                return this.AvailabilityStatusField;
-            }
-            set {
-                if ((this.AvailabilityStatusField.Equals(value) != true)) {
-                    this.AvailabilityStatusField = value;
-                    this.RaisePropertyChanged("AvailabilityStatus");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MaterialCode {
-            get {
-                return this.MaterialCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MaterialCodeField, value) != true)) {
-                    this.MaterialCodeField = value;
-                    this.RaisePropertyChanged("MaterialCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int MaterialId {
-            get {
-                return this.MaterialIdField;
-            }
-            set {
-                if ((this.MaterialIdField.Equals(value) != true)) {
-                    this.MaterialIdField = value;
-                    this.RaisePropertyChanged("MaterialId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int TankId {
-            get {
-                return this.TankIdField;
-            }
-            set {
-                if ((this.TankIdField.Equals(value) != true)) {
-                    this.TankIdField = value;
-                    this.RaisePropertyChanged("TankId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TankName {
-            get {
-                return this.TankNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TankNameField, value) != true)) {
-                    this.TankNameField = value;
-                    this.RaisePropertyChanged("TankName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool isVisible {
-            get {
-                return this.isVisibleField;
-            }
-            set {
-                if ((this.isVisibleField.Equals(value) != true)) {
-                    this.isVisibleField = value;
-                    this.RaisePropertyChanged("isVisible");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="NonTransactionalFunctions.INonTransactionalFunctions")]
     public interface INonTransactionalFunctions {
@@ -2599,6 +2614,12 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
         System.IAsyncResult BegingetLoadRackArms(System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.LoadRackArm> EndgetLoadRackArms(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/INonTransactionalFunctions/GetSapTanks", ReplyAction="http://tempuri.org/INonTransactionalFunctions/GetSapTanksResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hylasoft.OrdersGui.NonTransactionalFunctions.UserException), Action="http://tempuri.org/INonTransactionalFunctions/GetSapTanksUserExceptionFault", Name="UserException", Namespace="http://schemas.datacontract.org/2004/07/EventMonitorService")]
+        System.IAsyncResult BeginGetSapTanks(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.Tank> EndGetSapTanks(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/INonTransactionalFunctions/GetFinishedProducts", ReplyAction="http://tempuri.org/INonTransactionalFunctions/GetFinishedProductsResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Hylasoft.OrdersGui.NonTransactionalFunctions.UserException), Action="http://tempuri.org/INonTransactionalFunctions/GetFinishedProductsUserExceptionFau" +
@@ -2749,6 +2770,25 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.LoadRackArm>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetSapTanksCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetSapTanksCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.Tank> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.Tank>)(this.results[0]));
             }
         }
     }
@@ -3054,6 +3094,12 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
         
         private System.Threading.SendOrPostCallback ongetLoadRackArmsCompletedDelegate;
         
+        private BeginOperationDelegate onBeginGetSapTanksDelegate;
+        
+        private EndOperationDelegate onEndGetSapTanksDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetSapTanksCompletedDelegate;
+        
         private BeginOperationDelegate onBeginGetFinishedProductsDelegate;
         
         private EndOperationDelegate onEndGetFinishedProductsDelegate;
@@ -3207,6 +3253,8 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
         
         public event System.EventHandler<getLoadRackArmsCompletedEventArgs> getLoadRackArmsCompleted;
         
+        public event System.EventHandler<GetSapTanksCompletedEventArgs> GetSapTanksCompleted;
+        
         public event System.EventHandler<GetFinishedProductsCompletedEventArgs> GetFinishedProductsCompleted;
         
         public event System.EventHandler<getLoadOrderDetailsCompletedEventArgs> getLoadOrderDetailsCompleted;
@@ -3329,6 +3377,50 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
                 this.ongetLoadRackArmsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OngetLoadRackArmsCompleted);
             }
             base.InvokeAsync(this.onBegingetLoadRackArmsDelegate, null, this.onEndgetLoadRackArmsDelegate, this.ongetLoadRackArmsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Hylasoft.OrdersGui.NonTransactionalFunctions.INonTransactionalFunctions.BeginGetSapTanks(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetSapTanks(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.Tank> Hylasoft.OrdersGui.NonTransactionalFunctions.INonTransactionalFunctions.EndGetSapTanks(System.IAsyncResult result) {
+            return base.Channel.EndGetSapTanks(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetSapTanks(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((Hylasoft.OrdersGui.NonTransactionalFunctions.INonTransactionalFunctions)(this)).BeginGetSapTanks(callback, asyncState);
+        }
+        
+        private object[] OnEndGetSapTanks(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.Tank> retVal = ((Hylasoft.OrdersGui.NonTransactionalFunctions.INonTransactionalFunctions)(this)).EndGetSapTanks(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetSapTanksCompleted(object state) {
+            if ((this.GetSapTanksCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetSapTanksCompleted(this, new GetSapTanksCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetSapTanksAsync() {
+            this.GetSapTanksAsync(null);
+        }
+        
+        public void GetSapTanksAsync(object userState) {
+            if ((this.onBeginGetSapTanksDelegate == null)) {
+                this.onBeginGetSapTanksDelegate = new BeginOperationDelegate(this.OnBeginGetSapTanks);
+            }
+            if ((this.onEndGetSapTanksDelegate == null)) {
+                this.onEndGetSapTanksDelegate = new EndOperationDelegate(this.OnEndGetSapTanks);
+            }
+            if ((this.onGetSapTanksCompletedDelegate == null)) {
+                this.onGetSapTanksCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetSapTanksCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetSapTanksDelegate, null, this.onEndGetSapTanksDelegate, this.onGetSapTanksCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4157,6 +4249,18 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
             public System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.LoadRackArm> EndgetLoadRackArms(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.LoadRackArm> _result = ((System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.LoadRackArm>)(base.EndInvoke("getLoadRackArms", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetSapTanks(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetSapTanks", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.Tank> EndGetSapTanks(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.Tank> _result = ((System.Collections.ObjectModel.ObservableCollection<Hylasoft.OrdersGui.NonTransactionalFunctions.Tank>)(base.EndInvoke("GetSapTanks", _args, result)));
                 return _result;
             }
             

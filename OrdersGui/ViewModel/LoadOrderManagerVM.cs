@@ -116,8 +116,8 @@ namespace Hylasoft.OrdersGui.ViewModel
                         }
                         catch (Exception e)
                         {
-                            HandleException(e);
                             MessageBox.Show("Unhandled Error when opening LoadOrderManager. Please Restart the application.\n\n" + e);
+                            HandleException(e);
                         }
                     });
                 _dataService.GetSystemData(
@@ -130,8 +130,8 @@ namespace Hylasoft.OrdersGui.ViewModel
                         }
                         catch (Exception e)
                         {
-                            HandleException(e);
                             MessageBox.Show("Unhandled Error when opening LoadOrderManager. Please Restart the application.\n\n" + e);
+                            HandleException(e);
                         }
                     });
                 _dataService.GetOrders(
@@ -145,6 +145,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                         }
                         catch (Exception e)
                         {
+                            MessageBox.Show("Unhandled Error when opening LoadOrderManager. Please Restart the application.\n\n" + e);
                             HandleException(e);
                         }
                     });
@@ -160,8 +161,8 @@ namespace Hylasoft.OrdersGui.ViewModel
             }
             catch (Exception e)
             {
-                HandleException(e);
                 MessageBox.Show("Unhandled Error when opening LoadOrderManager. Please Restart the application.\n\n" + e);
+                HandleException(e);
             }
         }
 

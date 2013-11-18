@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using GalaSoft.MvvmLight;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
@@ -55,6 +56,18 @@ namespace Hylasoft.OrdersGui.ViewModel
         public CreateOrderVM(IDataService ds)
         {
             _dataService = ds;
+            _dataService.GetMaterials(
+                (item, error) =>
+                {
+                    if (error != null) throw error;
+                    Materials = item;
+                });
+//            _dataService.GetSapTanks(
+//                (item, error) =>
+//                {
+//                    if (error != null) throw error;
+//                    Tanks = item;
+//                });
             Cleanup();
         }
 
@@ -68,7 +81,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                 new OrderProduct{Material = new Material(), SourceTank = new Tank()},
                 new OrderProduct{Material = new Material(), SourceTank = new Tank()},
                 new OrderProduct{Material = new Material(), SourceTank = new Tank()},
-                new OrderProduct{SourceTank = new Tank()}
+                new OrderProduct{Material = new Material(), SourceTank = new Tank()}
             };
         }
     }

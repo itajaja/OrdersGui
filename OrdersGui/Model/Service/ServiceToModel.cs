@@ -176,24 +176,39 @@ namespace Hylasoft.OrdersGui.Model.Service
             }
         }
 
-        public void GetMaterials(Action<IList<Material>, Exception> callback)
+        private Material ConvertMaterial(NonTransactionalFunctions.Material material)
         {
-            throw new NotImplementedException();
+            var mMaterial = new Material();
+            mMaterial.CategoryName = material.CategoryName;
+            mMaterial.DataEntryValue = material.DataEntryValue;
+            mMaterial.MaterialCategory = material.MaterialCategory;
+            mMaterial.MaterialCode = material.MaterialCode;
+            mMaterial.MaterialFamily = material.MaterialFamily;
+            mMaterial.MaterialId = material.MaterialId;
+            mMaterial.MaterialName = material.MaterialName;
+            return mMaterial;
         }
 
-        public void GetTanks(Action<IList<Tank>, Exception> callback)
+        private IList<Material> ConvertMaterials(IEnumerable<NonTransactionalFunctions.Material> orders)
         {
-            throw new NotImplementedException();
+            return orders.Select(ConvertMaterial).ToList();
         }
 
-        public void GetCompartments(Action<IList<Compartment>, Exception> callback)
+        private Tank ConvertTank(NonTransactionalFunctions.Tank tank)
         {
-            throw new NotImplementedException();
+            var mTank = new Tank();
+            mTank.ApiGravity = tank.APIGravity;
+            mTank.AvailabilityStatus = tank.AvailabilityStatus == 1;
+            mTank.Material = _materials.FirstOrDefault(m => m.MaterialId == tank.MaterialId);
+            mTank.SapTankName = tank.SapTankName;
+            mTank.TankId = tank.TankId;
+            mTank.TankName = tank.TankName;
+            return mTank;
         }
 
-        public void GetContainers(Action<IList<Container>, Exception> callback)
+        private IList<Tank> ConvertTanks(IEnumerable<NonTransactionalFunctions.Tank> orders)
         {
-            throw new NotImplementedException();
+            return orders.Select(ConvertTank).ToList();
         }
     }
 }

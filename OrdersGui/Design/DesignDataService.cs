@@ -60,5 +60,10 @@ namespace Hylasoft.OrdersGui.Design
         {
             throw new NotImplementedException();
         }
+
+        public void GetSapTanks(Action<IList<Tank>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

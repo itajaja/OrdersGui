@@ -26,6 +26,15 @@
   <wsdl:message name="INonTransactionalFunctions_getLoadRackArms_UserExceptionFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q2:UserException" />
   </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetSapTanks_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSapTanks" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetSapTanks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSapTanksResponse" />
+  </wsdl:message>
+  <wsdl:message name="INonTransactionalFunctions_GetSapTanks_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q3:UserException" />
+  </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetFinishedProducts_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFinishedProducts" />
   </wsdl:message>
@@ -33,7 +42,7 @@
     <wsdl:part name="parameters" element="tns:GetFinishedProductsResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetFinishedProducts_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q3:UserException" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q4:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetails_InputMessage">
     <wsdl:part name="parameters" element="tns:getLoadOrderDetails" />
@@ -42,7 +51,7 @@
     <wsdl:part name="parameters" element="tns:getLoadOrderDetailsResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetails_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q4:UserException" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q5:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetailsCompartments_InputMessage">
     <wsdl:part name="parameters" element="tns:getLoadOrderDetailsCompartments" />
@@ -51,7 +60,7 @@
     <wsdl:part name="parameters" element="tns:getLoadOrderDetailsCompartmentsResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_getLoadOrderDetailsCompartments_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q5:UserException" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q6:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetAssignCompartmentsNosAndCapacityFromDb_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAssignCompartmentsNosAndCapacityFromDb" />
@@ -60,7 +69,7 @@
     <wsdl:part name="parameters" element="tns:GetAssignCompartmentsNosAndCapacityFromDbResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetAssignCompartmentsNosAndCapacityFromDb_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q6:UserException" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q7:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetContainers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetContainers" />
@@ -69,7 +78,7 @@
     <wsdl:part name="parameters" element="tns:GetContainersResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetContainers_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q7:UserException" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q8:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetContainer_InputMessage">
     <wsdl:part name="parameters" element="tns:GetContainer" />
@@ -78,7 +87,7 @@
     <wsdl:part name="parameters" element="tns:GetContainerResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetContainer_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q8:UserException" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q9:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_getContainerCompartments_InputMessage">
     <wsdl:part name="parameters" element="tns:getContainerCompartments" />
@@ -87,7 +96,7 @@
     <wsdl:part name="parameters" element="tns:getContainerCompartmentsResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_getContainerCompartments_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q9:UserException" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q10:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetSAPMaterials_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSAPMaterials" />
@@ -96,7 +105,7 @@
     <wsdl:part name="parameters" element="tns:GetSAPMaterialsResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetSAPMaterials_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q10:UserException" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q11:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetMaterials_InputMessage">
     <wsdl:part name="parameters" element="tns:GetMaterials" />
@@ -105,7 +114,7 @@
     <wsdl:part name="parameters" element="tns:GetMaterialsResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetMaterials_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q11:UserException" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q12:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetRebrandedProducts_InputMessage">
     <wsdl:part name="parameters" element="tns:GetRebrandedProducts" />
@@ -114,7 +123,7 @@
     <wsdl:part name="parameters" element="tns:GetRebrandedProductsResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetRebrandedProducts_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q12:UserException" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q13:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetLoadOrderProducts_InputMessage">
     <wsdl:part name="parameters" element="tns:GetLoadOrderProducts" />
@@ -123,7 +132,7 @@
     <wsdl:part name="parameters" element="tns:GetLoadOrderProductsResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetLoadOrderProducts_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q13:UserException" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q14:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_getCompletedSAPLoadOrderCompartmentSeals_InputMessage">
     <wsdl:part name="parameters" element="tns:getCompletedSAPLoadOrderCompartmentSeals" />
@@ -132,7 +141,7 @@
     <wsdl:part name="parameters" element="tns:getCompletedSAPLoadOrderCompartmentSealsResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_getCompletedSAPLoadOrderCompartmentSeals_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q14:UserException" />
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q15:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetSystemInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSystemInfo" />
@@ -141,7 +150,7 @@
     <wsdl:part name="parameters" element="tns:GetSystemInfoResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetSystemInfo_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q15:UserException" />
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q16:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_InsertLoadOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertLoadOrder" />
@@ -150,7 +159,7 @@
     <wsdl:part name="parameters" element="tns:InsertLoadOrderResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_InsertLoadOrder_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q16:UserException" />
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q17:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetLoadOrderTruckNo_InputMessage">
     <wsdl:part name="parameters" element="tns:GetLoadOrderTruckNo" />
@@ -159,7 +168,7 @@
     <wsdl:part name="parameters" element="tns:GetLoadOrderTruckNoResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetLoadOrderTruckNo_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q17:UserException" />
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q18:UserException" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetWinblendTanks_InputMessage">
     <wsdl:part name="parameters" element="tns:GetWinblendTanks" />
@@ -168,7 +177,7 @@
     <wsdl:part name="parameters" element="tns:GetWinblendTanksResponse" />
   </wsdl:message>
   <wsdl:message name="INonTransactionalFunctions_GetWinblendTanks_UserExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q18:UserException" />
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q19:UserException" />
   </wsdl:message>
   <wsdl:portType name="INonTransactionalFunctions">
     <wsdl:operation name="GetLoadOrders">
@@ -180,6 +189,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadRackArms" message="tns:INonTransactionalFunctions_getLoadRackArms_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadRackArmsResponse" message="tns:INonTransactionalFunctions_getLoadRackArms_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/getLoadRackArmsUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_getLoadRackArms_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSapTanks">
+      <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetSapTanks" message="tns:INonTransactionalFunctions_GetSapTanks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetSapTanksResponse" message="tns:INonTransactionalFunctions_GetSapTanks_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetSapTanksUserExceptionFault" name="UserExceptionFault" message="tns:INonTransactionalFunctions_GetSapTanks_UserExceptionFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFinishedProducts">
       <wsdl:input wsaw:Action="http://tempuri.org/INonTransactionalFunctions/GetFinishedProducts" message="tns:INonTransactionalFunctions_GetFinishedProducts_InputMessage" />
@@ -278,6 +292,18 @@
     </wsdl:operation>
     <wsdl:operation name="getLoadRackArms">
       <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/getLoadRackArms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSapTanks">
+      <soap:operation soapAction="http://tempuri.org/INonTransactionalFunctions/GetSapTanks" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

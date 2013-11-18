@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using Hylasoft.OrdersGui.EventMonitor;
 using Hylasoft.OrdersGui.NonTransactionalFunctions;
 using Hylasoft.OrdersGui.Resources;
@@ -18,10 +17,12 @@ namespace Hylasoft.OrdersGui.Model.Service
         private SystemInfo _systemInfo;
         private IList<Rack> _racks;
         private IList<Arm> _arms;
-        //        private readonly IList<Tank> _tanks;
-        //        private readonly IList<Material> _materials; 
+        private IList<Material> _materials;
+        private IList<Tank> _sapTanks;
+        private IList<Tank> _tanks;
         //        private readonly IList<Container> _containers; 
-        //        private readonly IList<Compartment> _compartments; 
+        //        private readonly IList<Compartment> _compartments;
+
 
         public DataService()
         {
@@ -33,14 +34,15 @@ namespace Hylasoft.OrdersGui.Model.Service
             _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
             _emClient = new EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
             _ntfClient = new NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
-            GetSystemData((info, exception) =>
-                GetRacks((a,b) =>
-                    GetArms((c, d) => { })));
+            GetSystemData((a, b) => { });
+            GetRacks((a, b) => GetArms((c, d) => { }));
+            GetMaterials((a,b) => GetTanks((c, d) => GetSapTanks((e, f) => { })));
+//            GetContainers((a, b) => GetCompartments((c, d) => { }));
         }
 
         public void GetSessionData(Action<SessionData, Exception> callback)
         {
-                callback(_sessionData, null);
+            callback(_sessionData, null);
         }
 
         public void GetSystemData(Action<SystemInfo, Exception> callback)
@@ -149,7 +151,90 @@ namespace Hylasoft.OrdersGui.Model.Service
             _emClient.GetOpcServerStateAsync();
         }
 
-        private void CheckAndRethrow(Exception exception)
+
+        public void GetMaterials(Action<IList<Material>, Exception> callback)
+        {
+            if (_materials != null)
+            {
+                callback(_materials, null);
+                return;
+            }
+            _ntfClient.GetMaterialsCompleted += (sender, args) =>
+            {
+                try
+                {
+                    CheckAndRethrow(args.Error);
+                    _materials = ConvertMaterials(args.Result);
+                    callback(_materials, null);
+                }
+                catch
+                (Exception e)
+                {
+                    callback(null, e);
+                }
+            };
+            _ntfClient.GetMaterialsAsync();
+        }
+
+        public void GetTanks(Action<IList<Tank>, Exception> callback)
+        {
+            if (_tanks != null)
+            {
+                callback(_tanks, null);
+                return;
+            }
+            _ntfClient.GetWinblendTanksCompleted += (sender, args) =>
+            {
+                try
+                {
+                    CheckAndRethrow(args.Error);
+                    _tanks = ConvertTanks(args.Result);
+                    callback(_tanks, null);
+                }
+                catch
+                (Exception e)
+                {
+                    callback(null, e);
+                }
+            };
+            _ntfClient.GetWinblendTanksAsync();
+        }
+
+        public void GetSapTanks(Action<IList<Tank>, Exception> callback)
+        {
+            if (_sapTanks != null)
+            {
+                callback(_sapTanks, null);
+                return;
+            }
+            _ntfClient.GetSapTanksCompleted += (sender, args) =>
+            {
+                try
+                {
+                    CheckAndRethrow(args.Error);
+                    _sapTanks = ConvertTanks(args.Result);
+                    callback(_sapTanks, null);
+                }
+                catch
+                (Exception e)
+                {
+                    callback(null, e);
+                }
+            };
+            _ntfClient.GetSapTanksAsync();
+        }
+
+        public void GetCompartments(Action<IList<Compartment>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetContainers(Action<IList<Container>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void CheckAndRethrow(Exception exception)
         {
             if (exception != null)
             {

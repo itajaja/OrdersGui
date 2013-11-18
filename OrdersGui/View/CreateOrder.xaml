@@ -23,7 +23,7 @@
             </Button>
             <sdk:Label Style="{StaticResource TitleStyle}" Content="Create new order" />
         </StackPanel>
-        <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch">
+        <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" DataContext="{Binding Path=Order}">
             <Grid.Resources>
                 <Style TargetType="sdk:Label" BasedOn="{StaticResource BasicLabelStyle}">
                     <Setter Property="Margin" Value="15,4,5,4" />
@@ -54,19 +54,21 @@
             <sdk:Label>Order Number</sdk:Label>
             <sdk:Label Grid.Row="1" Grid.Column="0">Customer Name</sdk:Label>
             <sdk:Label Grid.Row="2" Grid.Column="0">Customer Number</sdk:Label>
-            <sdk:Label Grid.Row="3" Grid.Column="0">Carrier Number</sdk:Label>
+            <sdk:Label Grid.Row="3" Grid.Column="0">Carrier Name</sdk:Label>
             <sdk:Label Grid.Row="4" Grid.Column="0">PO Number</sdk:Label>
             <sdk:Label Grid.Row="5" Grid.Column="0">Order Type</sdk:Label>
             <sdk:Label Grid.Row="6" Grid.Column="0">Delivery Method</sdk:Label>
             <sdk:Label Grid.Row="7" Grid.Column="0">Schedule Date</sdk:Label>
-            <TextBox Grid.Row="0" Grid.Column="1" />
-            <TextBox Grid.Row="1" Grid.Column="1" />
-            <TextBox Grid.Row="2" Grid.Column="1" />
-            <TextBox Grid.Row="3" Grid.Column="1" />
-            <TextBox Grid.Row="4" Grid.Column="1" />
-            <ComboBox Grid.Row="5" Grid.Column="1" SelectedItem="{Binding Order.OrderType}" ItemsSource="{Binding Types}"/>
-            <ComboBox Grid.Row="6" Grid.Column="1" SelectedItem="{Binding Order.MethodOfDelivery}" ItemsSource="{Binding Methods}"/>
-            <sdk:Calendar Grid.Row="7" Grid.Column="1"></sdk:Calendar>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding OrderNo}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CustomerName}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CustomerNo}"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CarrierName}"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding PoNumber}"/>
+            <ComboBox Grid.Row="5" Grid.Column="1" SelectedItem="{Binding OrderType}"
+                      ItemsSource="{Binding CreateOrderVM.Types, Source={StaticResource Locator}}"/>
+            <ComboBox Grid.Row="6" Grid.Column="1" SelectedItem="{Binding MethodOfDelivery}"
+                      ItemsSource="{Binding CreateOrderVM.Methods, Source={StaticResource Locator}}"/>
+            <sdk:Calendar Grid.Row="7" Grid.Column="1" />
         </Grid>
         <sdk:DataGrid Grid.Row="1" Grid.Column="1" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" CanUserResizeColumns="False"
                       ItemsSource="{Binding OrderProducts}" AutoGenerateColumns="False" SelectionMode="Single">
@@ -76,19 +78,31 @@
                 <Style TargetType="sdk:AutoCompleteBox" BasedOn="{StaticResource GridAutocompleteStyle}"/>
             </sdk:DataGrid.Resources>
             <sdk:DataGrid.Columns>
-                <sdk:DataGridTemplateColumn Width="150" Header="Material Code" >
+                <sdk:DataGridTemplateColumn Width="100" Header="Material Code" >
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <sdk:AutoCompleteBox HorizontalAlignment="Stretch" SelectedItem="{Binding Material.MaterialName}"
-                                                 ItemsSource="{Binding CreateOrderVM.Materials, Source={StaticResource Locator}}"/>
+                            <sdk:AutoCompleteBox  SelectedItem="{Binding Material, Mode=TwoWay}" ValueMemberPath="MaterialCode" MinimumPopulateDelay="400" MinimumPrefixLength="2"
+                                                 ItemsSource="{Binding CreateOrderVM.Materials, Source={StaticResource Locator}}">
+                                <sdk:AutoCompleteBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding MaterialCode}" />
+                                    </DataTemplate>
+                                </sdk:AutoCompleteBox.ItemTemplate>
+                            </sdk:AutoCompleteBox>
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>
-                <sdk:DataGridTemplateColumn Width="150" Header="Material Name">
+                <sdk:DataGridTemplateColumn Width="220" Header="Material Name" >
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <sdk:AutoCompleteBox SelectedItem="{Binding Material.MaterialName}" 
-                                                 ItemsSource="{Binding CreateOrderVM.Materials, Source={StaticResource Locator}}"/>
+                            <sdk:AutoCompleteBox SelectedItem="{Binding Material, Mode=TwoWay}" ValueMemberPath="MaterialName" MinimumPopulateDelay="400" MinimumPrefixLength="4"
+                                                 ItemsSource="{Binding CreateOrderVM.Materials, Source={StaticResource Locator}}">
+                                <sdk:AutoCompleteBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding MaterialName}" />
+                                    </DataTemplate>
+                                </sdk:AutoCompleteBox.ItemTemplate>
+                            </sdk:AutoCompleteBox>
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>

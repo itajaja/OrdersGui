@@ -26,6 +26,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetSapTanks">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSapTanksResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetSapTanksResult" nillable="true" type="q3:ArrayOfTank" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetFinishedProducts">
     <xs:complexType>
       <xs:sequence />
@@ -34,7 +46,7 @@
   <xs:element name="GetFinishedProductsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetFinishedProductsResult" nillable="true" type="q3:ArrayOfstring" />
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetFinishedProductsResult" nillable="true" type="q4:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -48,7 +60,7 @@
   <xs:element name="getLoadOrderDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="getLoadOrderDetailsResult" nillable="true" type="q4:ArrayOfLoadOrderDetails" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="getLoadOrderDetailsResult" nillable="true" type="q5:ArrayOfLoadOrderDetails" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -62,7 +74,7 @@
   <xs:element name="getLoadOrderDetailsCompartmentsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="getLoadOrderDetailsCompartmentsResult" nillable="true" type="q5:ArrayOfLoadOrderDetailsCompartments" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="getLoadOrderDetailsCompartmentsResult" nillable="true" type="q6:ArrayOfLoadOrderDetailsCompartments" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -77,7 +89,7 @@
   <xs:element name="GetAssignCompartmentsNosAndCapacityFromDbResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetAssignCompartmentsNosAndCapacityFromDbResult" nillable="true" type="q6:ArrayOfLoadOrderDetailsCompartments" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetAssignCompartmentsNosAndCapacityFromDbResult" nillable="true" type="q7:ArrayOfLoadOrderDetailsCompartments" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -93,7 +105,7 @@
   <xs:element name="GetContainersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetContainersResult" nillable="true" type="q7:ArrayOfContainer" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetContainersResult" nillable="true" type="q8:ArrayOfContainer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -107,7 +119,7 @@
   <xs:element name="GetContainerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetContainerResult" nillable="true" type="q8:Container" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetContainerResult" nillable="true" type="q9:Container" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -121,7 +133,7 @@
   <xs:element name="getContainerCompartmentsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="getContainerCompartmentsResult" nillable="true" type="q9:ArrayOfCompartment" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="getContainerCompartmentsResult" nillable="true" type="q10:ArrayOfCompartment" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -133,7 +145,7 @@
   <xs:element name="GetSAPMaterialsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetSAPMaterialsResult" nillable="true" type="q10:ArrayOfSAPMaterial" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetSAPMaterialsResult" nillable="true" type="q11:ArrayOfSAPMaterial" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -145,7 +157,7 @@
   <xs:element name="GetMaterialsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetMaterialsResult" nillable="true" type="q11:ArrayOfMaterial" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetMaterialsResult" nillable="true" type="q12:ArrayOfMaterial" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -157,7 +169,7 @@
   <xs:element name="GetRebrandedProductsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetRebrandedProductsResult" nillable="true" type="q12:ArrayOfRebrandedProduct" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetRebrandedProductsResult" nillable="true" type="q13:ArrayOfRebrandedProduct" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -171,7 +183,7 @@
   <xs:element name="GetLoadOrderProductsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetLoadOrderProductsResult" nillable="true" type="q13:ArrayOfLoadOrderProduct" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetLoadOrderProductsResult" nillable="true" type="q14:ArrayOfLoadOrderProduct" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -183,7 +195,7 @@
   <xs:element name="getCompletedSAPLoadOrderCompartmentSealsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="getCompletedSAPLoadOrderCompartmentSealsResult" nillable="true" type="q14:ArrayOfSAPLoadOrderCompartmentSeal" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="getCompletedSAPLoadOrderCompartmentSealsResult" nillable="true" type="q15:ArrayOfSAPLoadOrderCompartmentSeal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -195,15 +207,15 @@
   <xs:element name="GetSystemInfoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetSystemInfoResult" nillable="true" type="q15:Wb7System" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetSystemInfoResult" nillable="true" type="q16:Wb7System" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertLoadOrder">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="loadOrder" nillable="true" type="q16:LoadOrder" />
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="products" nillable="true" type="q17:ArrayOfLoadOrderProduct" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="loadOrder" nillable="true" type="q17:LoadOrder" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="products" nillable="true" type="q18:ArrayOfLoadOrderProduct" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -234,7 +246,7 @@
   <xs:element name="GetWinblendTanksResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetWinblendTanksResult" nillable="true" type="q18:ArrayOfTank" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="GetWinblendTanksResult" nillable="true" type="q19:ArrayOfTank" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

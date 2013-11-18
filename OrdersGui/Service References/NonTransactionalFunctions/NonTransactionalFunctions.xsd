@@ -232,6 +232,25 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LoadRackArm" nillable="true" type="tns:LoadRackArm" />
+  <xs:complexType name="ArrayOfTank">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Tank" nillable="true" type="tns:Tank" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTank" nillable="true" type="tns:ArrayOfTank" />
+  <xs:complexType name="Tank">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="APIGravity" type="xs:double" />
+      <xs:element minOccurs="0" name="AvailabilityStatus" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialId" type="xs:int" />
+      <xs:element minOccurs="0" name="SapTankName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TankId" type="xs:int" />
+      <xs:element minOccurs="0" name="TankName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="isVisible" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Tank" nillable="true" type="tns:Tank" />
   <xs:complexType name="ArrayOfLoadOrderDetails">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="LoadOrderDetails" nillable="true" type="tns:LoadOrderDetails" />
@@ -454,22 +473,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Wb7System" nillable="true" type="tns:Wb7System" />
-  <xs:complexType name="ArrayOfTank">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Tank" nillable="true" type="tns:Tank" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfTank" nillable="true" type="tns:ArrayOfTank" />
-  <xs:complexType name="Tank">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="APIGravity" type="xs:double" />
-      <xs:element minOccurs="0" name="AvailabilityStatus" type="xs:int" />
-      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MaterialId" type="xs:int" />
-      <xs:element minOccurs="0" name="TankId" type="xs:int" />
-      <xs:element minOccurs="0" name="TankName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="isVisible" type="xs:boolean" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Tank" nillable="true" type="tns:Tank" />
 </xs:schema>

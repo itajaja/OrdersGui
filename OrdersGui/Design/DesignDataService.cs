@@ -61,12 +61,12 @@ namespace Hylasoft.OrdersGui.Design
             throw new NotImplementedException();
         }
 
-        public void GetOrderProducts(Action<IList<OrderCompartment>, Exception> callback)
+        public void GetOrderProducts(long orderId, Action<IList<OrderCompartment>, Exception> callback)
         {
             throw new NotImplementedException();
         }
 
-        public void GetOrderCompartments(Action<IList<OrderProduct>, Exception> callback)
+        public void GetOrderCompartments(long orderId, Action<IList<OrderProduct>, Exception> callback)
         {
             throw new NotImplementedException();
         }

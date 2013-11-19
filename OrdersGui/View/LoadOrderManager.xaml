@@ -6,6 +6,7 @@
              xmlns:ignore="http://www.ignore.com"
              mc:Ignorable="d ignore"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
              DataContext="{Binding LoadOrderManagerVM, Source={StaticResource Locator}}"
              d:DesignWidth="1000" d:DesignHeight="600">
     <UserControl.Resources>
@@ -64,7 +65,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <sdk:Label Style="{StaticResource TitleStyle}" Content="{Binding LoadOrderManagerTitle, Source={StaticResource Strings}}" />
+<!--        <sdk:Label Style="{StaticResource TitleStyle}" Content="{Binding LoadOrderManagerTitle, Source={StaticResource Strings}}" />-->
         <Grid Grid.Row="1" Margin="0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -87,7 +88,24 @@
             </Button>
         </Grid>
         <Border Grid.Row="2" Grid.RowSpan="2" BorderThickness="0,2,0,0" BorderBrush="{StaticResource DarkGrayBrush}">
-            <sdk:DataGrid Style="{x:Null}"  AutoGenerateColumns="False" Name="OrdersGrid" ItemsSource="{Binding OrdersView}" IsReadOnly="True" SelectionMode="Single">
+            <sdk:DataGrid MouseRightButtonDown="OrdersGrid_OnMouseRightButtonDown" Style="{x:Null}"  AutoGenerateColumns="False" Name="OrdersGrid"
+                          ItemsSource="{Binding OrdersView}" IsReadOnly="True" SelectionMode="Single">
+                <toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu Name="GridContextMenu" DataContext="{Binding ElementName=OrdersGrid, Path=SelectedItem}">
+<!--                        <toolkit:MenuItem Header="{Binding OrderNo, StringFormat=Load Order \{0\}}" Background="{StaticResource BackgroundBrush}" HorizontalContentAlignment="Center"/>-->
+                        <toolkit:MenuItem Header="View/Edit Order Details" />
+                        <toolkit:MenuItem Header="View Carrier Instruction" />
+                        <toolkit:MenuItem Header="Prepare Order" />
+                        <toolkit:MenuItem Header="+Enter Seals" />
+                        <toolkit:MenuItem Header="+Release" />
+                        <toolkit:MenuItem Header="Release for Manual" />
+                        <toolkit:MenuItem Header="Fullfill Manual Order" />
+                        <toolkit:MenuItem Header="Inspection Failed" />
+                        <toolkit:MenuItem Header="Manually Approve Order" />
+                        <toolkit:MenuItem Header="Cancel Order" />
+                        <toolkit:MenuItem Header="Unload Order" />
+                    </toolkit:ContextMenu>
+                </toolkit:ContextMenuService.ContextMenu>
                 <sdk:DataGrid.Resources>
                     <Style TargetType="TextBlock" />
                 </sdk:DataGrid.Resources>
@@ -160,7 +178,6 @@
                 </Grid>
             </Grid>
         </Border>
-
         <Grid Grid.Row="4" Name="FooterGrid" Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>

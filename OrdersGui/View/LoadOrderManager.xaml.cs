@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using GalaSoft.MvvmLight.Messaging;
 using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.Resources;
@@ -48,6 +53,18 @@ namespace Hylasoft.OrdersGui.View
         private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
         {
             Messenger.Default.Send(new GoToCreateOrderMessage()); //todo this should be command
+        }
+
+        private void OrdersGrid_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var elementsUnderMouse = VisualTreeHelper.FindElementsInHostCoordinates(e.GetPosition(null), this);
+            DataGridRow row = elementsUnderMouse
+                    .Where(uie => uie is DataGridRow)
+                    .Cast<DataGridRow>()
+                    .FirstOrDefault();
+            if (row != null)
+                OrdersGrid.SelectedItem = row.DataContext;
+            GridContextMenu.DataContext = OrdersGrid.SelectedItem;
         }
     }
 }

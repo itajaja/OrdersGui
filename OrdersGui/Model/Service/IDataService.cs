@@ -16,6 +16,8 @@ namespace Hylasoft.OrdersGui.Model.Service
         void GetSapTanks(Action<IList<Tank>, Exception> callback);
         void GetCompartments(Action<IList<Compartment>, Exception> callback);
         void GetContainers(Action<IList<Container>, Exception> callback);
+        void GetOrderProducts(Action<IList<OrderCompartment>, Exception> callback);
+        void GetOrderCompartments(Action<IList<OrderProduct>, Exception> callback);
 
         void CreateOrder(Action<Exception> callback);
     }

@@ -202,6 +202,16 @@ namespace Hylasoft.OrdersGui.Model.Service
             throw new NotImplementedException();
         }
 
+        public void GetOrderProducts(Action<IList<OrderCompartment>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetOrderCompartments(Action<IList<OrderProduct>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
         public void CreateOrder(Action<Exception> callback)
         {
             throw new NotImplementedException();

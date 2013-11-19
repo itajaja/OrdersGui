@@ -8,8 +8,13 @@
     public class GoToLodMessage
     {
         /// <summary>
-        /// the ID of the order to display
+        /// The ID of the order to display
         /// </summary>
         public long OrderId { get; set; }
+
+        /// <summary>
+        /// Sets if editing is enabled
+        /// </summary>
+        public bool IsReadOnly { get; set; }
     }
 }

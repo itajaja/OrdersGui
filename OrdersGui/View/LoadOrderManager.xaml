@@ -7,7 +7,7 @@
              mc:Ignorable="d ignore"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              DataContext="{Binding LoadOrderManagerVM, Source={StaticResource Locator}}"
-             d:DesignWidth="1000" d:DesignHeight="600" Loaded="LoadOrderManager_OnLoaded">
+             d:DesignWidth="1000" d:DesignHeight="600">
     <UserControl.Resources>
         <Storyboard x:Name="OpenStatusFilter">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DateFilterGrid" Storyboard.TargetProperty="(UIElement.Visibility)">
@@ -73,7 +73,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel  Orientation="Horizontal">
                 <sdk:Label Content="{Binding OrderNumberFilter, Source={StaticResource Strings}}" />
-                <TextBox Margin="5,0,10,0" Width="150" Text="{Binding OrderNoFilter, Mode=TwoWay}"/>
+                <TextBox Margin="5,0,10,0" Width="150" Text="{Binding OrderNoFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Name="OrderStatusFilterButton" Content="{Binding OrderStatusFilter, Source={StaticResource Strings}}" Click="OrderStatusFilterButton_Click" />
                 <Button Name="DateFilterButton" Content="{Binding DateFilter, Source={StaticResource Strings}}" Click="DateFilterButton_Click" />
                 <Button Name="CreateOrderButton" Content="{Binding CreateOrder, Source={StaticResource Strings}}" Click="CreateOrderButton_Click" />
@@ -87,24 +87,23 @@
             </Button>
         </Grid>
         <Border Grid.Row="2" Grid.RowSpan="2" BorderThickness="0,2,0,0" BorderBrush="{StaticResource DarkGrayBrush}">
-            <sdk:DataGrid  AutoGenerateColumns="False" Name="OrdersGrid" ItemsSource="{Binding OrdersView}" IsReadOnly="True" SelectionMode="Single">
+            <sdk:DataGrid Style="{x:Null}"  AutoGenerateColumns="False" Name="OrdersGrid" ItemsSource="{Binding OrdersView}" IsReadOnly="True" SelectionMode="Single">
                 <sdk:DataGrid.Resources>
                     <Style TargetType="TextBlock" />
                 </sdk:DataGrid.Resources>
                 <sdk:DataGrid.Columns>
-                    <sdk:DataGridTextColumn Binding="{Binding OrderNo}" />
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding LoadRack.RackName}" />
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding CustomerName}" />
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}" />
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding ScheduleDate, Mode=OneWay}" />
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding ScheduleDate}" />
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding StartDate}" />
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding EndDate}" />
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding OrderType}" />
+                    <sdk:DataGridTextColumn Header="Order No." Width="Auto" Binding="{Binding OrderNo}" />
+                    <sdk:DataGridTextColumn Header="Rack" Binding="{Binding LoadRack.RackName}" />
+                    <sdk:DataGridTextColumn Header="Customer" Width="*" Binding="{Binding CustomerName}" />
+                    <sdk:DataGridTextColumn Header="Carrier" Width="*" Binding="{Binding CarrierName}" />
+                    <sdk:DataGridTextColumn Header="Date Scheduled" Width="Auto" Binding="{Binding ScheduleDate, StringFormat=\{0:g\}}" />
+                    <sdk:DataGridTextColumn Header="Start Time" Width="Auto" Binding="{Binding StartDate, StringFormat=\{0:t\}}" />
+                    <sdk:DataGridTextColumn Header="End Time" Width="Auto" Binding="{Binding EndDate, StringFormat=\{0:t\}}" />
+                    <sdk:DataGridTextColumn Header="Order Type" Width="*" Binding="{Binding OrderType}" />
+                    <sdk:DataGridTextColumn Header="Delivery Method" Width="*" Binding="{Binding MethodOfDelivery}" />
                     <!--                todo this should be shipref. Where do i take it?-->
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding MethodOfDelivery}" />
-                    <sdk:DataGridTextColumn Width="*" Binding="{Binding CarrierName}" />
-                    <sdk:DataGridTextColumn Binding="{Binding OrderStatus}" >
+                    <sdk:DataGridTextColumn Header="Ship Ref" Width="*" Binding="{Binding CarrierName}" />
+                    <sdk:DataGridTextColumn Header="Status" Width="110" Binding="{Binding OrderStatus}" >
                         <sdk:DataGridTextColumn.CellStyle>
                             <Style TargetType="sdk:DataGridCell">
                                 <Setter Property="Background" Value="{Binding Path=OrderStatus, Converter={StaticResource OrderStatusToBackground}}" />

@@ -7,6 +7,7 @@
              xmlns:res="clr-namespace:Hylasoft.OrdersGui.Resources"
              xmlns:utils="clr-namespace:Hylasoft.OrdersGui.View.Utils"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
              mc:Ignorable="d">
     <Application.Resources>
         <ResourceDictionary>
@@ -16,8 +17,10 @@
                 <ResourceDictionary Source="Skins/PopupSkin.xaml" />
                 <ResourceDictionary Source="Skins/ComboBoxSkin.xaml" />
                 <ResourceDictionary Source="Skins/DataGridSkin.xaml" />
+                <ResourceDictionary Source="Skins/ContextMenuSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" />
+            <Style TargetType="toolkit:ContextMenu" BasedOn="{StaticResource ContextMenuStyle}" />
             <Style TargetType="TextBlock" BasedOn="{StaticResource BasicTextBlockStyle}" />
             <Style TargetType="sdk:Label" BasedOn="{StaticResource BasicLabelStyle}" />
             <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxStyle}" />

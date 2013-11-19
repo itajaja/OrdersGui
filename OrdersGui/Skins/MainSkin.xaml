@@ -3,9 +3,10 @@
                     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
                     mc:Ignorable="d">
 
-        <!--    Colors and Brushes-->
+    <!--    Colors and Brushes-->
     <Color x:Key="BlackColor">#3A3A30</Color>
     <Color x:Key="BackgroundColor">WhiteSmoke</Color>
     <Color x:Key="DarkGrayColor">#86816B</Color>
@@ -64,5 +65,28 @@
     </Style>
     <Style TargetType="sdk:Label" x:Key="TitleStyle" BasedOn="{StaticResource BasicLabelStyle}">
         <Setter Property="FontSize" Value="30"/>
+    </Style>
+    <Style x:Key="ContextMenuStyle" TargetType="toolkit:ContextMenu">
+        <Setter Property="Background" Value="#FFF5F5F5"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#FF959595"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="toolkit:ContextMenu">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="2">
+                        <Border.Effect>
+                            <DropShadowEffect Color="LightGray" ShadowDepth="3"/>
+                        </Border.Effect>
+                        <Grid>
+                            <Rectangle Fill="#FFF1F1F1" HorizontalAlignment="Left" Margin="2" RadiusY="2" RadiusX="2" Width="28"/>
+                            <Rectangle Fill="#FFE2E3E3" HorizontalAlignment="Left" Margin="30,2,0,2" Width="1"/>
+                            <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Margin="31,2,0,2" Width="1"/>
+                            <ItemsPresenter Margin="{TemplateBinding Padding}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

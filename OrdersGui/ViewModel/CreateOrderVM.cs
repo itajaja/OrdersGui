@@ -118,6 +118,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                 MessageBox.Show("The order number field cannot be empty.");
                 return false;
             }
+            //todo if (Orders.Any(o => o.OrderNo == order.OrderNo))
             var uniqueProductList = new List<string>();
             var validProducts = OrderProducts.Where(product => !IsEmptyProduct(product)).ToList();
             if (validProducts.Count == 0)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -60,8 +59,16 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("Types", ref _types, value); }
         }
 
+        private ObservableCollection<string> _uoms = new ObservableCollection<string>{"GAL","LB"};
+        public ObservableCollection<string> Uoms
+        {
+            get { return _uoms; }
+            set { Set("Uoms", ref _uoms, value); }
+        }
+
         public RelayCommand CreateOrderCommand { get; private set; }
         public RelayCommand GoBackCommand { get; private set; }
+        public RelayCommand<OrderProduct> ClearRowCommand { get; private set; }
 
         public CreateOrderVM(IDataService ds)
         {
@@ -77,6 +84,14 @@ namespace Hylasoft.OrdersGui.ViewModel
             GoBackCommand = new RelayCommand(() =>
             {
                 Messenger.Default.Send(new GoToLomMessage());
+                Cleanup();
+            });
+            ClearRowCommand = new RelayCommand<OrderProduct>(product =>
+            {
+                product.Material = null;
+                product.SourceTank = null;
+                product.TargetQty = 0;
+                product.Uom = null;
                 Cleanup();
             });
             Cleanup();
@@ -104,7 +119,13 @@ namespace Hylasoft.OrdersGui.ViewModel
                 return false;
             }
             var uniqueProductList = new List<string>();
-            foreach (var p in OrderProducts.Where(product => !IsEmptyProduct(product)))
+            var validProducts = OrderProducts.Where(product => !IsEmptyProduct(product)).ToList();
+            if (validProducts.Count == 0)
+            {
+                MessageBox.Show("You must insert at least a product");
+                return false;
+            }
+            foreach (var p in validProducts)
             {
                 bool containsItem = uniqueProductList.Any(item => item == p.Material.MaterialCode);
                 if (containsItem)
@@ -113,9 +134,9 @@ namespace Hylasoft.OrdersGui.ViewModel
                     return false;
                 }
                 uniqueProductList.Add(p.Material.MaterialCode);
-                if (string.IsNullOrEmpty(p.SourceTank.SapTankName))
+                if (p.SourceTank == null || string.IsNullOrEmpty(p.SourceTank.SapTankName))
                 {
-                    MessageBox.Show("Product " + OrderProducts.IndexOf(p) + ": " + p.Material.MaterialName + " should only be entered once.", "ERROR", MessageBoxButton.OK);
+                    MessageBox.Show("Please insert a tank for " + p.Material.MaterialName, "ERROR", MessageBoxButton.OK);
                     return false;
                 }
                 var tank = Tanks.FirstOrDefault(t => p.SourceTank.SapTankName == t.SapTankName);

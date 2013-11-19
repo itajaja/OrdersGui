@@ -202,6 +202,11 @@ namespace Hylasoft.OrdersGui.Model.Service
             throw new NotImplementedException();
         }
 
+        public void CreateOrder(Action<Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
         private static void CheckAndRethrow(Exception exception)
         {
             if (exception != null)

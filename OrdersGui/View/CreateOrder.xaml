@@ -71,20 +71,21 @@
                       ItemsSource="{Binding CreateOrderVM.Methods, Source={StaticResource Locator}}"/>
             <sdk:Calendar Grid.Row="7" Grid.Column="1" SelectedDate="{Binding ScheduleDate, Mode=TwoWay}"/>
         </Grid>
-        <sdk:DataGrid Grid.Row="1" Grid.Column="1" Margin="100,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" CanUserResizeColumns="False"
-                      ItemsSource="{Binding OrderProducts}" AutoGenerateColumns="False" SelectionMode="Single">
+        <sdk:DataGrid Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" CanUserResizeColumns="False"
+                      ItemsSource="{Binding OrderProducts}" AutoGenerateColumns="False" SelectionMode="Single" Style="{StaticResource DataGridStyle}" IsReadOnly="True">
             <sdk:DataGrid.Resources>
                 <Style TargetType="TextBlock" BasedOn="{StaticResource GridTextBlockStyle}"/>
                 <Style TargetType="TextBox" BasedOn="{StaticResource GridTextBoxStyle}"/>
                 <Style TargetType="sdk:AutoCompleteBox" BasedOn="{StaticResource GridAutocompleteStyle}"/>
             </sdk:DataGrid.Resources>
             <sdk:DataGrid.Columns>
-                <sdk:DataGridTemplateColumn Width="100" Header="Material Code" >
+                <sdk:DataGridTemplateColumn Width="100" Header="Material Code">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <sdk:AutoCompleteBox SelectedItem="{Binding Material, Mode=TwoWay}" ValueMemberPath="MaterialCode"
-                                                 MinimumPopulateDelay="400" MinimumPrefixLength="2"
-                                                 ItemsSource="{Binding CreateOrderVM.Materials, Source={StaticResource Locator}}">
+                            <sdk:AutoCompleteBox SelectedItem="{Binding Material, Mode=TwoWay}"
+                                                     ValueMemberPath="MaterialCode"
+                                                     MinimumPopulateDelay="400" MinimumPrefixLength="2"
+                                                     ItemsSource="{Binding CreateOrderVM.Materials, Source={StaticResource Locator}}">
                                 <sdk:AutoCompleteBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding MaterialCode}" />
@@ -97,7 +98,7 @@
                 <sdk:DataGridTemplateColumn Width="220" Header="Material Name" >
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <sdk:AutoCompleteBox SelectedItem="{Binding Material, Mode=TwoWay}" ValueMemberPath="MaterialName" MinimumPopulateDelay="400" MinimumPrefixLength="4"
+                            <sdk:AutoCompleteBox SelectedItem="{Binding Material, Mode=TwoWay}" ValueMemberPath="MaterialName" MinimumPopulateDelay="300" MinimumPrefixLength="3"
                                                  ItemsSource="{Binding CreateOrderVM.Materials, Source={StaticResource Locator}}">
                                 <sdk:AutoCompleteBox.ItemTemplate>
                                     <DataTemplate>
@@ -108,13 +109,48 @@
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>
-                <sdk:DataGridTextColumn Header="Target Qty" Binding="{Binding TargetQty}"></sdk:DataGridTextColumn>
-                <sdk:DataGridTextColumn Header="UoM" Binding="{Binding Uom}"></sdk:DataGridTextColumn>
-                <sdk:DataGridTextColumn Header="Source Tank" Binding="{Binding SourceTank.SapTankName}"></sdk:DataGridTextColumn>
+                <sdk:DataGridTemplateColumn Header="Target Qty" Width="110">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding TargetQty, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTemplateColumn Header="UoM" Width="75">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding Uom, Mode=TwoWay}" ItemsSource="{Binding CreateOrderVM.Uoms, Source={StaticResource Locator}}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTemplateColumn Header="Source Tank">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <sdk:AutoCompleteBox SelectedItem="{Binding SourceTank, Mode=TwoWay}" ValueMemberPath="SapTankName" MinimumPopulateDelay="300" MinimumPrefixLength="2"
+                                                 ItemsSource="{Binding CreateOrderVM.Tanks, Source={StaticResource Locator}}">
+                                <sdk:AutoCompleteBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding SapTankName}" />
+                                    </DataTemplate>
+                                </sdk:AutoCompleteBox.ItemTemplate>
+                            </sdk:AutoCompleteBox>
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTemplateColumn>
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button BorderBrush="Transparent" Background="Transparent"
+                                    Command="{Binding CreateOrderVM.ClearRowCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}">
+                                <Image Source="../Resources/Images/clear.png"></Image>
+                            </Button>
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <Button HorizontalAlignment="Center" Margin="10,5">Create</Button>
+            <Button HorizontalAlignment="Center" Margin="10,5" Command="{Binding CreateOrderCommand}">Create</Button>
         </Grid>
     </Grid>
 </UserControl>

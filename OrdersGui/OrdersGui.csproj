@@ -271,6 +271,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Resource Include="Resources\Images\up.png" />
+    <Resource Include="Resources\Images\clear.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.wsdl" />
     <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.xsd">

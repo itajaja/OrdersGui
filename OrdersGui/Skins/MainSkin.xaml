@@ -13,6 +13,7 @@
     <Color x:Key="LightBlueColor">#C9E4ED</Color>
     <Color x:Key="YellowColor">#BBBE25</Color>
     <Color x:Key="BrownColor">#AB4930</Color>
+    <Color x:Key="GreenColor">#92C663</Color>
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" />
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
     <SolidColorBrush x:Key="DarkGrayBrush" Color="{StaticResource DarkGrayColor}" />
@@ -20,6 +21,7 @@
     <SolidColorBrush x:Key="LightBlueBrush" Color="{StaticResource LightBlueColor}" />
     <SolidColorBrush x:Key="YellowBrush" Color="{StaticResource YellowColor}" />
     <SolidColorBrush x:Key="BrownBrush" Color="{StaticResource BrownColor}" />
+    <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource GreenColor}" />
 
     <!-- Simple Styles-->
     <Style TargetType="sdk:AutoCompleteBox" x:Key="GridAutocompleteStyle">
@@ -35,6 +37,8 @@
         <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
     </Style>
     <Style TargetType="TextBox" x:Key="GridTextBoxStyle">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="16" />
         <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />

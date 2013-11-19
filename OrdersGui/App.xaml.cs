@@ -11,7 +11,7 @@ namespace Hylasoft.OrdersGui
         {
             Startup += Application_Startup;
             Exit += Application_Exit;
-            UnhandledException += Application_UnhandledException;
+//            UnhandledException += Application_UnhandledException;
 
             InitializeComponent();
         }

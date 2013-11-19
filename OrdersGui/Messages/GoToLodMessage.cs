@@ -1,4 +1,6 @@
-﻿namespace Hylasoft.OrdersGui.Messages
+﻿using Hylasoft.OrdersGui.Model;
+
+namespace Hylasoft.OrdersGui.Messages
 {
 
     /// <summary>
@@ -10,7 +12,7 @@
         /// <summary>
         /// The ID of the order to display
         /// </summary>
-        public long OrderId { get; set; }
+        public Order Order { get; set; }
 
         /// <summary>
         /// Sets if editing is enabled

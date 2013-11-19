@@ -41,7 +41,7 @@
                                 <VisualState x:Name="Normal"/>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" To="0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Presenter"/>
+                                        <DoubleAnimation Duration="0" To="0.25" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Presenter"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

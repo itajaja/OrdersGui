@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.Messaging;
 using Hylasoft.OrdersGui.Messages;
-using Hylasoft.OrdersGui.Resources;
 
 namespace Hylasoft.OrdersGui.View
 {
@@ -25,8 +23,6 @@ namespace Hylasoft.OrdersGui.View
     
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            //todo this should be command
-            Messenger.Default.Send(new GoToLodMessage{OrderId = 0}); //todo we don't like order id here, of course!
         }
 
         private void OrderStatusFilterButton_Click(object sender, RoutedEventArgs e)

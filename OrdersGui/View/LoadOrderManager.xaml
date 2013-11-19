@@ -93,11 +93,12 @@
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu Name="GridContextMenu" DataContext="{Binding ElementName=OrdersGrid, Path=SelectedItem}">
 <!--                        <toolkit:MenuItem Header="{Binding OrderNo, StringFormat=Load Order \{0\}}" Background="{StaticResource BackgroundBrush}" HorizontalContentAlignment="Center"/>-->
-                        <toolkit:MenuItem Header="View/Edit Order Details" />
+                        <toolkit:MenuItem Header="View/Edit Order Details" Command="{Binding LoadOrderManagerVM.ViewEditDetailsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                         <toolkit:MenuItem Header="View Carrier Instruction" />
                         <toolkit:MenuItem Header="Prepare Order" />
-                        <toolkit:MenuItem Header="+Enter Seals" />
-                        <toolkit:MenuItem Header="+Release" />
+                        <!-- Next two items ONLY for load!-->
+                        <toolkit:MenuItem Header="Enter Seals" Command="{Binding LoadOrderManagerVM.EnterSealsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
+                        <toolkit:MenuItem Header="Release" Command="{Binding LoadOrderManagerVM.ReleaseCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                         <toolkit:MenuItem Header="Release for Manual" />
                         <toolkit:MenuItem Header="Fullfill Manual Order" />
                         <toolkit:MenuItem Header="Inspection Failed" />

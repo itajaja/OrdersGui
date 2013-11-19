@@ -7,7 +7,9 @@ using System.Windows.Data;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
+using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
 using Hylasoft.OrdersGui.Utils;
@@ -101,6 +103,10 @@ namespace Hylasoft.OrdersGui.ViewModel
         public RelayCommand AddAllStatusFilterCommand { get; private set; }
         public RelayCommand SetTodayFilterCommand { get; private set; }
         public RelayCommand ClearDateFilterCommand { get; private set; }
+        //contextmenu command
+        public RelayCommand<Order> ViewEditDetailsCommand { get; private set; }
+        public RelayCommand<Order> EnterSealsCommand { get; private set; }
+        public RelayCommand<Order> ReleaseCommand { get; private set; }
 
         public LoadOrderManagerVM(IDataService ds)
         {
@@ -212,6 +218,12 @@ namespace Hylasoft.OrdersGui.ViewModel
             {
                 DateFilter = DateTime.Today;
             }, CanExecute);
+
+            //ContextMenu Items
+            ViewEditDetailsCommand = new RelayCommand<Order>(order => Messenger.Default.Send(new GoToLodMessage{IsReadOnly = order.OrderStatus != OrderStatus.Ready, Order = order}),order => order!= null);
+            EnterSealsCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
+            ReleaseCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
+            
             _commandList = new List<RelayCommand>{
                 ClearStatusFilerCommand, AddAllStatusFilterCommand,
                 SetTodayFilterCommand, ClearDateFilterCommand

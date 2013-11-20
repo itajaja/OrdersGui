@@ -110,7 +110,6 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         public LoadOrderManagerVM(IDataService ds)
         {
-//            DispatcherHelper.Initialize();
             try
             {
                 _dataService = ds;
@@ -220,7 +219,12 @@ namespace Hylasoft.OrdersGui.ViewModel
             }, CanExecute);
 
             //ContextMenu Items
-            ViewEditDetailsCommand = new RelayCommand<Order>(order => Messenger.Default.Send(new GoToLodMessage{IsReadOnly = order.OrderStatus != OrderStatus.Ready, Order = order}),order => order!= null);
+            ViewEditDetailsCommand = new RelayCommand<Order>(order =>
+            {
+
+                Messenger.Default.Send(new GoToLodMessage{IsReadOnly = order.OrderStatus != OrderStatus.Ready, Order = order});
+                
+            },order => order!= null);
             EnterSealsCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
             ReleaseCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
             

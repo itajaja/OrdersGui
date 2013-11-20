@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
@@ -43,22 +44,33 @@ namespace Hylasoft.OrdersGui.ViewModel
         public LoadOrderDetailsVM(IDataService ds)
         {
             _dataservice = ds;
-            ds.GetSessionData((data, exception) => _sessionData = data);
+            _dataservice.GetSessionData((data, exception) => _sessionData = data);
+            
             Messenger.Default.Register<GoToLodMessage>(this, o =>
             {
                 _readOnly = o.IsReadOnly;
                 Order = o.Order;
+                _dataservice.GetOrderProducts(Order.OrderId,
+                    (item, error) =>
+                    {
+                        DispatcherHelper.CheckBeginInvokeOnUI(() => OrderProducts = new TrulyObservableCollection<OrderProduct>(item));
+                    });
+                _dataservice.GetOrderCompartments(Order.OrderId,
+                    (item, error) =>
+                    {
+                        DispatcherHelper.CheckBeginInvokeOnUI(() => OrderCompartments = new TrulyObservableCollection<OrderCompartment>(item));
+                    });
             });
             GoBackCommand = new RelayCommand(() =>
             {
                 Messenger.Default.Send(new GoToLomMessage());
-                Cleanup();
+                Reset();
             });
             AssignCompartmentCommand = new RelayCommand(() => { },
                 CanExecute);
             AssignTruckCommand = new RelayCommand(() => { },
                 CanExecute);
-            Cleanup();
+            Reset();
         }
 
         private bool CanExecute()
@@ -66,9 +78,8 @@ namespace Hylasoft.OrdersGui.ViewModel
             return _sessionData.User != User.User0 && !_readOnly;
         }
 
-        public override void Cleanup()
+        public void Reset()
         {
-            base.Cleanup();
             Order = new Order();
             //initialize with 5 empty products and compartments
             OrderProducts = new TrulyObservableCollection<OrderProduct>{

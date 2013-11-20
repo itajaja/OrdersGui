@@ -105,9 +105,6 @@
                         <toolkit:MenuItem Header="Unload Order" />
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
-                <sdk:DataGrid.Resources>
-                    <Style TargetType="TextBlock" />
-                </sdk:DataGrid.Resources>
                 <sdk:DataGrid.Columns>
                     <sdk:DataGridTextColumn Header="Order No." Width="Auto" Binding="{Binding OrderNo}" />
                     <sdk:DataGridTextColumn Header="Rack" Binding="{Binding LoadRack.RackName}" />

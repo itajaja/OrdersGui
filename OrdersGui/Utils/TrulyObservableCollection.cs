@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -11,6 +12,12 @@ namespace Hylasoft.OrdersGui.Utils
         public TrulyObservableCollection()
         {
             CollectionChanged += TrulyObservableCollection_CollectionChanged;
+        }
+
+        public TrulyObservableCollection(IEnumerable<T> source) : this()
+        {
+            foreach (var item in source)
+                Add(item);
         }
 
         void TrulyObservableCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

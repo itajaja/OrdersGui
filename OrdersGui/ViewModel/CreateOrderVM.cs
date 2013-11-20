@@ -15,6 +15,7 @@ namespace Hylasoft.OrdersGui.ViewModel
 {
     public sealed class CreateOrderVM : ViewModelBase
     {
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly IDataService _dataService;
 
         private Order _order;
@@ -84,7 +85,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             GoBackCommand = new RelayCommand(() =>
             {
                 Messenger.Default.Send(new GoToLomMessage());
-                Cleanup();
+                Reset();
             });
             ClearRowCommand = new RelayCommand<OrderProduct>(product =>
             {
@@ -93,12 +94,11 @@ namespace Hylasoft.OrdersGui.ViewModel
                 product.TargetQty = 0;
                 product.Uom = null;
             });
-            Cleanup();
+            Reset();
         }
 
-        public override void Cleanup()
+        public void Reset()
         {
-            base.Cleanup();
             Order = new Order();
             //initialize with 5 empty products
             OrderProducts = new TrulyObservableCollection<OrderProduct>{
@@ -169,7 +169,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         {
             return op.Material == null
                    && op.SourceTank == null
-                   && op.TargetQty == 0
+                   && op.TargetQty <= 0
                    && string.IsNullOrEmpty(op.Uom);
         }
     }

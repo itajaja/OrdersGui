@@ -210,5 +210,89 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             return orders.Select(ConvertTank).ToList();
         }
+
+        private Container ConvertContainer(NonTransactionalFunctions.Container cont)
+        {
+            var mCont = new Container();
+            mCont.Capacity = cont.Capacity;
+            mCont.CompartmentsCount = cont.Compartments;
+            mCont.ContainerId = cont.ContainerId;
+            mCont.ContainerNo = cont.ContainerNo;
+            mCont.GrossWeight = cont.GrossWeight;
+            mCont.Type = cont.Type;
+            return mCont;
+        }
+
+        private IList<Container> ConvertContainers(IEnumerable<NonTransactionalFunctions.Container> containers)
+        {
+            return containers.Select(ConvertContainer).ToList();
+        }
+
+        private Compartment ConvertCompartment(NonTransactionalFunctions.Compartment comp)
+        {
+            var mComp = new Compartment();
+            mComp.Capacity = comp.Capacity;
+            mComp.CompartmentNo = comp.CompartmentNo;
+            mComp.Container = _containers.FirstOrDefault(c => c.ContainerId == comp.ContainerID);
+            return mComp;
+        }
+
+        private IList<Compartment> ConvertCompartments(IEnumerable<NonTransactionalFunctions.Compartment> compartments)
+        {
+            return compartments.Select(ConvertCompartment).ToList();
+        }
+
+        private OrderProduct ConvertOrderProduct(LoadOrderProduct product)
+        {
+            var mProduct = new OrderProduct();
+            mProduct.Material = _materials.FirstOrDefault(m => m.MaterialCode == product.MaterialCode);
+            mProduct.SourceTank = _tanks.FirstOrDefault(t => t.TankName == product.SourceTank);
+            mProduct.TargetQty = product.TargetQty;
+            mProduct.Uom = product.UoM;
+            return mProduct;
+        }
+
+        private IList<OrderProduct> ConvertOrderProducts(IEnumerable<LoadOrderProduct> products)
+        {
+            return products.Select(ConvertOrderProduct).ToList();
+        }
+
+        private LoadingCompartmentStatus ConvertCompartmentStatus(int compartmentStatus)
+        {
+            switch (compartmentStatus)
+            {
+                case 0:return LoadingCompartmentStatus.Free;
+                case 1:return LoadingCompartmentStatus.Ready;
+                case 2:return LoadingCompartmentStatus.Filling;
+                case 3:return LoadingCompartmentStatus.Stopped;
+                case 4:return LoadingCompartmentStatus.Completed;
+                case 5:return LoadingCompartmentStatus.Partial;
+                case 6:return LoadingCompartmentStatus.Aborted;
+                case 7:return LoadingCompartmentStatus.Unused;
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private OrderCompartment ConvertOrderCompartment(LoadOrderDetailsCompartments comp, IEnumerable<Compartment> comps = null, IEnumerable<OrderProduct> prods = null)
+        {
+            var mComp = new OrderCompartment();
+            mComp.ActualQty = comp.ActualQty;
+            if (comps != null)
+                mComp.Compartment = comps.FirstOrDefault(c => c.CompartmentNo == comp.CompartmentNo);
+            if (prods != null)
+                mComp.OrderProduct = prods.FirstOrDefault(p => p.Material.MaterialCode == comp.MaterialCode);
+            mComp.CompartmentStatus = ConvertCompartmentStatus(comp.CompartmentStatus);
+            mComp.NetWeight = comp.NetWeight;
+            mComp.RackArm = _arms.FirstOrDefault(a => a.ArmId == comp.LoadArmId);
+            mComp.SeqNo = comp.SeqNo;
+            mComp.Tank = _tanks.FirstOrDefault(t => t.TankId == comp.TankId);
+            mComp.TargetQty = comp.TargetQty;
+            return mComp;
+        }
+
+        private IList<OrderCompartment> ConvertOrderCompartments(IEnumerable<LoadOrderDetailsCompartments> compartments, IEnumerable<Compartment> comps = null, IEnumerable<OrderProduct> prods = null)
+        {
+            return compartments.Select(c => ConvertOrderCompartment(c,comps,prods)).ToList();
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace Hylasoft.OrdersGui.Design
             throw new NotImplementedException();
         }
 
-        public void GetCompartments(Action<IList<Compartment>, Exception> callback)
+        public void GetCompartments(long containerId, Action<IList<Compartment>, Exception> callback)
         {
             throw new NotImplementedException();
         }
@@ -60,12 +60,7 @@ namespace Hylasoft.OrdersGui.Design
             throw new NotImplementedException();
         }
 
-        public void GetOrderProducts(long orderId, Action<IList<OrderProduct>, Exception> callback)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetOrderCompartments(long orderId, Action<IList<OrderCompartment>, Exception> callback)
+        public void GetOrderDetails(long orderId, Action<IList<OrderProduct>, IList<OrderCompartment>, IList<Compartment>, Container, Exception> callback)
         {
             throw new NotImplementedException();
         }

@@ -37,6 +37,20 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("OrderCompartments", ref _orderCompartments, value); }
         }
 
+        private TrulyObservableCollection<Compartment> _compartments;
+        public TrulyObservableCollection<Compartment> Compartments
+        {
+            get { return _compartments; }
+            set { Set("Compartments", ref _compartments, value); }
+        }
+
+        private Container _container;
+        public Container Container
+        {
+            get { return _container; }
+            set { Set("Container", ref _container, value); }
+        }
+
         public RelayCommand GoBackCommand { get; private set; }
         public RelayCommand AssignCompartmentCommand { get; private set; }
         public RelayCommand AssignTruckCommand { get; private set; }
@@ -45,21 +59,24 @@ namespace Hylasoft.OrdersGui.ViewModel
         {
             _dataservice = ds;
             _dataservice.GetSessionData((data, exception) => _sessionData = data);
-            
+
             Messenger.Default.Register<GoToLodMessage>(this, o =>
             {
                 _readOnly = o.IsReadOnly;
                 Order = o.Order;
-                _dataservice.GetOrderProducts(Order.OrderId,
-                    (item, error) =>
+                _dataservice.GetOrderDetails(Order.OrderId,
+                    (orderProds, orderComps, comps, container, error) => DispatcherHelper.CheckBeginInvokeOnUI(() =>
                     {
-                        DispatcherHelper.CheckBeginInvokeOnUI(() => OrderProducts = new TrulyObservableCollection<OrderProduct>(item));
-                    });
-                _dataservice.GetOrderCompartments(Order.OrderId,
-                    (item, error) =>
-                    {
-                        DispatcherHelper.CheckBeginInvokeOnUI(() => OrderCompartments = new TrulyObservableCollection<OrderCompartment>(item));
-                    });
+                        if (orderProds != null)
+                            OrderProducts = new TrulyObservableCollection<OrderProduct>(orderProds);
+                        if (orderComps != null)
+                        {
+                            OrderCompartments = new TrulyObservableCollection<OrderCompartment>(orderComps);
+                            Compartments = new TrulyObservableCollection<Compartment>(comps);
+                            Container = container;
+                        }
+                    })
+                    );
             });
             GoBackCommand = new RelayCommand(() =>
             {
@@ -88,6 +105,13 @@ namespace Hylasoft.OrdersGui.ViewModel
                 new OrderProduct(),
                 new OrderProduct(),
                 new OrderProduct()
+            };
+            OrderCompartments = new TrulyObservableCollection<OrderCompartment>{
+                new OrderCompartment(),
+                new OrderCompartment(),
+                new OrderCompartment(),
+                new OrderCompartment(),
+                new OrderCompartment()
             };
         }
     }

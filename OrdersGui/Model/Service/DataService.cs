@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Hylasoft.OrdersGui.EventMonitor;
@@ -21,8 +22,7 @@ namespace Hylasoft.OrdersGui.Model.Service
         private IList<Material> _materials;
         private IList<Tank> _sapTanks;
         private IList<Tank> _tanks;
-        //        private readonly IList<Container> _containers; 
-        //        private readonly IList<Compartment> _compartments;
+        private List<Container> _containers;
 
         public DataService()
         {
@@ -43,7 +43,6 @@ namespace Hylasoft.OrdersGui.Model.Service
         private readonly AutoResetEvent _tanksWaiter = new AutoResetEvent(false);
         private readonly AutoResetEvent _sapTanksWaiter = new AutoResetEvent(false);
         private readonly AutoResetEvent _containersWaiter = new AutoResetEvent(false);
-        private readonly AutoResetEvent _compartmentsWaiter = new AutoResetEvent(false);
         private readonly AutoResetEvent _materialsWaiter = new AutoResetEvent(false);
         private void Initialize()
         {
@@ -88,7 +87,20 @@ namespace Hylasoft.OrdersGui.Model.Service
                 _ntfClient.GetSapTanksAsync();
             };
             _ntfClient.GetMaterialsAsync();
-            //            GetContainers((a, b) => GetCompartments((c, d) => { }));
+            var page = 0;
+            var range = 500;
+            _containers = new List<Container>();
+            _ntfClient.GetContainersCompleted += (sender, args) =>
+            {
+                CheckAndRethrow(args.Error);
+                _containers.AddRange(ConvertContainers(args.Result));
+                page++;
+                if (args.Result.Count >= range)
+                    _ntfClient.GetContainersAsync("", page, range);
+                else
+                    _containersWaiter.Set();
+            };
+            _ntfClient.GetContainersAsync("", page, range);
         }
 
         public void GetSessionData(Action<SessionData, Exception> callback)
@@ -192,24 +204,58 @@ namespace Hylasoft.OrdersGui.Model.Service
             });
         }
 
-        public void GetCompartments(Action<IList<Compartment>, Exception> callback)
-        {
-            throw new NotImplementedException();
-        }
-
         public void GetContainers(Action<IList<Container>, Exception> callback)
         {
-            throw new NotImplementedException();
+            Task.Factory.StartNew(() =>
+            {
+                _containersWaiter.WaitOne();
+                callback(_containers, null);
+            });
         }
 
-        public void GetOrderProducts(long orderId, Action<IList<OrderProduct>, Exception> callback)
+        public void GetCompartments(long containerId, Action<IList<Compartment>, Exception> callback)
         {
-            throw new NotImplementedException();
+            Task.Factory.StartNew(() =>
+            {
+                EventHandler<getContainerCompartmentsCompletedEventArgs> handler = null;
+                handler = (sender, args) =>
+                {
+                    _ntfClient.getContainerCompartmentsCompleted -= handler;
+                    CheckAndRethrow(args.Error);
+                    var comps = ConvertCompartments(args.Result);
+                    callback(comps, null);
+                };
+                _ntfClient.getContainerCompartmentsCompleted += handler;
+                _ntfClient.getContainerCompartmentsAsync(containerId);
+            });
         }
 
-        public void GetOrderCompartments(long orderId, Action<IList<OrderCompartment>, Exception> callback)
+        public void GetOrderDetails(long orderId, Action<IList<OrderProduct>, IList<OrderCompartment>, IList<Compartment>, Container, Exception> callback)
         {
-            throw new NotImplementedException();
+            Task.Factory.StartNew(() =>
+            {
+                _ntfClient.GetLoadOrderProductsCompleted += (sender, opArgs) =>
+                {
+                    var orderProds = ConvertOrderProducts(opArgs.Result);
+                    _ntfClient.getLoadOrderDetailsCompartmentsCompleted += (o, ocArgs) =>
+                    {
+                        if (ocArgs.Result.Count == 0)
+                        {
+                            callback(orderProds, null, null, null, null);
+                            return;
+                        }
+                        var containerId = ocArgs.Result.First().ContainerId;
+                        GetCompartments(containerId, (compsList, exception) =>
+                        {
+                            var orderComps = ConvertOrderCompartments(ocArgs.Result, compsList, orderProds);
+                            var container = compsList.FirstOrDefault().Container;
+                            callback(orderProds, orderComps, compsList, container, null);
+                        });
+                    };
+                    _ntfClient.getLoadOrderDetailsCompartmentsAsync(orderId);
+                };
+                _ntfClient.GetLoadOrderProductsAsync(orderId);
+            });
         }
 
         public void CreateOrder(Action<Exception> callback)

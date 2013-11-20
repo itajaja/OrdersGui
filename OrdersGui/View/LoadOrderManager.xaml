@@ -65,7 +65,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-<!--        <sdk:Label Style="{StaticResource TitleStyle}" Content="{Binding LoadOrderManagerTitle, Source={StaticResource Strings}}" />-->
+        <sdk:Label Style="{StaticResource TitleStyle}" Content="{Binding LoadOrderManagerTitle, Source={StaticResource Strings}}" />
         <Grid Grid.Row="1" Margin="0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -88,15 +88,13 @@
             </Button>
         </Grid>
         <Border Grid.Row="2" Grid.RowSpan="2" BorderThickness="0,2,0,0" BorderBrush="{StaticResource DarkGrayBrush}">
-            <sdk:DataGrid MouseRightButtonDown="OrdersGrid_OnMouseRightButtonDown" Style="{x:Null}"  AutoGenerateColumns="False" Name="OrdersGrid"
-                          ItemsSource="{Binding OrdersView}" IsReadOnly="True" SelectionMode="Single">
+            <sdk:DataGrid MouseRightButtonDown="OrdersGrid_OnMouseRightButtonDown" Name="OrdersGrid" ItemsSource="{Binding OrdersView}">
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu Name="GridContextMenu" DataContext="{Binding ElementName=OrdersGrid, Path=SelectedItem}">
 <!--                        <toolkit:MenuItem Header="{Binding OrderNo, StringFormat=Load Order \{0\}}" Background="{StaticResource BackgroundBrush}" HorizontalContentAlignment="Center"/>-->
                         <toolkit:MenuItem Header="View/Edit Order Details" Command="{Binding LoadOrderManagerVM.ViewEditDetailsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                         <toolkit:MenuItem Header="View Carrier Instruction" />
                         <toolkit:MenuItem Header="Prepare Order" />
-                        <!-- Next two items ONLY for load!-->
                         <toolkit:MenuItem Header="Enter Seals" Command="{Binding LoadOrderManagerVM.EnterSealsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                         <toolkit:MenuItem Header="Release" Command="{Binding LoadOrderManagerVM.ReleaseCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                         <toolkit:MenuItem Header="Release for Manual" />

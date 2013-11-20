@@ -8,17 +8,18 @@
         <ResourceDictionary Source="MainSkin.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <Style x:Key="DataGridStyle" TargetType="sdk:DataGrid">
+        <Setter Property="CanUserResizeColumns" Value="False"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="RowBackground" Value="#AAEAEFF4"/>
         <Setter Property="AlternatingRowBackground" Value="#00FFFFFF"/>
         <Setter Property="Background" Value="#FFFFFFFF"/>
         <Setter Property="HeadersVisibility" Value="Column"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="SelectionMode" Value="Extended"/>
         <Setter Property="CanUserReorderColumns" Value="True"/>
-        <Setter Property="CanUserResizeColumns" Value="True"/>
-        <Setter Property="CanUserSortColumns" Value="True"/>
-        <Setter Property="AutoGenerateColumns" Value="True"/>
+        <Setter Property="CanUserSortColumns" Value="False"/>
         <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
         <Setter Property="BorderBrush">
             <Setter.Value>
@@ -108,6 +109,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="sdk:DataGrid">
                     <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource GridTextBlockStyle}"/>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource GridTextBoxStyle}"/>
+                            <Style TargetType="sdk:AutoCompleteBox" BasedOn="{StaticResource GridAutocompleteStyle}"/>
+                        </Grid.Resources>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>

@@ -71,13 +71,7 @@
                       ItemsSource="{Binding CreateOrderVM.Methods, Source={StaticResource Locator}}"/>
             <sdk:Calendar Grid.Row="7" Grid.Column="1" SelectedDate="{Binding ScheduleDate, Mode=TwoWay}"/>
         </Grid>
-        <sdk:DataGrid Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" CanUserResizeColumns="False"
-                      ItemsSource="{Binding OrderProducts}" AutoGenerateColumns="False" SelectionMode="Single" Style="{StaticResource DataGridStyle}" IsReadOnly="True">
-            <sdk:DataGrid.Resources>
-                <Style TargetType="TextBlock" BasedOn="{StaticResource GridTextBlockStyle}"/>
-                <Style TargetType="TextBox" BasedOn="{StaticResource GridTextBoxStyle}"/>
-                <Style TargetType="sdk:AutoCompleteBox" BasedOn="{StaticResource GridAutocompleteStyle}"/>
-            </sdk:DataGrid.Resources>
+        <sdk:DataGrid Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,0,0,0" ItemsSource="{Binding OrderProducts}">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTemplateColumn Width="100" Header="Material Code">
                     <sdk:DataGridTemplateColumn.CellTemplate>

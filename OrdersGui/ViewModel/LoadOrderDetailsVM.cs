@@ -22,15 +22,15 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("Order", ref _order, value); }
         }
 
-        private IList<OrderProduct> _orderProducts;
-        public IList<OrderProduct> OrderProducts
+        private TrulyObservableCollection<OrderProduct> _orderProducts;
+        public TrulyObservableCollection<OrderProduct> OrderProducts
         {
             get { return _orderProducts; }
             set { Set("OrderProducts", ref _orderProducts, value); }
         }
 
-        private IList<OrderCompartment> _orderCompartments;
-        public IList<OrderCompartment> OrderCompartments
+        private TrulyObservableCollection<OrderCompartment> _orderCompartments;
+        public TrulyObservableCollection<OrderCompartment> OrderCompartments
         {
             get { return _orderCompartments; }
             set { Set("OrderCompartments", ref _orderCompartments, value); }
@@ -46,15 +46,19 @@ namespace Hylasoft.OrdersGui.ViewModel
             ds.GetSessionData((data, exception) => _sessionData = data);
             Messenger.Default.Register<GoToLodMessage>(this, o =>
             {
-                //gets order, orderproduct and ordercomparmtent
                 _readOnly = o.IsReadOnly;
+                Order = o.Order;
             });
-            //todo implement commands
-            GoBackCommand = new RelayCommand(() => { });
+            GoBackCommand = new RelayCommand(() =>
+            {
+                Messenger.Default.Send(new GoToLomMessage());
+                Cleanup();
+            });
             AssignCompartmentCommand = new RelayCommand(() => { },
                 CanExecute);
             AssignTruckCommand = new RelayCommand(() => { },
                 CanExecute);
+            Cleanup();
         }
 
         private bool CanExecute()
@@ -66,9 +70,14 @@ namespace Hylasoft.OrdersGui.ViewModel
         {
             base.Cleanup();
             Order = new Order();
-            //initialize with 5 empty products
-            OrderProducts = new TrulyObservableCollection<OrderProduct>();
-            OrderCompartments = new List<OrderCompartment>();
+            //initialize with 5 empty products and compartments
+            OrderProducts = new TrulyObservableCollection<OrderProduct>{
+                new OrderProduct(),
+                new OrderProduct(),
+                new OrderProduct(),
+                new OrderProduct(),
+                new OrderProduct()
+            };
         }
     }
 }

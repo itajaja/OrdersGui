@@ -79,7 +79,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             CreateOrderCommand = new RelayCommand(() =>
             {
                 if (Validate())
-                    MessageBox.Show("YEAH");
+                    MessageBox.Show("YEAH"); //todo implement
             });
             GoBackCommand = new RelayCommand(() =>
             {
@@ -92,7 +92,6 @@ namespace Hylasoft.OrdersGui.ViewModel
                 product.SourceTank = null;
                 product.TargetQty = 0;
                 product.Uom = null;
-                Cleanup();
             });
             Cleanup();
         }

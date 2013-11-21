@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
@@ -109,62 +108,58 @@ namespace Hylasoft.OrdersGui.ViewModel
         public RelayCommand<Order> ReleaseCommand { get; private set; }
 
         public LoadOrderManagerVM(IDataService ds)
-        {
-            try
-            {
-                _dataService = ds;
-                _dataService.GetSessionData(
-                    (item, error) =>
-                    {
-                        HandleException(error);
-                        DispatcherHelper.CheckBeginInvokeOnUI(() => SessionData = item);
-                    });
-                _dataService.GetSystemData(
-                    (item, error) =>
-                    {
-                        HandleException(error);
-                        DispatcherHelper.CheckBeginInvokeOnUI(() => SystemInfo = item);
-                    });
-                _dataService.GetOrders(
-                    (item, error) =>
-                    {
-                        HandleException(error);
-                        DispatcherHelper.CheckBeginInvokeOnUI(() => Orders = new ObservableCollection<Order>(item));
-                    });
-                OrderStatusFilter = new TrulyObservableCollection<OrderStatusCheck>();
-                InitializeCommands();
-                foreach (var status in EnumList.GetEnumValues<OrderStatus>())
-                    OrderStatusFilter.Add(new OrderStatusCheck{Status = status, IsChecked = true});
-                var updateTimer = new DispatcherTimer();
-                updateTimer.Interval = TimeSpan.FromSeconds(5); //todo resourcify
-                updateTimer.Tick += Reload;
-                updateTimer.Start();
-                Reload(null, null);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Unhandled Error when opening LoadOrderManager. Please Restart the application.\n\n" + e);
-                HandleException(e);
-            }
+    {
+            _dataService = ds;
+            _dataService.GetSessionData(
+                (item, error) =>
+                {
+                    HandleException(error);
+                    DispatcherHelper.CheckBeginInvokeOnUI(() => SessionData = item);
+                });
+            _dataService.GetSystemData(
+                (item, error) =>
+                {
+                    HandleException(error);
+                    DispatcherHelper.CheckBeginInvokeOnUI(() => SystemInfo = item);
+                });
+            _dataService.GetOrders(
+                (item, error) =>
+                {
+                    HandleException(error);
+                    DispatcherHelper.CheckBeginInvokeOnUI(() => Orders = new ObservableCollection<Order>(item));
+                });
+            OrderStatusFilter = new TrulyObservableCollection<OrderStatusCheck>();
+            InitializeCommands();
+            foreach (var status in EnumList.GetEnumValues<OrderStatus>())
+                OrderStatusFilter.Add(new OrderStatusCheck{Status = status, IsChecked = true});
+            var updateTimer = new DispatcherTimer();
+            updateTimer.Interval = TimeSpan.FromSeconds(5); //todo resourcify
+            updateTimer.Tick += Reload;
+            updateTimer.Start();
+            Reload(null, null);
         }
 
         private void Reload(object sender, EventArgs eventArgs)
         {
-            _dataService.GetOpcStatus(
-                (item, error) =>
+            _dataService.GetServerStatus(
+                (itemStatus, slomStatus, error) => DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
                     try
                     {
                         if (error != null) throw error;
-                        _sessionData.OpcStatus = item;
-                        _sessionData.SlomStatus = SlomConnectionStatus.Connected;
-                        RefreshCanExecuteCommands();
+
+                        _sessionData.OpcStatus = itemStatus;
+                        _sessionData.SlomStatus = slomStatus;
                     }
                     catch (Exception e)
                     {
                         HandleException(e);
                     }
-                });
+                    finally
+                    {
+                        RefreshCanExecuteCommands();
+                    }
+                }));
         }
 
         private void HandleException(Exception exception)
@@ -180,7 +175,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                 SlomStatus = SlomConnectionStatus.Disconnected,
                 User = User.User0
             };
-            throw new Exception(exception.Message,exception);
+//            throw new Exception(exception.Message,exception);
         }
 
         private bool OrderFilter(object o)
@@ -220,11 +215,10 @@ namespace Hylasoft.OrdersGui.ViewModel
 
             //ContextMenu Items
             ViewEditDetailsCommand = new RelayCommand<Order>(order =>
-            {
-
-                Messenger.Default.Send(new GoToLodMessage{IsReadOnly = order.OrderStatus != OrderStatus.Ready, Order = order});
-                
-            },order => order!= null);
+                Messenger.Default.Send(new GoToLodMessage{
+                    IsReadOnly = order.OrderStatus != OrderStatus.Ready,
+                    Order = order
+                }), order => order != null);
             EnterSealsCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
             ReleaseCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
             

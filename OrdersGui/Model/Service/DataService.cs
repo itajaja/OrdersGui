@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
 using Hylasoft.OrdersGui.EventMonitor;
+using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.NonTransactionalFunctions;
 using Hylasoft.OrdersGui.Resources;
 
+// ReSharper disable ImplicitlyCapturedClosure
 namespace Hylasoft.OrdersGui.Model.Service
 {
     public partial class DataService : IDataService
@@ -14,7 +18,7 @@ namespace Hylasoft.OrdersGui.Model.Service
         private readonly EventMonitorClient _emClient;
         private readonly NonTransactionalFunctionsClient _ntfClient;
 
-        // These property are stored into the dataService because they don't need to be fetched more than once
+        // These properties are stored into the dataService because they don't need to be fetched more than once
         private readonly SessionData _sessionData = new SessionData();
         private SystemInfo _systemInfo;
         private IList<Rack> _racks;
@@ -26,81 +30,98 @@ namespace Hylasoft.OrdersGui.Model.Service
 
         public DataService()
         {
-            _sessionData = new SessionData();
-            _sessionData.EmConnectionString = Configuration.EmConnectionString;
-            _sessionData.NtfConnectionString = Configuration.NtfConnectionString;
-            _sessionData.User = User.User2; //todo parametric
-            _sessionData.OpcStatus = OpcConnectionStatus.Unknown;
-            _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
-            _emClient = new EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
-            _ntfClient = new NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
-            Initialize();
+            try
+            {
+                _sessionData = new SessionData();
+                _sessionData.EmConnectionString = Configuration.EmConnectionString;
+                _sessionData.NtfConnectionString = Configuration.NtfConnectionString;
+                _sessionData.User = User.User2; //todo parametric
+                _sessionData.OpcStatus = OpcConnectionStatus.Unknown;
+                _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
+                _emClient = new EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
+                _ntfClient = new NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
+                Initialize();
+            }
+            catch (Exception e)
+            {
+                FaultState = e;
+                DispatchException("critical error when initializing the Dataservice, please restart the application", e);
+            }
         }
 
-        private readonly AutoResetEvent _systemInfoWaiter = new AutoResetEvent(false);
-        private readonly AutoResetEvent _racksWaiter = new AutoResetEvent(false);
-        private readonly AutoResetEvent _armsWaiter = new AutoResetEvent(false);
-        private readonly AutoResetEvent _tanksWaiter = new AutoResetEvent(false);
-        private readonly AutoResetEvent _sapTanksWaiter = new AutoResetEvent(false);
-        private readonly AutoResetEvent _containersWaiter = new AutoResetEvent(false);
-        private readonly AutoResetEvent _materialsWaiter = new AutoResetEvent(false);
+        private readonly ManualResetEvent _systemInfoWaiter = new ManualResetEvent(false);
+        private readonly ManualResetEvent _racksWaiter = new ManualResetEvent(false);
+        private readonly ManualResetEvent _armsWaiter = new ManualResetEvent(false);
+        private readonly ManualResetEvent _tanksWaiter = new ManualResetEvent(false);
+        private readonly ManualResetEvent _sapTanksWaiter = new ManualResetEvent(false);
+        private readonly ManualResetEvent _containersWaiter = new ManualResetEvent(false);
+        private readonly ManualResetEvent _materialsWaiter = new ManualResetEvent(false);
+        public Exception FaultState { get; private set; }
+
         private void Initialize()
         {
-            _ntfClient.GetSystemInfoCompleted += (sender, args) =>
+            //todo exception handling
+            Task.Factory.StartNew(() =>
             {
-                CheckAndRethrow(args.Error);
-                _systemInfo = ConvertSystemInfo(args.Result);
-                _systemInfoWaiter.Set();
-            };
-            _ntfClient.GetSystemInfoAsync();
-            _racks = new List<Rack>{
-                new Rack{RackId = 0, RackName = "None", RackStatus = 0},
-                new Rack{RackId = 1, RackName = "North", RackStatus = 0},
-                new Rack{RackId = 2, RackName = "South", RackStatus = 0},
-                new Rack{RackId = 3, RackName = "East", RackStatus = 0}};
-            _racksWaiter.Set();
-            _ntfClient.getLoadRackArmsCompleted += (sender, args) =>
-            {
-                CheckAndRethrow(args.Error);
-                _arms = ConvertArms(args.Result);
-                _armsWaiter.Set();
-            };
-            _ntfClient.getLoadRackArmsAsync();
-            _ntfClient.GetMaterialsCompleted += (sender, args) =>
-            {
-                CheckAndRethrow(args.Error);
-                _materials = ConvertMaterials(args.Result);
-                _materialsWaiter.Set();
-                _ntfClient.GetWinblendTanksCompleted += (sender2, args2) =>
+                _ntfClient.GetSystemInfoCompleted += (sender, args) =>
                 {
                     CheckAndRethrow(args.Error);
-                    _tanks = ConvertTanks(args2.Result);
-                    _tanksWaiter.Set();
+                    _systemInfo = ConvertSystemInfo(args.Result);
+                    _systemInfoWaiter.Set();
                 };
-                _ntfClient.GetWinblendTanksAsync();
-                _ntfClient.GetSapTanksCompleted += (sender2, args2) =>
+                _ntfClient.GetSystemInfoAsync();
+                _racks = new List<Rack>{
+                    new Rack{RackId = 0, RackName = "None", RackStatus = 0},
+                    new Rack{RackId = 1, RackName = "North", RackStatus = 0},
+                    new Rack{RackId = 2, RackName = "South", RackStatus = 0},
+                    new Rack{RackId = 3, RackName = "East", RackStatus = 0}
+                };
+                _racksWaiter.Set();
+                _ntfClient.getLoadRackArmsCompleted += (sender, args) =>
                 {
                     CheckAndRethrow(args.Error);
-                    _sapTanks = ConvertTanks(args2.Result);
-                    _sapTanksWaiter.Set();
+                    _arms = ConvertArms(args.Result);
+                    _armsWaiter.Set();
                 };
-                _ntfClient.GetSapTanksAsync();
-            };
-            _ntfClient.GetMaterialsAsync();
-            var page = 0;
-            var range = 500;
-            _containers = new List<Container>();
-            _ntfClient.GetContainersCompleted += (sender, args) =>
-            {
-                CheckAndRethrow(args.Error);
-                _containers.AddRange(ConvertContainers(args.Result));
-                page++;
-                if (args.Result.Count >= range)
-                    _ntfClient.GetContainersAsync("", page, range);
-                else
-                    _containersWaiter.Set();
-            };
-            _ntfClient.GetContainersAsync("", page, range);
+                _ntfClient.getLoadRackArmsAsync();
+                _ntfClient.GetMaterialsCompleted += (sender, args) =>
+                {
+                    CheckAndRethrow(args.Error);
+                    _materials = ConvertMaterials(args.Result);
+                    _materialsWaiter.Set();
+                    _ntfClient.GetWinblendTanksCompleted += (sender2, args2) =>
+                    {
+                        CheckAndRethrow(args.Error);
+                        _tanks = ConvertTanks(args2.Result);
+                        _tanksWaiter.Set();
+                    };
+                    _ntfClient.GetWinblendTanksAsync();
+                    _ntfClient.GetSapTanksCompleted += (sender2, args2) =>
+                    {
+                        CheckAndRethrow(args.Error);
+                        _sapTanks = ConvertTanks(args2.Result);
+                        _sapTanksWaiter.Set();
+                    };
+                    _ntfClient.GetSapTanksAsync();
+                };
+                _ntfClient.GetMaterialsAsync();
+                var page = 0;
+                var range = 500;
+                _containers = new List<Container>();
+                _ntfClient.GetContainersCompleted += (sender, args) =>
+                {
+                    CheckAndRethrow(args.Error);
+                    _containers.AddRange(ConvertContainers(args.Result));
+                    page++;
+                    if (args.Result.Count >= range)
+                        _ntfClient.GetContainersAsync("", page, range);
+                    else
+                        _containersWaiter.Set();
+                };
+                _ntfClient.GetContainersAsync("", page, range);
+                WaitforInit();
+                Messenger.Default.Send(new LoadingCompleteMessage());
+            });
         }
 
         public void GetSessionData(Action<SessionData, Exception> callback)
@@ -112,7 +133,7 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             Task.Factory.StartNew(() =>
             {
-                _systemInfoWaiter.WaitOne();
+                WaitforInit();
                 callback(_systemInfo, null);
             });
         }
@@ -121,7 +142,7 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             Task.Factory.StartNew(() =>
             {
-                _racksWaiter.WaitOne();
+                WaitforInit();
                 callback(_racks, null);
             });
         }
@@ -130,58 +151,16 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             Task.Factory.StartNew(() =>
             {
-                _systemInfoWaiter.WaitOne();
+                WaitforInit();
                 callback(_arms, null);
             });
-        }
-
-        public void GetOrders(Action<IList<Order>, Exception> callback)
-        {
-            EventHandler<GetLoadOrdersCompletedEventArgs> handler = null;
-            handler = (sender, args) =>
-            {
-                try
-                {
-                    _ntfClient.GetLoadOrdersCompleted -= handler;
-                    CheckAndRethrow(args.Error);
-                    IList<Order> orders = ConvertOrders(args.Result);
-                    callback(orders, null);
-                }
-                catch (Exception e)
-                {
-                    callback(null, e);
-                }
-            };
-            _ntfClient.GetLoadOrdersCompleted += handler;
-            _ntfClient.GetLoadOrdersAsync();
-        }
-
-        public void GetOpcStatus(Action<OpcConnectionStatus, Exception> callback)
-        {
-            EventHandler<GetOpcServerStateCompletedEventArgs> handler = null;
-            handler = (sender, args) =>
-            {
-                try
-                {
-                    _emClient.GetOpcServerStateCompleted -= handler;
-                    CheckAndRethrow(args.Error);
-                    OpcConnectionStatus status = ConvertOpcConnectionStatus(args.Result);
-                    callback(status, null);
-                }
-                catch (Exception e)
-                {
-                    callback(OpcConnectionStatus.Unknown, e);
-                }
-            };
-            _emClient.GetOpcServerStateCompleted += handler;
-            _emClient.GetOpcServerStateAsync();
         }
 
         public void GetMaterials(Action<IList<Material>, Exception> callback)
         {
             Task.Factory.StartNew(() =>
             {
-                _materialsWaiter.WaitOne();
+                WaitforInit();
                 callback(_materials, null);
             });
         }
@@ -190,7 +169,7 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             Task.Factory.StartNew(() =>
             {
-                _tanksWaiter.WaitOne();
+                WaitforInit();
                 callback(_tanks, null);
             });
         }
@@ -199,7 +178,7 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             Task.Factory.StartNew(() =>
             {
-                _sapTanksWaiter.WaitOne();
+                WaitforInit();
                 callback(_sapTanks, null);
             });
         }
@@ -208,53 +187,85 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             Task.Factory.StartNew(() =>
             {
-                _containersWaiter.WaitOne();
+                WaitforInit();
                 callback(_containers, null);
             });
         }
 
-        public void GetCompartments(long containerId, Action<IList<Compartment>, Exception> callback)
+        private readonly AutoResetEvent _opcStatusLock = new AutoResetEvent(true);
+        public void GetServerStatus(Action<OpcConnectionStatus, SlomConnectionStatus, Exception> callback)
         {
-            Task.Factory.StartNew(() =>
-            {
-                EventHandler<getContainerCompartmentsCompletedEventArgs> handler = null;
-                handler = (sender, args) =>
-                {
-                    _ntfClient.getContainerCompartmentsCompleted -= handler;
-                    CheckAndRethrow(args.Error);
-                    var comps = ConvertCompartments(args.Result);
-                    callback(comps, null);
-                };
-                _ntfClient.getContainerCompartmentsCompleted += handler;
-                _ntfClient.getContainerCompartmentsAsync(containerId);
-            });
+            var status = OpcConnectionStatus.Unknown;
+            SendIt<GetOpcServerStateCompletedEventArgs>(_opcStatusLock,
+                _emClient.GetOpcServerStateAsync,
+                handler => _emClient.GetOpcServerStateCompleted += handler,
+                handler => _emClient.GetOpcServerStateCompleted -= handler,
+                args => status = ConvertOpcConnectionStatus(args.Result),
+                () => callback(status, SlomConnectionStatus.Connected, null),
+                e => callback(OpcConnectionStatus.Unknown, SlomConnectionStatus.Disconnected, e));
         }
 
+        private readonly AutoResetEvent _compartmentsLock = new AutoResetEvent(true);
+        public void GetCompartments(long containerId, Action<IList<Compartment>, Exception> callback)
+        {
+            IList<Compartment> comps = null;
+            SendIt<getContainerCompartmentsCompletedEventArgs>(_compartmentsLock,
+                () => _ntfClient.getContainerCompartmentsAsync(containerId),
+                handler => _ntfClient.getContainerCompartmentsCompleted += handler,
+                handler => _ntfClient.getContainerCompartmentsCompleted -= handler,
+                args => comps = ConvertCompartments(args.Result),
+                () => callback(comps,null),
+                e => callback(null,e));
+        }
+
+        private readonly AutoResetEvent _ordersLock = new AutoResetEvent(true);
+        public void GetOrders(Action<IList<Order>, Exception> callback)
+        {
+            IList<Order> obj = null;
+            SendIt<GetLoadOrdersCompletedEventArgs>(_ordersLock,
+                _ntfClient.GetLoadOrdersAsync,
+                handler => _ntfClient.GetLoadOrdersCompleted += handler,
+                handler => _ntfClient.GetLoadOrdersCompleted -= handler,
+                args => obj = ConvertOrders(args.Result),
+                () => callback(obj, null),
+                e => callback(null, e));
+        }
+
+        private readonly AutoResetEvent _orderDetailsLock = new AutoResetEvent(true);
         public void GetOrderDetails(long orderId, Action<IList<OrderProduct>, IList<OrderCompartment>, IList<Compartment>, Container, Exception> callback)
         {
             Task.Factory.StartNew(() =>
             {
-                _ntfClient.GetLoadOrderProductsCompleted += (sender, opArgs) =>
-                {
-                    var orderProds = ConvertOrderProducts(opArgs.Result);
-                    _ntfClient.getLoadOrderDetailsCompartmentsCompleted += (o, ocArgs) =>
-                    {
-                        if (ocArgs.Result.Count == 0)
+                IList<OrderProduct> orderProds = null;
+                IList<OrderCompartment> orderComps = null;
+                IList<Compartment> compartments = null;
+                Container container = null;
+                SendIt<GetLoadOrderProductsCompletedEventArgs>(_orderDetailsLock,
+                    () => _ntfClient.GetLoadOrderProductsAsync(orderId),
+                    handler => _ntfClient.GetLoadOrderProductsCompleted += handler,
+                    handler => _ntfClient.GetLoadOrderProductsCompleted -= handler,
+                    prodArgs => orderProds = ConvertOrderProducts(prodArgs.Result),
+                    () => SendIt<getLoadOrderDetailsCompartmentsCompletedEventArgs>(_orderDetailsLock,
+                        () => _ntfClient.getLoadOrderDetailsCompartmentsAsync(orderId),
+                        handler => _ntfClient.getLoadOrderDetailsCompartmentsCompleted += handler,
+                        handler => _ntfClient.getLoadOrderDetailsCompartmentsCompleted -= handler,
+                        compArgs =>
                         {
-                            callback(orderProds, null, null, null, null);
-                            return;
-                        }
-                        var containerId = ocArgs.Result.First().ContainerId;
-                        GetCompartments(containerId, (compsList, exception) =>
-                        {
-                            var orderComps = ConvertOrderCompartments(ocArgs.Result, compsList, orderProds);
-                            var container = compsList.FirstOrDefault().Container;
-                            callback(orderProds, orderComps, compsList, container, null);
-                        });
-                    };
-                    _ntfClient.getLoadOrderDetailsCompartmentsAsync(orderId);
-                };
-                _ntfClient.GetLoadOrderProductsAsync(orderId);
+                            if (compArgs.Result.Count == 0)
+                                return;
+                            var containerId = compArgs.Result.First().ContainerId;
+                            GetCompartments(containerId, (compsList, exception) =>
+                            {
+                                compartments = compsList;
+                                orderComps = ConvertOrderCompartments(compArgs.Result, compartments, orderProds);
+                                container = compsList.FirstOrDefault().Container;
+                            });
+                        },
+                        () => callback(orderProds, orderComps, compartments, container, null),
+                        e => callback(null, null, null, null, e)
+                        ),
+                    e => callback(null, null, null, null, e)
+                    );
             });
         }
 
@@ -266,9 +277,77 @@ namespace Hylasoft.OrdersGui.Model.Service
         private static void CheckAndRethrow(Exception exception)
         {
             if (exception != null)
-            {
                 throw exception;
-            }
         }
+
+        private void DispatchException(string messageString, Exception exception)
+        {
+            Messenger.Default.Send(new ErrorMessage(exception, messageString));
+        }
+
+        private void SendIt<T>(AutoResetEvent locker, Action asyncAction, Action<EventHandler<T>> subscribe, Action<EventHandler<T>> unsubscribe,
+    Action<T> completedAction, Action returnCallback, Action<Exception> errorCallback) where T : AsyncCompletedEventArgs
+        {
+            Task.Factory.StartNew(() =>
+            {
+                EventHandler<T> handler = null;
+                Exception ex = null;
+                try
+                {
+                    WaitforInit();
+                    if (locker != null)
+                    {
+                        locker.WaitOne();
+                    }
+                    var waiter = new AutoResetEvent(false);
+                    handler = (sender, args) =>
+                    {
+                        try
+                        {
+                            CheckAndRethrow(args.Error);
+                            completedAction(args);
+                        }
+                        catch (Exception e)
+                        {
+                            ex = e;
+                        }
+                        finally
+                        {
+                            waiter.Set();
+                        }
+                    };
+                    subscribe(handler);
+                    asyncAction();
+                    waiter.WaitOne();
+                    CheckAndRethrow(ex);
+                }
+                catch (Exception e)
+                {
+                    errorCallback(e);
+                }
+                finally
+                {
+                    if (locker != null)
+                        locker.Set();
+                    if (handler != null)
+                        unsubscribe(handler);
+                }
+                returnCallback();
+            });
+        }
+
+
+        private void WaitforInit()
+        {
+            _systemInfoWaiter.WaitOne();
+            _racksWaiter.WaitOne();
+            _armsWaiter.WaitOne();
+            _tanksWaiter.WaitOne();
+            _sapTanksWaiter.WaitOne();
+            _containersWaiter.WaitOne();
+            _materialsWaiter.WaitOne();
+        }
+
     }
 }
+// ReSharper restore ImplicitlyCapturedClosure

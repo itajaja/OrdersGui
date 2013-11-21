@@ -10,7 +10,7 @@ namespace Hylasoft.OrdersGui.Model.Service
         void GetRacks(Action<IList<Rack>, Exception> callback);
         void GetArms(Action<IList<Arm>, Exception> callback);
         void GetOrders(Action<IList<Order>, Exception> callback);
-        void GetOpcStatus(Action<OpcConnectionStatus, Exception> callback);
+        void GetServerStatus(Action<OpcConnectionStatus, SlomConnectionStatus, Exception> callback);
         void GetMaterials(Action<IList<Material>, Exception> callback);
         void GetTanks(Action<IList<Tank>, Exception> callback);
         void GetSapTanks(Action<IList<Tank>, Exception> callback);

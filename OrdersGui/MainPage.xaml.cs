@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Messages;
 
 namespace Hylasoft.OrdersGui
@@ -9,9 +10,14 @@ namespace Hylasoft.OrdersGui
         public MainPage()
         {
             InitializeComponent();
-            Messenger.Default.Register<GoToLodMessage>(this, o => ToLod.Begin());
-            Messenger.Default.Register<GoToCreateOrderMessage>(this, o => ToCreate.Begin());
-            Messenger.Default.Register<GoToLomMessage>(this, o => ToLom.Begin());
+            Messenger.Default.Register<GoToLodMessage>(this, _ => ToLod.Begin());
+            Messenger.Default.Register<GoToCreateOrderMessage>(this, _ => ToCreate.Begin());
+            Messenger.Default.Register<GoToLomMessage>(this, _ => ToLom.Begin());
+            Messenger.Default.Register<LoadingCompleteMessage>(this, _ => DispatcherHelper.CheckBeginInvokeOnUI(() => 
+            {
+                LoadingBusy.IsBusy = false;
+                Rootgrid.Visibility = Visibility.Visible;
+            }));
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)

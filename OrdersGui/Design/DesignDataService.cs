@@ -35,9 +35,9 @@ namespace Hylasoft.OrdersGui.Design
             callback(_orders, null);
         }
 
-        public void GetOpcStatus(Action<OpcConnectionStatus, Exception> callback)
+        public void GetServerStatus(Action<OpcConnectionStatus, SlomConnectionStatus, Exception> callback)
         {
-            callback(OpcConnectionStatus.Suspended, null);
+            callback(OpcConnectionStatus.Suspended, SlomConnectionStatus.Connected, null);
         }
 
         public void GetMaterials(Action<IList<Material>, Exception> callback)

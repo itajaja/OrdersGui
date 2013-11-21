@@ -136,9 +136,11 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Messages\ErrorMessage.cs" />
     <Compile Include="Messages\GoToCreateOrderMessage.cs" />
     <Compile Include="Messages\GoToLodMessage.cs" />
     <Compile Include="Messages\GoToLomMessage.cs" />
+    <Compile Include="Messages\LoadingCompleteMessage.cs" />
     <Compile Include="Model\Arm.cs" />
     <Compile Include="Model\Compartment.cs" />
     <Compile Include="Model\Container.cs" />

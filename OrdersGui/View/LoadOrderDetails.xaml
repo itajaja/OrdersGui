@@ -63,9 +63,9 @@
             <sdk:Label Grid.Row="2" Grid.Column="2" Content="Truck No" />
             <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding Path=TruckNo}" />
             <sdk:Label Grid.Row="2" Grid.Column="4" Content="Container No" />
-            <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding Path=ContainerNo}" />
+            <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding Path=LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
             <sdk:Label Grid.Row="3" Grid.Column="0" Content="Compartments" />
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=CompartmentCount}" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
             <sdk:Label Grid.Row="3" Grid.Column="2" Content="Po Number" />
             <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Path=PoNumber}"/>
             <sdk:Label Grid.Row="3" Grid.Column="4" Content="Load Rack" x:Name="LoadRackTextBlock"/>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
+using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.ViewModel;
 
 namespace Hylasoft.OrdersGui
@@ -11,8 +13,7 @@ namespace Hylasoft.OrdersGui
         {
             Startup += Application_Startup;
             Exit += Application_Exit;
-//            UnhandledException += Application_UnhandledException;
-
+            UnhandledException += Application_UnhandledException;
             InitializeComponent();
         }
 
@@ -20,6 +21,8 @@ namespace Hylasoft.OrdersGui
         {
             DispatcherHelper.Initialize();
             RootVisual = new MainPage();
+            Messenger.Default.Register<ErrorMessage>(this, o => DispatcherHelper.CheckBeginInvokeOnUI(() => 
+                MessageBox.Show("Error:" + o.Message + "\n" + o.Exception)));
         }
 
         private void Application_Exit(object sender, EventArgs e)
@@ -42,7 +45,8 @@ namespace Hylasoft.OrdersGui
                 e.Handled = true;
                 Deployment.Current.Dispatcher.BeginInvoke(delegate
                 {
-                    ReportErrorToDOM(e);
+                    MessageBox.Show("Unhandled exception:\n" + e.ExceptionObject);
+                    //                    ReportErrorToDOM(e);
                 });
             }
         }

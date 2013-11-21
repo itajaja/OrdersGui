@@ -20,9 +20,9 @@ namespace Hylasoft.OrdersGui.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
-            SimpleIoc.Default.Register<LoadOrderManagerVM>();
-            SimpleIoc.Default.Register<LoadOrderDetailsVM>();
-            SimpleIoc.Default.Register<CreateOrderVM>();
+            SimpleIoc.Default.Register<LoadOrderManagerVM>(false);
+            SimpleIoc.Default.Register<LoadOrderDetailsVM>(false);
+            SimpleIoc.Default.Register<CreateOrderVM>(false);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]

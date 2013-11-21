@@ -12,7 +12,7 @@ namespace Hylasoft.OrdersGui.ViewModel
 {
     public sealed class LoadOrderDetailsVM : ViewModelBase
     {
-        private IDataService _dataservice;
+        private readonly IDataService _dataservice;
         private bool _readOnly;
         private SessionData _sessionData;
 

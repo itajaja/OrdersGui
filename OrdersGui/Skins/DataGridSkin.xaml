@@ -10,6 +10,7 @@
     <Style x:Key="DataGridStyle" TargetType="sdk:DataGrid">
         <Setter Property="CanUserResizeColumns" Value="False"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="RowHeight" Value="28"/>
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="RowBackground" Value="#AAEAEFF4"/>

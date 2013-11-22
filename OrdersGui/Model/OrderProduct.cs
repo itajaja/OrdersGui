@@ -11,9 +11,7 @@ namespace Hylasoft.OrdersGui.Model
             get { return _sourceTank; }
             set
             {
-                SetField(ref _sourceTank, value, "SourceTank");
-                OnPropertyChanged("PoundsQuantity");
-                OnPropertyChanged("TargetQty");
+                SetField(ref _sourceTank, value, "SourceTank", "TargetQty", "PoundsQuantity");
             }
         }
 
@@ -49,27 +47,21 @@ namespace Hylasoft.OrdersGui.Model
         private double _targetQty;
         public double TargetQty
         {
-            get { return _targetQty; }
-            set
-            {
-                SetField(ref _targetQty, value, "TargetQty", "PoundsQuantity");
-            }
+            get { return Math.Round(_targetQty, 2); }
+            set { SetField(ref _targetQty, value, "TargetQty", "PoundsQuantity"); }
         }
 
         public double PoundsQuantity
         {
-            get { return TargetQty / Density; }
-            set
-            {
-                SetField(ref _targetQty, Density*value, "PoundsQuantity", "TargetQty");
-            }
+            get { return Math.Round(TargetQty / Density, 2); }
+            set { SetField(ref _targetQty, Density * value, "PoundsQuantity", "TargetQty"); }
         }
 
         private double CalculateDensity()
         {
             try
             {
-                var d = (141.5/(SourceTank.ApiGravity + 131.5))*8.328;
+                var d = (141.5 / (SourceTank.ApiGravity + 131.5)) * 8.328;
                 return d <= 0 ? Double.NaN : d;
             }
             catch

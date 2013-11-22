@@ -96,22 +96,10 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         public void Reset()
         {
-            Order = new Order();
-            //initialize with 5 empty products and compartments
-            OrderProducts = new TrulyObservableCollection<OrderProduct>{
-                new OrderProduct(),
-                new OrderProduct(),
-                new OrderProduct(),
-                new OrderProduct(),
-                new OrderProduct()
-            };
-            OrderCompartments = new TrulyObservableCollection<OrderCompartment>{
-                new OrderCompartment(),
-                new OrderCompartment(),
-                new OrderCompartment(),
-                new OrderCompartment(),
-                new OrderCompartment()
-            };
+            Order = null;
+            OrderProducts = null;
+            OrderCompartments = null;
+            Compartments = null;
         }
     }
 }

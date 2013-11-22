@@ -1,12 +1,16 @@
-﻿<UserControl x:Class="Hylasoft.OrdersGui.View.LoadOrderDetails"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ignore="http://www.ignore.com"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             x:Class="Hylasoft.OrdersGui.View.LoadOrderDetails"
              mc:Ignorable="d ignore" d:DesignWidth="1000" d:DesignHeight="700"
-             DataContext="{Binding LoadOrderDetailsVM, Source={StaticResource Locator}}">
+             >
+    <UserControl.DataContext>
+        <Binding Path="LoadOrderDetailsVM" Source="{StaticResource Locator}"/>
+    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -47,27 +51,27 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <sdk:Label Content="Order Number" />
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=OrderNo}" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding OrderNo}" />
             <sdk:Label Grid.Row="0" Grid.Column="2" Content="Customer Name" />
-            <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding Path=CustomerName}"/>
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding CustomerName}"/>
             <sdk:Label Grid.Row="0" Grid.Column="4" Content="Carrier Name" />
-            <TextBlock Grid.Row="0" Grid.Column="5" Text="{Binding Path=CarrierName}"/>
+            <TextBlock Grid.Row="0" Grid.Column="5" Text="{Binding CarrierName}"/>
             <sdk:Label Grid.Row="1" Grid.Column="0" Content="Scheduled Date" />
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=ScheduleDate, StringFormat=\{0:d\}}"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ScheduleDate, StringFormat=\{0:d\}}"/>
             <sdk:Label Grid.Row="1" Grid.Column="2" Content="Scheduled Time"/>
-            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Path=ScheduleDate, StringFormat=\{0:t\}}" />
+            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding ScheduleDate, StringFormat=\{0:t\}}" />
             <sdk:Label Grid.Row="1" Grid.Column="4" Content="Order Type" />
-            <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding Path=OrderType}"/>
+            <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding OrderType}"/>
             <sdk:Label Grid.Row="2" Grid.Column="0" Content="Status" />
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=OrderStatus, Converter={StaticResource OrderStatusToString}}" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding OrderStatus, Converter={StaticResource OrderStatusToString}}" />
             <sdk:Label Grid.Row="2" Grid.Column="2" Content="Truck No" />
-            <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding Path=TruckNo}" />
+            <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding TruckNo}" />
             <sdk:Label Grid.Row="2" Grid.Column="4" Content="Container No" />
-            <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding Path=LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
+            <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
             <sdk:Label Grid.Row="3" Grid.Column="0" Content="Compartments" />
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
             <sdk:Label Grid.Row="3" Grid.Column="2" Content="Po Number" />
-            <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Path=PoNumber}"/>
+            <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding PoNumber}"/>
             <sdk:Label Grid.Row="3" Grid.Column="4" Content="Load Rack" x:Name="LoadRackTextBlock"/>
             <TextBlock Grid.Row="3" Grid.Column="3" Text="Implement"/>
             <!--            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">-->
@@ -76,7 +80,8 @@
             <!--                <RadioButton Content="East Load" GroupName="bay" Width="92" />-->
             <!--            </StackPanel>-->
         </Grid>
-        <sdk:DataGrid Grid.Row="2" Margin="0,10" HorizontalAlignment="Center" ItemsSource="{Binding OrderProducts}">
+        <sdk:DataGrid Grid.Row="2" Margin="0,10" HorizontalAlignment="Center"
+                      ItemsSource="{Binding OrderProducts, ConverterParameter=5, Converter={StaticResource OrderProdFixedList}}">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Binding="{Binding Material.MaterialCode}" Header="Product Code" />
                 <sdk:DataGridTextColumn Binding="{Binding Material.MaterialName}" Header="Product Name" />
@@ -86,19 +91,20 @@
                 <sdk:DataGridTextColumn Binding="{Binding Density, StringFormat=\{0:N0\}}" Header="Density (LB/GAL)"/>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
-        <sdk:DataGrid Grid.Row="3" Margin="0,10" IsReadOnly="False" ItemsSource="{Binding OrderCompartments}">
+        <sdk:DataGrid Grid.Row="3" Margin="0,10" HorizontalAlignment="Center"
+                      ItemsSource="{Binding OrderCompartments, ConverterParameter=5, Converter={StaticResource OrderProdFixedList}}">
             <sdk:DataGrid.Columns>
-                <sdk:DataGridTextColumn Header="Seq" Binding="{Binding}"/>
-                <sdk:DataGridTextColumn Header="Comp #"  Binding="{Binding}"/>
-                <sdk:DataGridTextColumn Header="Capacity" Binding="{Binding}" />
-                <sdk:DataGridTextColumn Header="Product Code"  Binding="{Binding}"/>
-                <sdk:DataGridTextColumn Header="Tank"  Binding="{Binding}"/>
-                <sdk:DataGridTextColumn Header="Target Qty (GAL)"  Binding="{Binding}"/>
-                <sdk:DataGridTextColumn Header="Actual Qty (GAL)"  Binding="{Binding}"/>
-                <sdk:DataGridTextColumn Header="Net Weight (LB)"  Binding="{Binding}"/>
-                <sdk:DataGridTextColumn Header="Load Rack"  Binding="{Binding}"/>
-                <sdk:DataGridTextColumn Header="Load Arm"  Binding="{Binding}"/>
-                <sdk:DataGridTextColumn Header="Compartment Status" Binding="{Binding}" />
+                <sdk:DataGridTextColumn Header="Seq" Binding="{Binding SeqNo}"/>
+                <sdk:DataGridTextColumn Header="Comp #"  Binding="{Binding Compartment.CompartmentNo}"/>
+                <sdk:DataGridTextColumn Header="Capacity" Binding="{Binding Compartment.Capacity}" />
+                <sdk:DataGridTextColumn Header="Product Code"  Binding="{Binding OrderProduct.Material.MaterialCode}" />
+                <sdk:DataGridTextColumn Header="Tank"  Binding="{Binding Tank.TankName}"/>
+                <sdk:DataGridTextColumn Header="Target Qty (GAL)"  Binding="{Binding TargetQty, StringFormat=\{0:N0\}}"/>
+                <sdk:DataGridTextColumn Header="Actual Qty (GAL)"  Binding="{Binding ActualQty, StringFormat=\{0:N0\}}"/>
+                <sdk:DataGridTextColumn Header="Net Weight (LB)"  Binding="{Binding NetWeight, StringFormat=\{0:N0\}}"/>
+                <sdk:DataGridTextColumn Header="Load Rack"  Binding="{Binding RackArm.Rack.RackName}"/>
+                <sdk:DataGridTextColumn Header="Load Arm"  Binding="{Binding RackArm.ArmName}"/>
+                <sdk:DataGridTextColumn Header="Status" Binding="{Binding CompartmentStatus}"/>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
         <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">

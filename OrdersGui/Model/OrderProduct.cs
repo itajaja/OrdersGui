@@ -10,9 +10,7 @@ namespace Hylasoft.OrdersGui.Model
         {
             get { return _sourceTank; }
             set
-            {
-                SetField(ref _sourceTank, value, "SourceTank", "TargetQty", "PoundsQuantity");
-            }
+            { SetField(ref _sourceTank, value, "SourceTank", "TargetQty", "PoundsQuantity"); }
         }
 
         private Material _material;
@@ -22,7 +20,7 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _material, value, "Material"); }
         }
 
-        private string _uom;
+        private string _uom = SystemInfo.Gallons;
         public string Uom
         {
             get { return _uom; }
@@ -47,14 +45,14 @@ namespace Hylasoft.OrdersGui.Model
         private double _targetQty;
         public double TargetQty
         {
-            get { return Math.Round(_targetQty, 2); }
+            get { return _targetQty; }
             set { SetField(ref _targetQty, value, "TargetQty", "PoundsQuantity"); }
         }
 
         public double PoundsQuantity
         {
-            get { return Math.Round(TargetQty / Density, 2); }
-            set { SetField(ref _targetQty, Density * value, "PoundsQuantity", "TargetQty"); }
+            get { return TargetQty * Density; }
+            set { SetField(ref _targetQty, value / Density, "PoundsQuantity", "TargetQty"); }
         }
 
         private double CalculateDensity()

@@ -69,20 +69,21 @@
             <sdk:Label Grid.Row="3" Grid.Column="2" Content="Po Number" />
             <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Path=PoNumber}"/>
             <sdk:Label Grid.Row="3" Grid.Column="4" Content="Load Rack" x:Name="LoadRackTextBlock"/>
-<!--            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">-->
-<!--                <RadioButton Content="North Load" GroupName="bay"  Width="126" />-->
-<!--                <RadioButton Content="South Load" GroupName="bay" Width="123" />-->
-<!--                <RadioButton Content="East Load" GroupName="bay" Width="92" />-->
-<!--            </StackPanel>-->
+            <TextBlock Grid.Row="3" Grid.Column="3" Text="Implement"/>
+            <!--            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">-->
+            <!--                <RadioButton Content="North Load" GroupName="bay"  Width="126" />-->
+            <!--                <RadioButton Content="South Load" GroupName="bay" Width="123" />-->
+            <!--                <RadioButton Content="East Load" GroupName="bay" Width="92" />-->
+            <!--            </StackPanel>-->
         </Grid>
         <sdk:DataGrid Grid.Row="2" Margin="0,10" HorizontalAlignment="Center" ItemsSource="{Binding OrderProducts}">
             <sdk:DataGrid.Columns>
-                <sdk:DataGridTextColumn Binding="{Binding}" Header="Product Code" />
-                <sdk:DataGridTextColumn Binding="{Binding}" Header="Product Name" />
-                <sdk:DataGridTextColumn Binding="{Binding}" Header="Tank" />
-                <sdk:DataGridTextColumn Binding="{Binding}" Header="Target Qty (GAL)" />
-                <sdk:DataGridTextColumn Binding="{Binding}" Header="UoM" />
-                <sdk:DataGridTextColumn Binding="{Binding}" Header="Density (LB/GAL)" />
+                <sdk:DataGridTextColumn Binding="{Binding Material.MaterialCode}" Header="Product Code" />
+                <sdk:DataGridTextColumn Binding="{Binding Material.MaterialName}" Header="Product Name" />
+                <sdk:DataGridTextColumn Binding="{Binding SourceTank.TankName}" Header="Tank" />
+                <sdk:DataGridTextColumn Binding="{Binding TargetQty, StringFormat=\{0:N0\}}" Header="Target Qty (GAL)" />
+                <sdk:DataGridTextColumn Binding="{Binding Uom}" Header="UoM" />
+                <sdk:DataGridTextColumn Binding="{Binding Density, StringFormat=\{0:N0\}}" Header="Density (LB/GAL)"/>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
         <sdk:DataGrid Grid.Row="3" Margin="0,10" IsReadOnly="False" ItemsSource="{Binding OrderCompartments}">

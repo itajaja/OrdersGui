@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Hylasoft.OrdersGui.Model.Service
 {
@@ -14,11 +15,12 @@ namespace Hylasoft.OrdersGui.Model.Service
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
-        protected bool SetField<T>(ref T field, T value, string propertyName)
+        protected bool SetField<T>(ref T field, T value,params string[] propertyName)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;
             field = value;
-            OnPropertyChanged(propertyName);
+            foreach (var s in propertyName)
+                OnPropertyChanged(s);
             return true;
         }
     }

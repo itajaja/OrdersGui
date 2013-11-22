@@ -4,6 +4,8 @@ namespace Hylasoft.OrdersGui.Model
 {
     public class SystemInfo : NotifyPropertyChanged
     {
+        public const string Pounds = "LB";
+        public const string Gallons = "GAL";
 
         private string _projectTitleLine1;
         public string ProjectTitleLine1

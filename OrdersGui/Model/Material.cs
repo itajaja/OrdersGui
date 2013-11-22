@@ -1,4 +1,5 @@
-﻿using Hylasoft.OrdersGui.Model.Service;
+﻿using System.ServiceModel.Channels;
+using Hylasoft.OrdersGui.Model.Service;
 
 namespace Hylasoft.OrdersGui.Model
 {

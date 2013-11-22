@@ -6,6 +6,7 @@ namespace Hylasoft.OrdersGui.Model
     {
         public const string Pounds = "LB";
         public const string Gallons = "GAL";
+        public const int MaxOrderSize = 5;
 
         private string _projectTitleLine1;
         public string ProjectTitleLine1

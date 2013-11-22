@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
@@ -40,6 +41,7 @@ namespace Hylasoft.OrdersGui.Model.Service
                 _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
                 _emClient = new EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
                 _ntfClient = new NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
+                InitCallers();
                 Initialize();
             }
             catch (Exception e)
@@ -192,80 +194,86 @@ namespace Hylasoft.OrdersGui.Model.Service
             });
         }
 
-        private readonly AutoResetEvent _opcStatusLock = new AutoResetEvent(true);
+        private AsyncCaller<GetOpcServerStateCompletedEventArgs> _serverStatusCaller;
         public void GetServerStatus(Action<OpcConnectionStatus, SlomConnectionStatus, Exception> callback)
         {
             var status = OpcConnectionStatus.Unknown;
-            SendIt<GetOpcServerStateCompletedEventArgs>(_opcStatusLock,
-                _emClient.GetOpcServerStateAsync,
-                handler => _emClient.GetOpcServerStateCompleted += handler,
-                handler => _emClient.GetOpcServerStateCompleted -= handler,
+            _serverStatusCaller.ExecuteAsync(_emClient.GetOpcServerStateAsync,
                 args => status = ConvertOpcConnectionStatus(args.Result),
-                () => callback(status, SlomConnectionStatus.Connected, null),
-                e => callback(OpcConnectionStatus.Unknown, SlomConnectionStatus.Disconnected, e));
+                e => callback(status, e != null ? SlomConnectionStatus.Disconnected : SlomConnectionStatus.Connected, e));
         }
 
-        private readonly AutoResetEvent _compartmentsLock = new AutoResetEvent(true);
+        private AsyncCaller<getContainerCompartmentsCompletedEventArgs> _compartmentsCaller;
         public void GetCompartments(long containerId, Action<IList<Compartment>, Exception> callback)
         {
             IList<Compartment> comps = null;
-            SendIt<getContainerCompartmentsCompletedEventArgs>(_compartmentsLock,
-                () => _ntfClient.getContainerCompartmentsAsync(containerId),
-                handler => _ntfClient.getContainerCompartmentsCompleted += handler,
-                handler => _ntfClient.getContainerCompartmentsCompleted -= handler,
+            _compartmentsCaller.ExecuteAsync(() => _ntfClient.getContainerCompartmentsAsync(containerId),
                 args => comps = ConvertCompartments(args.Result),
-                () => callback(comps,null),
-                e => callback(null,e));
+                e => callback(comps, e)
+                );
         }
 
-        private readonly AutoResetEvent _ordersLock = new AutoResetEvent(true);
+        private AsyncCaller<GetLoadOrdersCompletedEventArgs> _orderCaller;
         public void GetOrders(Action<IList<Order>, Exception> callback)
         {
-            IList<Order> obj = null;
-            SendIt<GetLoadOrdersCompletedEventArgs>(_ordersLock,
-                _ntfClient.GetLoadOrdersAsync,
-                handler => _ntfClient.GetLoadOrdersCompleted += handler,
-                handler => _ntfClient.GetLoadOrdersCompleted -= handler,
-                args => obj = ConvertOrders(args.Result),
-                () => callback(obj, null),
-                e => callback(null, e));
+            IList<Order> orders = null;
+            _orderCaller.ExecuteAsync(_ntfClient.GetLoadOrdersAsync,
+                args =>
+                {
+                    orders = ConvertOrders(args.Result);
+                },
+                e => callback(orders, e)
+                );
         }
 
-        private readonly AutoResetEvent _orderDetailsLock = new AutoResetEvent(true);
+        private void InitCallers()
+        {
+            _orderCaller = new AsyncCaller<GetLoadOrdersCompletedEventArgs>(h => _ntfClient.GetLoadOrdersCompleted += h);
+            _orderProductsCaller = new AsyncCaller<GetLoadOrderProductsCompletedEventArgs>(h => _ntfClient.GetLoadOrderProductsCompleted += h);
+            _orderCompartmentsCaller = new AsyncCaller<getLoadOrderDetailsCompartmentsCompletedEventArgs>(h => _ntfClient.getLoadOrderDetailsCompartmentsCompleted += h);
+            _compartmentsCaller = new AsyncCaller<getContainerCompartmentsCompletedEventArgs>(h => _ntfClient.getContainerCompartmentsCompleted += h);
+            _serverStatusCaller = new AsyncCaller<GetOpcServerStateCompletedEventArgs>(h => _emClient.GetOpcServerStateCompleted += h);
+        }
+
+        private AsyncCaller<GetLoadOrderProductsCompletedEventArgs> _orderProductsCaller;
+        private AsyncCaller<getLoadOrderDetailsCompartmentsCompletedEventArgs> _orderCompartmentsCaller;
         public void GetOrderDetails(long orderId, Action<IList<OrderProduct>, IList<OrderCompartment>, IList<Compartment>, Container, Exception> callback)
         {
             Task.Factory.StartNew(() =>
             {
                 IList<OrderProduct> orderProds = null;
                 IList<OrderCompartment> orderComps = null;
+                IList<LoadOrderDetailsCompartments> orderCompss = null;
                 IList<Compartment> compartments = null;
                 Container container = null;
-                SendIt<GetLoadOrderProductsCompletedEventArgs>(_orderDetailsLock,
-                    () => _ntfClient.GetLoadOrderProductsAsync(orderId),
-                    handler => _ntfClient.GetLoadOrderProductsCompleted += handler,
-                    handler => _ntfClient.GetLoadOrderProductsCompleted -= handler,
-                    prodArgs => orderProds = ConvertOrderProducts(prodArgs.Result),
-                    () => SendIt<getLoadOrderDetailsCompartmentsCompletedEventArgs>(_orderDetailsLock,
-                        () => _ntfClient.getLoadOrderDetailsCompartmentsAsync(orderId),
-                        handler => _ntfClient.getLoadOrderDetailsCompartmentsCompleted += handler,
-                        handler => _ntfClient.getLoadOrderDetailsCompartmentsCompleted -= handler,
-                        compArgs =>
-                        {
-                            if (compArgs.Result.Count == 0)
-                                return;
-                            var containerId = compArgs.Result.First().ContainerId;
-                            GetCompartments(containerId, (compsList, exception) =>
-                            {
-                                compartments = compsList;
-                                orderComps = ConvertOrderCompartments(compArgs.Result, compartments, orderProds);
-                                container = compsList.FirstOrDefault().Container;
-                            });
-                        },
-                        () => callback(orderProds, orderComps, compartments, container, null),
-                        e => callback(null, null, null, null, e)
-                        ),
-                    e => callback(null, null, null, null, e)
-                    );
+                Exception ex = null;
+                Action call = () => callback(orderProds, orderComps, compartments, container, ex);
+                _orderProductsCaller.ExecuteAsync(() => _ntfClient.GetLoadOrderProductsAsync(orderId),
+                    args => orderProds = ConvertOrderProducts(args.Result),
+                    e => ex = e
+                    ).WaitOne();
+                if (ex != null)
+                {
+                    call();
+                    return;
+                }
+                _orderCompartmentsCaller.ExecuteAsync(() => _ntfClient.getLoadOrderDetailsCompartmentsAsync(orderId),
+                    args => orderCompss = args.Result,
+                    e => ex = e
+                    ).WaitOne();
+                if (ex != null || orderCompss.Count == 0)
+                {
+                    call();
+                    return;
+                }
+                var containerId = orderCompss.First().ContainerId;
+                GetCompartments(containerId, (compsList, exception) =>
+                {
+                    compartments = compsList;
+                    orderComps = ConvertOrderCompartments(orderCompss, compartments, orderProds);
+                    container = compsList.FirstOrDefault().Container;
+                });
+                call();
             });
         }
 
@@ -284,58 +292,6 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             Messenger.Default.Send(new ErrorMessage(exception, messageString));
         }
-
-        private void SendIt<T>(AutoResetEvent locker, Action asyncAction, Action<EventHandler<T>> subscribe, Action<EventHandler<T>> unsubscribe,
-    Action<T> completedAction, Action returnCallback, Action<Exception> errorCallback) where T : AsyncCompletedEventArgs
-        {
-            Task.Factory.StartNew(() =>
-            {
-                EventHandler<T> handler = null;
-                Exception ex = null;
-                try
-                {
-                    WaitforInit();
-                    if (locker != null)
-                    {
-                        locker.WaitOne();
-                    }
-                    var waiter = new AutoResetEvent(false);
-                    handler = (sender, args) =>
-                    {
-                        try
-                        {
-                            CheckAndRethrow(args.Error);
-                            completedAction(args);
-                        }
-                        catch (Exception e)
-                        {
-                            ex = e;
-                        }
-                        finally
-                        {
-                            waiter.Set();
-                        }
-                    };
-                    subscribe(handler);
-                    asyncAction();
-                    waiter.WaitOne();
-                    CheckAndRethrow(ex);
-                }
-                catch (Exception e)
-                {
-                    errorCallback(e);
-                }
-                finally
-                {
-                    if (locker != null)
-                        locker.Set();
-                    if (handler != null)
-                        unsubscribe(handler);
-                }
-                returnCallback();
-            });
-        }
-
 
         private void WaitforInit()
         {

@@ -147,6 +147,7 @@
     <Compile Include="Model\Material.cs" />
     <Compile Include="Model\OrderCompartment.cs" />
     <Compile Include="Model\OrderProduct.cs" />
+    <Compile Include="Model\Service\AsyncCaller.cs" />
     <Compile Include="Model\Service\DataService.cs" />
     <Compile Include="Model\Service\IDataService.cs" />
     <Compile Include="Model\Service\NotifyPropertyChanged.cs" />

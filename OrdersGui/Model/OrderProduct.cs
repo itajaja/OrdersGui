@@ -9,8 +9,7 @@ namespace Hylasoft.OrdersGui.Model
         public Tank SourceTank
         {
             get { return _sourceTank; }
-            set
-            { SetField(ref _sourceTank, value, "SourceTank", "TargetQty", "PoundsQuantity"); }
+            set { SetField(ref _sourceTank, value, "SourceTank", "TargetQty", "PoundsQuantity"); }
         }
 
         private Material _material;

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
@@ -272,8 +270,8 @@ namespace Hylasoft.OrdersGui.Model.Service
                     compartments = compsList;
                     orderComps = ConvertOrderCompartments(orderCompss, compartments, orderProds);
                     container = compsList.FirstOrDefault().Container;
+                    call();
                 });
-                call();
             });
         }
 

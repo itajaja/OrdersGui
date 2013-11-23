@@ -22,8 +22,9 @@ namespace Hylasoft.OrdersGui.Messages
 
     public enum DetailMode
     {
+        View,
         Edit,
-        Details,
-        Readonly
+        Prepare,
+        Fullfill
     }
 }

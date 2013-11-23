@@ -89,7 +89,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         private DateTime? _dateFilter;
         public DateTime DateFilter
         {
-            get { return _dateFilter??DateTime.Today; }
+            get { return _dateFilter ?? DateTime.Today; }
             set
             {
                 Set("DateFilter", ref _dateFilter, value);
@@ -104,11 +104,13 @@ namespace Hylasoft.OrdersGui.ViewModel
         public RelayCommand ClearDateFilterCommand { get; private set; }
         //contextmenu command
         public RelayCommand<Order> ViewEditDetailsCommand { get; private set; }
+        public RelayCommand<Order> PrepareOrderCommand { get; private set; }
+        public RelayCommand<Order> FullfillOrderCommand { get; private set; }
         public RelayCommand<Order> EnterSealsCommand { get; private set; }
         public RelayCommand<Order> ReleaseCommand { get; private set; }
 
         public LoadOrderManagerVM(IDataService ds)
-    {
+        {
             _dataService = ds;
             _dataService.GetSessionData(
                 (item, error) =>
@@ -131,7 +133,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             OrderStatusFilter = new TrulyObservableCollection<OrderStatusCheck>();
             InitializeCommands();
             foreach (var status in EnumList.GetEnumValues<OrderStatus>())
-                OrderStatusFilter.Add(new OrderStatusCheck{Status = status, IsChecked = true});
+                OrderStatusFilter.Add(new OrderStatusCheck { Status = status, IsChecked = true });
             var updateTimer = new DispatcherTimer();
             updateTimer.Interval = TimeSpan.FromSeconds(5); //todo resourcify
             updateTimer.Tick += Reload;
@@ -175,7 +177,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                 SlomStatus = SlomConnectionStatus.Disconnected,
                 User = User.User0
             };
-//            throw new Exception(exception.Message,exception);
+            //            throw new Exception(exception.Message,exception);
         }
 
         private bool OrderFilter(object o)
@@ -215,24 +217,39 @@ namespace Hylasoft.OrdersGui.ViewModel
 
             //ContextMenu commands
             ViewEditDetailsCommand = new RelayCommand<Order>(order =>
-                Messenger.Default.Send(new GoToLodMessage{
-                    Mode = DetailMode.Edit, //todo right mode here
+                Messenger.Default.Send(new GoToLodMessage
+                {
+                    Mode = order.OrderStatus == OrderStatus.Ready ? DetailMode.Edit : DetailMode.View,
                     Order = order
                 }), order => order != null);
+            PrepareOrderCommand = new RelayCommand<Order>(order =>
+                Messenger.Default.Send(new GoToLodMessage
+                {
+                    Mode = DetailMode.Prepare,
+                    Order = order
+                }), order => order != null &&
+                    (order.OrderStatus == OrderStatus.Ready || order.OrderStatus == OrderStatus.TruckArrived || order.OrderStatus == OrderStatus.ReadyForRelease ||
+                    order.OrderType == OrderType.Load && (order.OrderStatus == OrderStatus.InspectionFailed || order.OrderStatus == OrderStatus.ReleaseError || order.OrderStatus == OrderStatus.Suspended)));
+            FullfillOrderCommand = new RelayCommand<Order>(order =>
+                Messenger.Default.Send(new GoToLodMessage
+                {
+                    Mode = DetailMode.Fullfill, //todo right mode here
+                    Order = order
+                }), order => order != null && (order.OrderType == OrderType.Load && order.OrderStatus == OrderStatus.Released || order.OrderType == OrderType.Unload && order.OrderStatus == OrderStatus.Approved));
             //todo implement
             EnterSealsCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
             ReleaseCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
-            
+
             _commandList = new List<RelayCommand>{
                 ClearStatusFilerCommand, AddAllStatusFilterCommand,
                 SetTodayFilterCommand, ClearDateFilterCommand
             };
         }
 
-        private List<RelayCommand> _commandList; 
+        private List<RelayCommand> _commandList;
         private void RefreshCanExecuteCommands()
         {
-            foreach (var command in _commandList.Where(c => c!=null))
+            foreach (var command in _commandList.Where(c => c != null))
                 command.RaiseCanExecuteChanged();
         }
 

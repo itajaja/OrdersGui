@@ -14,7 +14,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
@@ -111,12 +110,12 @@
                                         DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10"
-                    Visibility="{Binding Order.OrderType, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}">
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10"
+                    Visibility="{Binding Mode, Converter={StaticResource EnumToVisible}, ConverterParameter='Prepare,Fullfill'}">
             <Button Content="Assign Truck" Command="{Binding AssignTruckCommand}"/>
             <Button Content="Assign Compartments" Command="{Binding AssignCompartmentCommand}"/>
-            <Button Content="Fullfill Order" Command="{Binding FulfillOrderCommand}"/>
-            <Button Content="Manually Approve" Command="{Binding ManualApproveCommand}"/>
+            <Button Content="Fullfill Order" Command="{Binding FulfillOrderCommand}"
+                    Visibility="{Binding Mode, Converter={StaticResource EnumToVisible}, ConverterParameter='Fullfill'}"/>
         </StackPanel>
     </Grid>
 </UserControl>

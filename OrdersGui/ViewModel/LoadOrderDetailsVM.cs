@@ -62,7 +62,6 @@ namespace Hylasoft.OrdersGui.ViewModel
         public RelayCommand AssignCompartmentCommand { get; private set; }
         public RelayCommand AssignTruckCommand { get; private set; }
         public RelayCommand FulfillOrderCommand { get; private set; }
-        public RelayCommand ManualApproveCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
 
         public LoadOrderDetailsVM(IDataService ds)
@@ -72,7 +71,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             Messenger.Default.Register<GoToLodMessage>(this, o =>
             {
                 RefreshCommands();
-                _mode = o.Mode;
+                Mode = o.Mode;
                 Order = o.Order;
                 _dataservice.GetOrderDetails(Order.OrderId,
                     (orderProds, orderComps, comps, container, error) => DispatcherHelper.CheckBeginInvokeOnUI(() =>
@@ -95,18 +94,17 @@ namespace Hylasoft.OrdersGui.ViewModel
             });
             //todo implement
             AssignCompartmentCommand = new RelayCommand(() => MessageBox.Show("assign comp"),
-                () => CanExecute(OrderStatus.Ready));
+                () => Order != null && Order.OrderStatus != OrderStatus.Ready);
             AssignTruckCommand = new RelayCommand(() => MessageBox.Show("assign truck"),
-                () => CanExecute(OrderStatus.Ready));
+                () => Mode == DetailMode.Prepare && Order != null);
             FulfillOrderCommand = new RelayCommand(() => MessageBox.Show("fullfill"),
-                () => CanExecute(OrderStatus.Approved)
+                () => Mode == DetailMode.Fullfill
                 );
             SaveCommand = new RelayCommand(() => MessageBox.Show("save"),
-                () => CanExecute(DetailMode.Details)
+                () => Mode == DetailMode.Edit
                 );
-            ManualApproveCommand = new RelayCommand(() => MessageBox.Show("assign comp"),
-                () => CanExecute(OrderStatus.PendingApproval));
-            Reset();
+            //todo implement racks
+            //todo implement save
         }
 
         private void RefreshCommands()
@@ -115,18 +113,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             AssignCompartmentCommand.RaiseCanExecuteChanged();
             AssignTruckCommand.RaiseCanExecuteChanged();
             FulfillOrderCommand.RaiseCanExecuteChanged();
-            ManualApproveCommand.RaiseCanExecuteChanged();
             SaveCommand.RaiseCanExecuteChanged();
-        }
-
-        private bool CanExecute(DetailMode mode)
-        {
-            return _mode == mode;
-        }
-
-        private bool CanExecute(OrderStatus status)
-        {
-            return Order != null && Order.OrderStatus == status;
         }
 
         public void Reset()

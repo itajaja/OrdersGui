@@ -94,11 +94,11 @@
 <!--                        <toolkit:MenuItem Header="{Binding OrderNo, StringFormat=Load Order \{0\}}" Background="{StaticResource BackgroundBrush}" HorizontalContentAlignment="Center"/>-->
                         <toolkit:MenuItem Header="View/Edit Order Details" Command="{Binding LoadOrderManagerVM.ViewEditDetailsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                         <toolkit:MenuItem Header="View Carrier Instruction" />
-                        <toolkit:MenuItem Header="Prepare Order" />
+                        <toolkit:MenuItem Header="Prepare Order" Command="{Binding LoadOrderManagerVM.PrepareOrderCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                         <toolkit:MenuItem Header="Enter Seals" Command="{Binding LoadOrderManagerVM.EnterSealsCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                         <toolkit:MenuItem Header="Release" Command="{Binding LoadOrderManagerVM.ReleaseCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                         <toolkit:MenuItem Header="Release for Manual" />
-                        <toolkit:MenuItem Header="Fullfill Manual Order" />
+                        <toolkit:MenuItem Header="Fullfill Manual Order" Command="{Binding LoadOrderManagerVM.FullfillOrderCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                         <toolkit:MenuItem Header="Inspection Failed" />
                         <toolkit:MenuItem Header="Manually Approve Order" />
                         <toolkit:MenuItem Header="Cancel Order" />

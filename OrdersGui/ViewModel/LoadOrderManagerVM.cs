@@ -213,12 +213,13 @@ namespace Hylasoft.OrdersGui.ViewModel
                 DateFilter = DateTime.Today;
             }, CanExecute);
 
-            //ContextMenu Items
+            //ContextMenu commands
             ViewEditDetailsCommand = new RelayCommand<Order>(order =>
                 Messenger.Default.Send(new GoToLodMessage{
-                    IsReadOnly = order.OrderStatus != OrderStatus.Ready,
+                    Mode = DetailMode.Edit, //todo right mode here
                     Order = order
                 }), order => order != null);
+            //todo implement
             EnterSealsCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
             ReleaseCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
             

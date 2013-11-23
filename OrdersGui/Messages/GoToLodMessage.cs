@@ -17,6 +17,13 @@ namespace Hylasoft.OrdersGui.Messages
         /// <summary>
         /// Sets if editing is enabled
         /// </summary>
-        public bool IsReadOnly { get; set; }
+        public DetailMode Mode { get; set; }    
+    }
+
+    public enum DetailMode
+    {
+        Edit,
+        Details,
+        Readonly
     }
 }

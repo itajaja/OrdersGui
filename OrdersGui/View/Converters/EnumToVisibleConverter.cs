@@ -2,24 +2,22 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using Hylasoft.OrdersGui.Model;
 
 namespace Hylasoft.OrdersGui.View.Converters
 {
-    public class EnumToCollapsedConverter<T> : IValueConverter
+    public class EnumToVisibleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                var enumType = typeof(T);
-                var par = (T)Enum.Parse(enumType, (string)parameter, true);
-                var val = (T)value;
-                return par.Equals(val) ? Visibility.Collapsed : Visibility.Visible;
+                var enumType = value.GetType();
+                var par = Enum.Parse(enumType, (string)parameter, true);
+                return par.Equals(value) ? Visibility.Visible : Visibility.Collapsed;
             }
             catch
             {
-                return Visibility.Visible;
+                return Visibility.Collapsed;
             }
         }
 
@@ -29,5 +27,6 @@ namespace Hylasoft.OrdersGui.View.Converters
         }
     }
 
-    public class OrderTypeToCollapsedConverter : EnumToCollapsedConverter<OrderType> { }
+//    public class OrderTypeToVisibleConverter : EnumToVisibleConverter<Model.OrderType> { }
+//    public class DetailModeToVisibleConverter : EnumToVisibleConverter<Messages.DetailMode> { }
 }

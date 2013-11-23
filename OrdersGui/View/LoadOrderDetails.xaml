@@ -104,18 +104,19 @@
                 <sdk:DataGridTextColumn Header="Actual Qty (GAL)"  Binding="{Binding ActualQty, StringFormat=\{0:N0\}}"/>
                 <sdk:DataGridTextColumn Header="Net Weight (LB)"  Binding="{Binding NetWeight, StringFormat=\{0:N0\}}"/>
                 <c:DataGridTextColumnEx Header="Load Rack"  Binding="{Binding RackArm.Rack.RackName}"
-                                        DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator},Converter={StaticResource OrderTypeToCollapsed}, ConverterParameter=Unload}"/>
+                                        DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator},Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
                 <c:DataGridTextColumnEx Header="Load Arm"  Binding="{Binding RackArm.ArmName}"
-                                        DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource OrderTypeToCollapsed}, ConverterParameter=Unload}"/>
+                                        DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
                 <c:DataGridTextColumnEx Header="Status" Binding="{Binding CompartmentStatus}"
-                                        DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource OrderTypeToCollapsed}, ConverterParameter=Unload}"/>
+                                        DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Assign Truck"/>
-            <Button Content="Assign Compartments"/>
-            <Button Content="Fullfill Order"/>
-            <Button Content="Manually Approve"/>
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10"
+                    Visibility="{Binding Order.OrderType, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}">
+            <Button Content="Assign Truck" Command="{Binding AssignTruckCommand}"/>
+            <Button Content="Assign Compartments" Command="{Binding AssignCompartmentCommand}"/>
+            <Button Content="Fullfill Order" Command="{Binding FulfillOrderCommand}"/>
+            <Button Content="Manually Approve" Command="{Binding ManualApproveCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

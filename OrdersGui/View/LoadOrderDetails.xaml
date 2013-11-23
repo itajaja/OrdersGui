@@ -63,7 +63,10 @@
             <sdk:Label Grid.Row="1" Grid.Column="4" Content="Order Type" />
             <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding OrderType}"/>
             <sdk:Label Grid.Row="2" Grid.Column="0" Content="Status" />
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding OrderStatus, Converter={StaticResource OrderStatusToString}}" />
+            <StackPanel Grid.Row="2" Grid.Column="1" Margin="0" Orientation="Horizontal">
+                <Border HorizontalAlignment="Right" BorderBrush="{StaticResource BlackBrush}" BorderThickness="1" Background="{Binding OrderStatus, Converter={StaticResource OrderStatusToBackground}}" Width="20" Height="20" CornerRadius="10" Margin="0,0,5,0"/>
+                <TextBlock  Text="{Binding OrderStatus, Converter={StaticResource OrderStatusToString}}"/>
+            </StackPanel>
             <sdk:Label Grid.Row="2" Grid.Column="2" Content="Truck No" />
             <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding TruckNo}" />
             <sdk:Label Grid.Row="2" Grid.Column="4" Content="Container No" />

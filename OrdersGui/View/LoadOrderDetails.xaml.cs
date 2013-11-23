@@ -16,10 +16,5 @@ namespace Hylasoft.OrdersGui.View
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Messenger.Default.Send(new GoToLomMessage());
-        }
     }
 }

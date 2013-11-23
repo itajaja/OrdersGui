@@ -71,8 +71,17 @@
             <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
             <sdk:Label Grid.Row="3" Grid.Column="2" Content="Po Number" />
             <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding PoNumber}"/>
-            <sdk:Label Grid.Row="3" Grid.Column="4" Content="Load Rack" x:Name="LoadRackTextBlock"/>
-            <TextBlock Grid.Row="3" Grid.Column="3" Text="Implement"/>
+            <sdk:Label Grid.Row="3" Grid.Column="4" Content="Load Rack" x:Name="LoadRackTextBlock" />
+            <Grid Grid.Row="3" Grid.Column="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <CheckBox Content="North"/>
+                <CheckBox Grid.Column="1" Content="South"/>
+                <CheckBox Grid.Column="2" Content="East"/>
+            </Grid>
             <!--            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">-->
             <!--                <RadioButton Content="North Load" GroupName="bay"  Width="126" />-->
             <!--                <RadioButton Content="South Load" GroupName="bay" Width="123" />-->

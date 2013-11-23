@@ -5,9 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Hylasoft.OrdersGui.ViewModel"
              xmlns:res="clr-namespace:Hylasoft.OrdersGui.Resources"
-             xmlns:utils="clr-namespace:Hylasoft.OrdersGui.View.Utils"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+             xmlns:converters="clr-namespace:Hylasoft.OrdersGui.View.Converters"
              mc:Ignorable="d">
     <Application.Resources>
         <ResourceDictionary>
@@ -29,13 +29,13 @@
             <Style TargetType="sdk:DataGrid" BasedOn="{StaticResource DataGridStyle}" />
             <res:Strings_en_us x:Key="Strings"/>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-            <utils:OpcConnectionStatusToColorConverter x:Key="OpcConnectionStatusToColor" />
-            <utils:SlomConnectionStatusToColorConverter x:Key="SlomConnectionStatusToColor" />
-            <utils:OrderStatusToBackgroundConverter x:Key="OrderStatusToBackground" />
-            <utils:OrderStatusToForegroundConverter x:Key="OrderStatusToForeground" />
-            <utils:OrderStatusToStringConverter x:Key="OrderStatusToString" />
-            <utils:OrderProductFixedListConverter x:Key="OrderProdFixedList"/>
-            <utils:OrderCompFixedListConverter x:Key="OrderCompFixedList"/>
+            <converters:OpcConnectionStatusToColorConverter x:Key="OpcConnectionStatusToColor" />
+            <converters:SlomConnectionStatusToColorConverter x:Key="SlomConnectionStatusToColor" />
+            <converters:OrderStatusToBackgroundConverter x:Key="OrderStatusToBackground" />
+            <converters:OrderStatusToForegroundConverter x:Key="OrderStatusToForeground" />
+            <converters:OrderStatusToStringConverter x:Key="OrderStatusToString" />
+            <converters:OrderProductFixedListConverter x:Key="OrderProdFixedList"/>
+            <converters:OrderCompFixedListConverter x:Key="OrderCompFixedList"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

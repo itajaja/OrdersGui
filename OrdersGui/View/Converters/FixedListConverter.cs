@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows.Data;
 using Hylasoft.OrdersGui.Model;
 
-namespace Hylasoft.OrdersGui.View.Utils
+namespace Hylasoft.OrdersGui.View.Converters
 {
     public class FixedListConverter<T> : IValueConverter where T : class
     {

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Hylasoft.OrdersGui.View.Utils
+namespace Hylasoft.OrdersGui.View.Converters
 {
     public class BooleanToVisibilityConverter : IValueConverter
     {

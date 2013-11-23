@@ -4,7 +4,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using Hylasoft.OrdersGui.Model;
 
-namespace Hylasoft.OrdersGui.View.Utils
+namespace Hylasoft.OrdersGui.View.Converters
 {
     public class OpcConnectionStatusToColorConverter : IValueConverter
     {

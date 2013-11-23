@@ -1,16 +1,13 @@
-﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ignore="http://www.ignore.com"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:c="clr-namespace:Hylasoft.OrdersGui.Controls"
              x:Class="Hylasoft.OrdersGui.View.LoadOrderDetails"
              mc:Ignorable="d ignore" d:DesignWidth="1000" d:DesignHeight="700"
-             >
-    <UserControl.DataContext>
-        <Binding Path="LoadOrderDetailsVM" Source="{StaticResource Locator}"/>
-    </UserControl.DataContext>
+             DataContext="{Binding LoadOrderDetailsVM, Source={StaticResource Locator}}" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -24,7 +21,7 @@
             <Button Margin="0,0,15,0" Command="{Binding GoBackCommand}">
                 <Image Source="/OrdersGui;component/Resources/Images/back.png"/>
             </Button>
-            <sdk:Label Style="{StaticResource TitleStyle}" Content="Load Order Details" />
+            <sdk:Label Style="{StaticResource TitleStyle}" Content="Order Details" />
         </StackPanel>
         <Grid Grid.Row="1" Margin="0,10" DataContext="{Binding Order}">
             <Grid.Resources>
@@ -83,7 +80,7 @@
             <!--                <RadioButton Content="East Load" GroupName="bay" Width="92" />-->
             <!--            </StackPanel>-->
         </Grid>
-        <sdk:DataGrid Grid.Row="2" Margin="0,10" HorizontalAlignment="Center"
+        <sdk:DataGrid Grid.Row="2" Margin="0,10" ColumnWidth="Auto" HorizontalAlignment="Center"
                       ItemsSource="{Binding OrderProducts, ConverterParameter=5, Converter={StaticResource OrderProdFixedList}}">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Binding="{Binding Material.MaterialCode}" Header="Product Code" />
@@ -94,20 +91,24 @@
                 <sdk:DataGridTextColumn Binding="{Binding Density, StringFormat=\{0:N0\}}" Header="Density (LB/GAL)"/>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
-        <sdk:DataGrid Grid.Row="3" Margin="0,10" HorizontalAlignment="Center"
+        <sdk:DataGrid Grid.Row="3" Margin="0,10" ColumnWidth="Auto" HorizontalAlignment="Center"
                       ItemsSource="{Binding OrderCompartments, ConverterParameter=5, Converter={StaticResource OrderCompFixedList}}">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Header="Seq" Binding="{Binding SeqNo}"/>
                 <sdk:DataGridTextColumn Header="Comp #"  Binding="{Binding Compartment.CompartmentNo}"/>
                 <sdk:DataGridTextColumn Header="Capacity" Binding="{Binding Compartment.Capacity}" />
                 <sdk:DataGridTextColumn Header="Product Code"  Binding="{Binding OrderProduct.Material.MaterialCode}" />
+                <sdk:DataGridTextColumn Header="Product Name"  Binding="{Binding OrderProduct.Material.MaterialName}" />
                 <sdk:DataGridTextColumn Header="Tank"  Binding="{Binding Tank.TankName}"/>
                 <sdk:DataGridTextColumn Header="Target Qty (GAL)"  Binding="{Binding TargetQty, StringFormat=\{0:N0\}}"/>
                 <sdk:DataGridTextColumn Header="Actual Qty (GAL)"  Binding="{Binding ActualQty, StringFormat=\{0:N0\}}"/>
                 <sdk:DataGridTextColumn Header="Net Weight (LB)"  Binding="{Binding NetWeight, StringFormat=\{0:N0\}}"/>
-                <sdk:DataGridTextColumn Header="Load Rack"  Binding="{Binding RackArm.Rack.RackName}"/>
-                <sdk:DataGridTextColumn Header="Load Arm"  Binding="{Binding RackArm.ArmName}"/>
-                <sdk:DataGridTextColumn Header="Status" Binding="{Binding CompartmentStatus}"/>
+                <c:DataGridTextColumnEx Header="Load Rack"  Binding="{Binding RackArm.Rack.RackName}"
+                                        DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator},Converter={StaticResource OrderTypeToCollapsed}, ConverterParameter=Unload}"/>
+                <c:DataGridTextColumnEx Header="Load Arm"  Binding="{Binding RackArm.ArmName}"
+                                        DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource OrderTypeToCollapsed}, ConverterParameter=Unload}"/>
+                <c:DataGridTextColumnEx Header="Status" Binding="{Binding CompartmentStatus}"
+                                        DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource OrderTypeToCollapsed}, ConverterParameter=Unload}"/>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
         <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">

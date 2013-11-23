@@ -24,6 +24,7 @@
             <Style TargetType="TextBlock" BasedOn="{StaticResource BasicTextBlockStyle}" />
             <Style TargetType="sdk:Label" BasedOn="{StaticResource BasicLabelStyle}" />
             <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxStyle}" />
+            <Style TargetType="ToggleButton" BasedOn="{StaticResource  ButtonStyle}" />
             <Style TargetType="TextBox" BasedOn="{StaticResource BasicTextBoxStyle}" />
             <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}" />
             <Style TargetType="sdk:DataGrid" BasedOn="{StaticResource DataGridStyle}" />
@@ -37,6 +38,7 @@
             <converters:OrderProductFixedListConverter x:Key="OrderProdFixedList"/>
             <converters:OrderCompFixedListConverter x:Key="OrderCompFixedList"/>
             <converters:EnumToVisibleConverter x:Key="EnumToVisible"/>
+            <converters:StringToBoolConverter x:Key="StringToBool"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -78,15 +78,13 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <CheckBox Content="North"/>
-                <CheckBox Grid.Column="1" Content="South"/>
-                <CheckBox Grid.Column="2" Content="East"/>
+                <ToggleButton Content="North"
+                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='North'}" />
+                <ToggleButton Grid.Column="1" Content="South"
+                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='South'}"/>
+                <ToggleButton Grid.Column="2" Content="East"
+                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='East'}"/>
             </Grid>
-            <!--            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">-->
-            <!--                <RadioButton Content="North Load" GroupName="bay"  Width="126" />-->
-            <!--                <RadioButton Content="South Load" GroupName="bay" Width="123" />-->
-            <!--                <RadioButton Content="East Load" GroupName="bay" Width="92" />-->
-            <!--            </StackPanel>-->
         </Grid>
         <sdk:DataGrid Grid.Row="2" Margin="0,10" ColumnWidth="Auto" HorizontalAlignment="Center"
                       ItemsSource="{Binding OrderProducts, ConverterParameter=5, Converter={StaticResource OrderProdFixedList}}">

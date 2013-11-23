@@ -7,7 +7,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="MainSkin.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <Style TargetType="Button" x:Key="ButtonStyle">
+    <Style TargetType="ButtonBase" x:Key="ButtonStyle">
         <Setter Property="Height" Value="29"/>
         <Setter Property="Background" Value="{StaticResource DarkGrayBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource BlackBrush}"/>
@@ -17,7 +17,7 @@
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="ButtonBase">
                     <Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -39,6 +39,19 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="CheckBorder" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0" To="1"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked"/>
+                                <VisualState x:Name="Indeterminate">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="IndeterminateBorder" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0" To="1"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
@@ -52,6 +65,8 @@
                             <Grid Background="{TemplateBinding Background}"  x:Name="ButtonContent"/>
                         </Border>
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Border Grid.ColumnSpan="2" BorderThickness="0 8 0 0" x:Name="CheckBorder" BorderBrush="{StaticResource BlueBrush}" Opacity="0" />
+                        <Border BorderThickness="0 8 0 0" x:Name="IndeterminateBorder" BorderBrush="{StaticResource BlueBrush}" Opacity="0" />
                         <Rectangle x:Name="DisabledVisualElement" Fill="#FFFFFFFF" IsHitTestVisible="false" Opacity="0"/>
                     </Grid>
                 </ControlTemplate>

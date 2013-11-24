@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace Hylasoft.OrdersGui.View
 {
@@ -14,6 +13,8 @@ namespace Hylasoft.OrdersGui.View
         public AssignTruck()
         {
             InitializeComponent();
+            Visibility = Visibility.Visible;
+            Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -217,7 +217,7 @@
                     Visibility="{Binding Mode, Converter={StaticResource EnumToVisible}, ConverterParameter='Fullfill'}"/>
                 </StackPanel>
             </Grid>
-            <view:AssignTruck Name="AssignTruckView" Visibility="Collapsed">
+            <view:AssignTruck Name="AssignTruckView">
                 <view:AssignTruck.RenderTransform>
                     <CompositeTransform TranslateX="{Binding ElementName=DetailsControl, Path=Width}"/>
                 </view:AssignTruck.RenderTransform>

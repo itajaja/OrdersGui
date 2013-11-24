@@ -74,18 +74,17 @@ namespace Hylasoft.OrdersGui.ViewModel
         public CreateOrderVM(IDataService ds)
         {
             _dataService = ds;
-            //todo need a smart way to handle errors
             _dataService.GetMaterials((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Materials = new ObservableCollection<Material>(item)));
             _dataService.GetSapTanks((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Tanks = new ObservableCollection<Tank>(item)));
             CreateOrderCommand = new RelayCommand(() =>
             {
                 if (Validate())
-                    MessageBox.Show("YEAH"); //todo implement
+                    MessageBox.Show("implement"); //todo implement
             });
             GoBackCommand = new RelayCommand(() =>
             {
-                Messenger.Default.Send(new GoToLomMessage());
                 Reset();
+                Messenger.Default.Send(new GoToLomMessage());
             });
             ClearRowCommand = new RelayCommand<OrderProduct>(product =>
             {
@@ -100,7 +99,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         public void Reset()
         {
             Order = new Order();
-            //initialize with 5 empty products
+//            initialize with 5 empty products
             OrderProducts = new TrulyObservableCollection<OrderProduct>{
                 new OrderProduct{Uom = null},
                 new OrderProduct{Uom = null},

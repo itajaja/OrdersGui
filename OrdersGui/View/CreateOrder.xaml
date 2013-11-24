@@ -120,7 +120,7 @@
                 <sdk:DataGridTemplateColumn Header="Source Tank">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <sdk:AutoCompleteBox SelectedItem="{Binding SourceTank, Mode=TwoWay}" ValueMemberPath="SapTankName" MinimumPopulateDelay="300" MinimumPrefixLength="2"
+                                <sdk:AutoCompleteBox SelectedItem="{Binding SourceTank, Mode=TwoWay}" ValueMemberPath="SapTankName" MinimumPopulateDelay="300" MinimumPrefixLength="2"
                                                  ItemsSource="{Binding CreateOrderVM.Tanks, Source={StaticResource Locator}}">
                                 <sdk:AutoCompleteBox.ItemTemplate>
                                     <DataTemplate>

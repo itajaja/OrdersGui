@@ -89,8 +89,8 @@ namespace Hylasoft.OrdersGui.ViewModel
             });
             ClearRowCommand = new RelayCommand<OrderProduct>(product =>
             {
-                product.Material = null;
-                product.SourceTank = null;
+                product.Material = new Material();
+                product.SourceTank = new Tank();
                 product.TargetQty = 0;
                 product.Uom = null;
             });
@@ -102,11 +102,11 @@ namespace Hylasoft.OrdersGui.ViewModel
             Order = new Order();
             //initialize with 5 empty products
             OrderProducts = new TrulyObservableCollection<OrderProduct>{
-                new OrderProduct(),
-                new OrderProduct(),
-                new OrderProduct(),
-                new OrderProduct(),
-                new OrderProduct()
+                new OrderProduct{Uom = null},
+                new OrderProduct{Uom = null},
+                new OrderProduct{Uom = null},
+                new OrderProduct{Uom = null},
+                new OrderProduct{Uom = null}
             };
         }
 

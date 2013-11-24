@@ -18,7 +18,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         private readonly IDataService _dataservice;
         private SessionData _sessionData;
 
-        private IList<Rack> _racks; 
+        private IList<Rack> _racks;
 
         private DetailMode _mode;
         public DetailMode Mode
@@ -180,6 +180,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             OrderProducts = null;
             OrderCompartments = null;
             Compartments = null;
+            Container = null;
         }
     }
 

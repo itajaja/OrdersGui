@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
-using Hylasoft.OrdersGui.Messages;
+using Hylasoft.OrdersGui.ViewModel;
 
 namespace Hylasoft.OrdersGui.View
 {
@@ -15,6 +15,13 @@ namespace Hylasoft.OrdersGui.View
         public LoadOrderDetails()
         {
             InitializeComponent();
+            Messenger.Default.Register<OpenCloseEditDateMessage>(this, message =>
+            {
+                if (message.Open)
+                    OpenEditDate.Begin();
+                else
+                    CloseEditDate.Begin();
+            });
         }
     }
 }

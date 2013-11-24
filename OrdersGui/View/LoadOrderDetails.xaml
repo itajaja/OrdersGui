@@ -9,6 +9,16 @@
              mc:Ignorable="d ignore" d:DesignWidth="1000" d:DesignHeight="700"
              DataContext="{Binding LoadOrderDetailsVM, Source={StaticResource Locator}}" >
     <Grid>
+        <Grid.Resources>
+            <Storyboard x:Name="OpenEditDate">
+                <DoubleAnimation To="230" Duration="0:0:.2" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
+                <DoubleAnimation To="180" Duration="0:0:.2" Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
+            </Storyboard>
+            <Storyboard x:Name="CloseEditDate">
+                <DoubleAnimation To="0" Duration="0:0:.2" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
+                <DoubleAnimation To="0" Duration="0:0:.2" Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
+            </Storyboard>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto"/>
@@ -52,14 +62,30 @@
             <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding CustomerName}"/>
             <sdk:Label Grid.Row="0" Grid.Column="4" Content="Carrier Name" />
             <TextBlock Grid.Row="0" Grid.Column="5" Text="{Binding CarrierName}"/>
-            <sdk:Label Grid.Row="1" Grid.Column="0" Content="Scheduled Date" />
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ScheduleDate, StringFormat=\{0:d\}}"/>
-            <sdk:Label Grid.Row="1" Grid.Column="2" Content="Scheduled Time"/>
-            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding ScheduleDate, StringFormat=\{0:t\}}" />
+            <sdk:Label Grid.Row="2" Grid.Column="0" Content="Scheduled Date" />
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
+                <TextBlock Text="{Binding ScheduleDate, StringFormat=\{0:d\}}"/>
+                <Button Margin="10,0,0,0" Content="M" Command="{Binding LoadOrderDetailsVM.EditDateCommand, Source={StaticResource Locator}}"
+                        Name="EditDateButton"/>
+                <Popup IsOpen="True"  HorizontalAlignment="Right" >
+                    <Grid Width="0" Height="0" Name="EditDateGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <sdk:Calendar SelectedDate="{Binding LoadOrderDetailsVM.EditDate, Source={StaticResource Locator}, Mode=TwoWay, StringFormat=\{0:d\}}" />
+                        <TextBox Grid.Row="1" Text="{Binding LoadOrderDetailsVM.EditTime, Source={StaticResource Locator}, Mode=TwoWay, StringFormat=\{0:t\}}"/>
+                        <Button Name="SaveDateButton" Grid.Row="2" Content="Save" Command="{Binding LoadOrderDetailsVM.SaveDateCommand, Source={StaticResource Locator}}"/>
+                    </Grid>
+                </Popup>
+            </StackPanel>
+            <sdk:Label Grid.Row="3" Grid.Column="0" Content="Scheduled Time"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ScheduleDate, StringFormat=\{0:t\}}" />
             <sdk:Label Grid.Row="1" Grid.Column="4" Content="Order Type" />
             <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding OrderType}"/>
-            <sdk:Label Grid.Row="2" Grid.Column="0" Content="Status" />
-            <StackPanel Grid.Row="2" Grid.Column="1" Margin="0" Orientation="Horizontal">
+            <sdk:Label Grid.Row="1" Grid.Column="0" Content="Status" />
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                 <Border HorizontalAlignment="Right" BorderBrush="{StaticResource BlackBrush}" BorderThickness="1" Width="20" Height="20" CornerRadius="10"
                         Background="{Binding OrderStatus, Converter={StaticResource OrderStatusToBackground}}" Margin="0,0,5,0"/>
                 <TextBlock  Text="{Binding OrderStatus, Converter={StaticResource OrderStatusToString}}"/>
@@ -68,8 +94,8 @@
             <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding TruckNo}" />
             <sdk:Label Grid.Row="2" Grid.Column="4" Content="Container No" />
             <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
-            <sdk:Label Grid.Row="3" Grid.Column="0" Content="Compartments" />
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
+            <sdk:Label Grid.Row="1" Grid.Column="2" Content="Compartments" />
+            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding LoadOrderDetailsVM.Container.CompartmentsCount, Source={StaticResource Locator}}" />
             <sdk:Label Grid.Row="3" Grid.Column="2" Content="Po Number" />
             <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding PoNumber}"/>
             <sdk:Label Grid.Row="3" Grid.Column="4" Content="Load Rack" x:Name="LoadRackTextBlock"

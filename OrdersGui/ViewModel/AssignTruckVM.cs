@@ -3,6 +3,7 @@ using System.ServiceModel.Channels;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
@@ -43,6 +44,13 @@ namespace Hylasoft.OrdersGui.ViewModel
             get { return _container; }
             set { Set("Container", ref _container, value); }
         }
+        
+        private IList<Container> _containers;
+        public IList<Container> Containers
+        {
+            get { return _containers; }
+            set { Set("Containers", ref _containers, value); }
+        }
 
         public RelayCommand GoBackCommand { get; private set; }
 
@@ -50,6 +58,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         {
             _dataservice = ds;
             _dataservice.GetSessionData((data, exception) => _sessionData = data);
+            _dataservice.GetContainers((data, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() =>Containers = data));
             Messenger.Default.Register<GoToAtMessage>(this, message =>
             {
                 if (!message.GoBack)

@@ -193,6 +193,7 @@
     <Compile Include="View\Converters\EnumToVisibleConverter.cs" />
     <Compile Include="View\Converters\FixedListConverter.cs" />
     <Compile Include="View\Converters\StringToBoolConverter.cs" />
+    <Compile Include="View\Converters\StringToVisibleConverter.cs" />
     <Compile Include="View\CreateOrder.xaml.cs">
       <DependentUpon>CreateOrder.xaml</DependentUpon>
     </Compile>

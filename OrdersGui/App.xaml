@@ -28,6 +28,7 @@
             <Style TargetType="TextBox" BasedOn="{StaticResource BasicTextBoxStyle}" />
             <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}" />
             <Style TargetType="sdk:DataGrid" BasedOn="{StaticResource DataGridStyle}" />
+            <Style TargetType="RadioButton" BasedOn="{StaticResource ButtonStyle}" />
             <res:Strings_en_us x:Key="Strings"/>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <converters:OpcConnectionStatusToColorConverter x:Key="OpcConnectionStatusToColor" />
@@ -39,6 +40,7 @@
             <converters:OrderCompFixedListConverter x:Key="OrderCompFixedList"/>
             <converters:EnumToVisibleConverter x:Key="EnumToVisible"/>
             <converters:StringToBoolConverter x:Key="StringToBool"/>
+            <converters:StringToVisibleConverter x:Key="StringToVisible"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

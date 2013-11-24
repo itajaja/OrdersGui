@@ -80,15 +80,26 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ToggleButton Content="North"
-                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='North'}" 
-                              Command="{Binding LoadOrderDetailsVM.ChangeRackCommand, Source={StaticResource Locator}}" CommandParameter="North"/>
-                <ToggleButton Grid.Column="1" Content="South"
-                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='South'}"
-                              Command="{Binding LoadOrderDetailsVM.ChangeRackCommand, Source={StaticResource Locator}}" CommandParameter="South"/>
-                <ToggleButton Grid.Column="2" Content="East"
-                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='East'}"
-                              Command="{Binding LoadOrderDetailsVM.ChangeRackCommand, Source={StaticResource Locator}}" CommandParameter="East"/>
+                <Grid.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="BorderThickness" Value="0 7 0 0"></Setter>
+                        <Setter Property="BorderBrush" Value="{StaticResource BlueBrush}" />
+                        <Setter Property="IsHitTestVisible" Value="False" />
+                    </Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                        <Setter Property="Command" Value="{Binding LoadOrderDetailsVM.ChangeRackCommand, Source={StaticResource Locator}}"/>
+                    </Style>
+                </Grid.Resources>
+                <Button Content="North" CommandParameter="North"/>
+                <Button Grid.Column="1" Content="South" CommandParameter="South"/>
+                <Button Grid.Column="2" Content="East" CommandParameter="East"/>
+                <Border Grid.Column="0"  BorderBrush="{StaticResource BlueBrush}"
+                        Visibility="{Binding LoadRack.RackName, Converter={StaticResource StringToVisible}, ConverterParameter='North'}"/>
+                <Border Grid.Column="1" BorderBrush="{StaticResource BlueBrush}"
+                Visibility="{Binding LoadRack.RackName, Converter={StaticResource StringToVisible}, ConverterParameter='South'}"/>
+                <Border Grid.Column="2"
+                Visibility="{Binding LoadRack.RackName, Converter={StaticResource StringToVisible}, ConverterParameter='East'}">
+                </Border>
             </Grid>
         </Grid>
         <sdk:DataGrid Grid.Row="2" Margin="0,10" ColumnWidth="Auto" HorizontalAlignment="Center"

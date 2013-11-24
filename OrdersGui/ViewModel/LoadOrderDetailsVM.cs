@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -16,6 +19,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         private readonly IDataService _dataservice;
         private SessionData _sessionData;
 
+        private IList<Rack> _racks; 
 
         private DetailMode _mode;
         public DetailMode Mode
@@ -70,6 +74,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         {
             _dataservice = ds;
             _dataservice.GetSessionData((data, exception) => _sessionData = data);
+            _dataservice.GetRacks((list, exception) => _racks = list);
             Messenger.Default.Register<GoToLodMessage>(this, o =>
             {
                 RefreshCommands();
@@ -103,7 +108,16 @@ namespace Hylasoft.OrdersGui.ViewModel
                 () => Order != null && Mode == DetailMode.Fullfill);
             SaveCommand = new RelayCommand(() => MessageBox.Show("save"),
                 () => Order != null && Mode == DetailMode.Edit);
-            ChangeRackCommand = new RelayCommand<string>(s => MessageBox.Show("changeRack"),
+            ChangeRackCommand = new RelayCommand<string>(s =>
+            {
+                var currentRack = Order.LoadRack;
+                var newRack = _racks.First(r => r.RackName == s);
+                if (currentRack == newRack)
+                    return;
+                var confirm = MessageBox.Show("Are you sure to change rack from " + currentRack.RackName + " to " + s + "?","Change Rack",MessageBoxButton.OKCancel);
+                if (confirm == MessageBoxResult.OK)
+                    Order.LoadRack = newRack;
+            },
                 s => Order != null && !String.IsNullOrEmpty(s) && Mode != DetailMode.View && Order.OrderType == OrderType.Load);
             //todo implement save
         }

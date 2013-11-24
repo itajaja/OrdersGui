@@ -65,7 +65,7 @@ namespace Hylasoft.OrdersGui.Model
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _tankId == other._tankId;
+            return _tankId != 0 && _tankId == other._tankId;
         }
 
         public static bool operator ==(Tank left, Tank right)

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -92,7 +94,6 @@ namespace Hylasoft.OrdersGui.ViewModel
             _dataservice.GetRacks((list, exception) => _racks = list);
             Messenger.Default.Register<GoToLodMessage>(this, o =>
             {
-                RefreshCommands();
                 Mode = o.Mode;
                 Order = o.Order;
                 _dataservice.GetOrderDetails(Order.OrderId,
@@ -106,7 +107,6 @@ namespace Hylasoft.OrdersGui.ViewModel
                             Compartments = new TrulyObservableCollection<Compartment>(comps);
                             Container = container;
                         }
-                        RefreshCommands();
                     }));
             });
             GoBackCommand = new RelayCommand(() =>
@@ -116,7 +116,11 @@ namespace Hylasoft.OrdersGui.ViewModel
             });
             AssignCompartmentCommand = new RelayCommand(() => MessageBox.Show("assign comp"),
                 () => Order != null && Order.OrderStatus != OrderStatus.Ready);
-            AssignTruckCommand = new RelayCommand(() => MessageBox.Show("assign truck"),
+            AssignTruckCommand = new RelayCommand(() =>
+            {
+                Messenger.Default.Send(new GoToAtMessage(false));
+                Messenger.Default.Send(new OpenCloseEditDateMessage(false));
+            },
                 () => Order != null && Mode == DetailMode.Prepare && Order != null);
             FulfillOrderCommand = new RelayCommand(() => MessageBox.Show("fullfill"),
                 () => Order != null && Mode == DetailMode.Fullfill);
@@ -161,6 +165,10 @@ namespace Hylasoft.OrdersGui.ViewModel
                         Order.LoadRack = newRack;
                 },
                 s => Order != null && !String.IsNullOrEmpty(s) && Mode != DetailMode.View && Order.OrderType == OrderType.Load);
+            var t = new DispatcherTimer();
+            t.Interval = TimeSpan.FromSeconds(1);
+            t.Tick += (_, __) => RefreshCommands();
+            t.Start();
         }
 
         private void RefreshCommands()
@@ -181,6 +189,8 @@ namespace Hylasoft.OrdersGui.ViewModel
             OrderCompartments = null;
             Compartments = null;
             Container = null;
+            Messenger.Default.Send(new GoToAtMessage(true));
+            Messenger.Default.Send(new OpenCloseEditDateMessage(false));
         }
     }
 

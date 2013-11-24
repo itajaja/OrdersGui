@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
+using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.ViewModel;
 
 namespace Hylasoft.OrdersGui.View
@@ -22,6 +23,20 @@ namespace Hylasoft.OrdersGui.View
                 else
                     CloseEditDate.Begin();
             });
+            Messenger.Default.Register<GoToAtMessage>(this, m =>
+            {
+                if (m.GoBack)
+                    GoBack.Begin();
+                else
+                    ToAt.Begin();
+            });
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Width = ActualWidth;
+            SlideAnimation1.To = -ActualWidth;
+            SizeChanged -= OnSizeChanged;
         }
     }
 }

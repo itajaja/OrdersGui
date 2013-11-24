@@ -60,7 +60,8 @@
             <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding OrderType}"/>
             <sdk:Label Grid.Row="2" Grid.Column="0" Content="Status" />
             <StackPanel Grid.Row="2" Grid.Column="1" Margin="0" Orientation="Horizontal">
-                <Border HorizontalAlignment="Right" BorderBrush="{StaticResource BlackBrush}" BorderThickness="1" Background="{Binding OrderStatus, Converter={StaticResource OrderStatusToBackground}}" Width="20" Height="20" CornerRadius="10" Margin="0,0,5,0"/>
+                <Border HorizontalAlignment="Right" BorderBrush="{StaticResource BlackBrush}" BorderThickness="1" Width="20" Height="20" CornerRadius="10"
+                        Background="{Binding OrderStatus, Converter={StaticResource OrderStatusToBackground}}" Margin="0,0,5,0"/>
                 <TextBlock  Text="{Binding OrderStatus, Converter={StaticResource OrderStatusToString}}"/>
             </StackPanel>
             <sdk:Label Grid.Row="2" Grid.Column="2" Content="Truck No" />
@@ -71,19 +72,23 @@
             <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
             <sdk:Label Grid.Row="3" Grid.Column="2" Content="Po Number" />
             <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding PoNumber}"/>
-            <sdk:Label Grid.Row="3" Grid.Column="4" Content="Load Rack" x:Name="LoadRackTextBlock" />
-            <Grid Grid.Row="3" Grid.Column="5">
+            <sdk:Label Grid.Row="3" Grid.Column="4" Content="Load Rack" x:Name="LoadRackTextBlock"
+                       Visibility="{Binding OrderType, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
+            <Grid Grid.Row="3" Grid.Column="5" Visibility="{Binding OrderType, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ToggleButton Content="North"
-                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='North'}" />
+                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='North'}" 
+                              Command="{Binding LoadOrderDetailsVM.ChangeRackCommand, Source={StaticResource Locator}}" CommandParameter="North"/>
                 <ToggleButton Grid.Column="1" Content="South"
-                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='South'}"/>
+                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='South'}"
+                              Command="{Binding LoadOrderDetailsVM.ChangeRackCommand, Source={StaticResource Locator}}" CommandParameter="South"/>
                 <ToggleButton Grid.Column="2" Content="East"
-                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='East'}"/>
+                              IsChecked="{Binding LoadRack.RackName, Converter={StaticResource StringToBool}, ConverterParameter='East'}"
+                              Command="{Binding LoadOrderDetailsVM.ChangeRackCommand, Source={StaticResource Locator}}" CommandParameter="East"/>
             </Grid>
         </Grid>
         <sdk:DataGrid Grid.Row="2" Margin="0,10" ColumnWidth="Auto" HorizontalAlignment="Center"

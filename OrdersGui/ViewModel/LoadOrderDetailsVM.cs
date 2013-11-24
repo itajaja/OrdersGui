@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -62,6 +63,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         public RelayCommand AssignCompartmentCommand { get; private set; }
         public RelayCommand AssignTruckCommand { get; private set; }
         public RelayCommand FulfillOrderCommand { get; private set; }
+        public RelayCommand<string> ChangeRackCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
 
         public LoadOrderDetailsVM(IDataService ds)
@@ -96,14 +98,13 @@ namespace Hylasoft.OrdersGui.ViewModel
             AssignCompartmentCommand = new RelayCommand(() => MessageBox.Show("assign comp"),
                 () => Order != null && Order.OrderStatus != OrderStatus.Ready);
             AssignTruckCommand = new RelayCommand(() => MessageBox.Show("assign truck"),
-                () => Mode == DetailMode.Prepare && Order != null);
+                () => Order != null && Mode == DetailMode.Prepare && Order != null);
             FulfillOrderCommand = new RelayCommand(() => MessageBox.Show("fullfill"),
-                () => Mode == DetailMode.Fullfill
-                );
+                () => Order != null && Mode == DetailMode.Fullfill);
             SaveCommand = new RelayCommand(() => MessageBox.Show("save"),
-                () => Mode == DetailMode.Edit
-                );
-            //todo implement racks
+                () => Order != null && Mode == DetailMode.Edit);
+            ChangeRackCommand = new RelayCommand<string>(s => MessageBox.Show("changeRack"),
+                s => Order != null && !String.IsNullOrEmpty(s) && Mode != DetailMode.View && Order.OrderType == OrderType.Load);
             //todo implement save
         }
 
@@ -114,6 +115,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             AssignTruckCommand.RaiseCanExecuteChanged();
             FulfillOrderCommand.RaiseCanExecuteChanged();
             SaveCommand.RaiseCanExecuteChanged();
+            ChangeRackCommand.RaiseCanExecuteChanged();
         }
 
         public void Reset()

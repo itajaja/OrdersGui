@@ -33,7 +33,4 @@ namespace Hylasoft.OrdersGui.View.Converters
             throw new InvalidOperationException();
         }
     }
-
-    //    public class OrderTypeToVisibleConverter : EnumToVisibleConverter<Model.OrderType> { }
-    //    public class DetailModeToVisibleConverter : EnumToVisibleConverter<Messages.DetailMode> { }
 }

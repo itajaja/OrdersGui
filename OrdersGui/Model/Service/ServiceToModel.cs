@@ -284,7 +284,7 @@ namespace Hylasoft.OrdersGui.Model.Service
             mComp.CompartmentStatus = ConvertCompartmentStatus(comp.CompartmentStatus);
             mComp.NetWeight = comp.NetWeight;
             mComp.RackArm = _arms.FirstOrDefault(a => a.ArmId == comp.LoadArmId);
-            mComp.SeqNo = comp.SeqNo;
+            mComp.SeqNo = (SequenceNumber)comp.SeqNo;
             mComp.Tank = _tanks.FirstOrDefault(t => t.TankId == comp.TankId);
             mComp.TargetQty = comp.TargetQty;
             return mComp;

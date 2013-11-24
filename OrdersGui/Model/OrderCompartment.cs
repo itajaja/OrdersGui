@@ -47,8 +47,8 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _targetQty, value, "TargetQty"); }
         }
 
-        private int _seqNo;
-        public int SeqNo
+        private SequenceNumber _seqNo;
+        public SequenceNumber SeqNo
         {
             get { return _seqNo; }
             set { SetField(ref _seqNo, value, "SeqNo"); }
@@ -79,5 +79,14 @@ namespace Hylasoft.OrdersGui.Model
         Partial,
         Aborted,
         Unused
+    }
+
+    public enum SequenceNumber
+    {
+        A = 1,
+        B = 2,
+        C = 3,
+        D = 4,
+        E = 5
     }
 }

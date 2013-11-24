@@ -5,6 +5,7 @@
              xmlns:ignore="http://www.ignore.com"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              xmlns:c="clr-namespace:Hylasoft.OrdersGui.Controls"
+             xmlns:view="clr-namespace:Hylasoft.OrdersGui.View"
              x:Class="Hylasoft.OrdersGui.View.LoadOrderDetails"
              mc:Ignorable="d ignore" d:DesignWidth="1000" d:DesignHeight="700"
              DataContext="{Binding LoadOrderDetailsVM, Source={StaticResource Locator}}" >
@@ -21,8 +22,6 @@
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -135,43 +134,55 @@
                 </Border>
             </Grid>
         </Grid>
-        <sdk:DataGrid Grid.Row="2" Margin="0,10" ColumnWidth="Auto" HorizontalAlignment="Center"
+        <Grid Name="DetailsContentGrid" Row="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <sdk:DataGrid Grid.Row="0" Margin="0,10" ColumnWidth="Auto" HorizontalAlignment="Center"
                       ItemsSource="{Binding OrderProducts, ConverterParameter=5, Converter={StaticResource OrderProdFixedList}}">
-            <sdk:DataGrid.Columns>
-                <sdk:DataGridTextColumn Binding="{Binding Material.MaterialCode}" Header="Product Code" />
-                <sdk:DataGridTextColumn Binding="{Binding Material.MaterialName}" Header="Product Name" />
-                <sdk:DataGridTextColumn Binding="{Binding SourceTank.TankName}" Header="Tank" />
-                <sdk:DataGridTextColumn Binding="{Binding TargetQty, StringFormat=\{0:N0\}}" Header="Target Qty (GAL)" />
-                <sdk:DataGridTextColumn Binding="{Binding Uom}" Header="UoM" />
-                <sdk:DataGridTextColumn Binding="{Binding Density, StringFormat=\{0:N0\}}" Header="Density (LB/GAL)"/>
-            </sdk:DataGrid.Columns>
-        </sdk:DataGrid>
-        <sdk:DataGrid Grid.Row="3" Margin="0,10" ColumnWidth="Auto" HorizontalAlignment="Center"
+                    <sdk:DataGrid.Columns>
+                        <sdk:DataGridTextColumn Binding="{Binding Material.MaterialCode}" Header="Product Code" />
+                        <sdk:DataGridTextColumn Binding="{Binding Material.MaterialName}" Header="Product Name" />
+                        <sdk:DataGridTextColumn Binding="{Binding SourceTank.TankName}" Header="Tank" />
+                        <sdk:DataGridTextColumn Binding="{Binding TargetQty, StringFormat=\{0:N0\}}" Header="Target Qty (GAL)" />
+                        <sdk:DataGridTextColumn Binding="{Binding Uom}" Header="UoM" />
+                        <sdk:DataGridTextColumn Binding="{Binding Density, StringFormat=\{0:N0\}}" Header="Density (LB/GAL)"/>
+                    </sdk:DataGrid.Columns>
+                </sdk:DataGrid>
+                <sdk:DataGrid Grid.Row="1" Margin="0,10" ColumnWidth="Auto" HorizontalAlignment="Center"
                       ItemsSource="{Binding OrderCompartments, ConverterParameter=5, Converter={StaticResource OrderCompFixedList}}">
-            <sdk:DataGrid.Columns>
-                <sdk:DataGridTextColumn Header="Seq" Binding="{Binding SeqNo}"/>
-                <sdk:DataGridTextColumn Header="Comp #"  Binding="{Binding Compartment.CompartmentNo}"/>
-                <sdk:DataGridTextColumn Header="Capacity" Binding="{Binding Compartment.Capacity}" />
-                <sdk:DataGridTextColumn Header="Product Code"  Binding="{Binding OrderProduct.Material.MaterialCode}" />
-                <sdk:DataGridTextColumn Header="Product Name"  Binding="{Binding OrderProduct.Material.MaterialName}" />
-                <sdk:DataGridTextColumn Header="Tank"  Binding="{Binding Tank.TankName}"/>
-                <sdk:DataGridTextColumn Header="Target Qty (GAL)"  Binding="{Binding TargetQty, StringFormat=\{0:N0\}}"/>
-                <sdk:DataGridTextColumn Header="Actual Qty (GAL)"  Binding="{Binding ActualQty, StringFormat=\{0:N0\}}"/>
-                <sdk:DataGridTextColumn Header="Net Weight (LB)"  Binding="{Binding NetWeight, StringFormat=\{0:N0\}}"/>
-                <c:DataGridTextColumnEx Header="Load Rack"  Binding="{Binding RackArm.Rack.RackName}"
+                    <sdk:DataGrid.Columns>
+                        <sdk:DataGridTextColumn Header="Seq" Binding="{Binding SeqNo}"/>
+                        <sdk:DataGridTextColumn Header="Comp #"  Binding="{Binding Compartment.CompartmentNo}"/>
+                        <sdk:DataGridTextColumn Header="Capacity" Binding="{Binding Compartment.Capacity}" />
+                        <sdk:DataGridTextColumn Header="Product Code"  Binding="{Binding OrderProduct.Material.MaterialCode}" />
+                        <sdk:DataGridTextColumn Header="Product Name"  Binding="{Binding OrderProduct.Material.MaterialName}" />
+                        <sdk:DataGridTextColumn Header="Tank"  Binding="{Binding Tank.TankName}"/>
+                        <sdk:DataGridTextColumn Header="Target Qty (GAL)"  Binding="{Binding TargetQty, StringFormat=\{0:N0\}}"/>
+                        <sdk:DataGridTextColumn Header="Actual Qty (GAL)"  Binding="{Binding ActualQty, StringFormat=\{0:N0\}}"/>
+                        <sdk:DataGridTextColumn Header="Net Weight (LB)"  Binding="{Binding NetWeight, StringFormat=\{0:N0\}}"/>
+                        <c:DataGridTextColumnEx Header="Load Rack"  Binding="{Binding RackArm.Rack.RackName}"
                                         DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator},Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
-                <c:DataGridTextColumnEx Header="Load Arm"  Binding="{Binding RackArm.ArmName}"
+                        <c:DataGridTextColumnEx Header="Load Arm"  Binding="{Binding RackArm.ArmName}"
                                         DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
-                <c:DataGridTextColumnEx Header="Status" Binding="{Binding CompartmentStatus}"
+                        <c:DataGridTextColumnEx Header="Status" Binding="{Binding CompartmentStatus}"
                                         DVisibility="{Binding LoadOrderDetailsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
-            </sdk:DataGrid.Columns>
-        </sdk:DataGrid>
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10"
+                    </sdk:DataGrid.Columns>
+                </sdk:DataGrid>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10"
                     Visibility="{Binding Mode, Converter={StaticResource EnumToVisible}, ConverterParameter='Prepare,Fullfill'}">
-            <Button Content="Assign Truck" Command="{Binding AssignTruckCommand}"/>
-            <Button Content="Assign Compartments" Command="{Binding AssignCompartmentCommand}"/>
-            <Button Content="Fullfill Order" Command="{Binding FulfillOrderCommand}"
+                    <Button Content="Assign Truck" Command="{Binding AssignTruckCommand}"/>
+                    <Button Content="Assign Compartments" Command="{Binding AssignCompartmentCommand}"/>
+                    <Button Content="Fullfill Order" Command="{Binding FulfillOrderCommand}"
                     Visibility="{Binding Mode, Converter={StaticResource EnumToVisible}, ConverterParameter='Fullfill'}"/>
-        </StackPanel>
+                </StackPanel>
+            </Grid>
+            <view:AssignTruck>
+                
+            </view:AssignTruck>
+        </Grid>
     </Grid>
 </UserControl>

@@ -114,7 +114,6 @@ namespace Hylasoft.OrdersGui.ViewModel
                 Messenger.Default.Send(new GoToLomMessage());
                 Reset();
             });
-            //todo implement
             AssignCompartmentCommand = new RelayCommand(() => MessageBox.Show("assign comp"),
                 () => Order != null && Order.OrderStatus != OrderStatus.Ready);
             AssignTruckCommand = new RelayCommand(() => MessageBox.Show("assign truck"),
@@ -146,6 +145,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                     {
                         Order.ScheduleDate = newDate;
                         Messenger.Default.Send(new OpenCloseEditDateMessage(false));
+                        _isEditingDate = false;
                     }
                 },
                 () => Order != null && Mode == DetailMode.Edit);
@@ -161,7 +161,6 @@ namespace Hylasoft.OrdersGui.ViewModel
                         Order.LoadRack = newRack;
                 },
                 s => Order != null && !String.IsNullOrEmpty(s) && Mode != DetailMode.View && Order.OrderType == OrderType.Load);
-            //todo implement save
         }
 
         private void RefreshCommands()

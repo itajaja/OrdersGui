@@ -11,12 +11,12 @@
     <Grid>
         <Grid.Resources>
             <Storyboard x:Name="OpenEditDate">
-                <DoubleAnimation To="230" Duration="0:0:.2" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
-                <DoubleAnimation To="180" Duration="0:0:.2" Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
+                <DoubleAnimation To="230" Duration="0:0:.1" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
+                <DoubleAnimation To="180" Duration="0:0:.1" Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
             </Storyboard>
             <Storyboard x:Name="CloseEditDate">
-                <DoubleAnimation To="0" Duration="0:0:.2" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
-                <DoubleAnimation To="0" Duration="0:0:.2" Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
+                <DoubleAnimation To="0" Duration="0:0:.1" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
+                <DoubleAnimation To="0" Duration="0:0:.1" Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="EditDateGrid" d:IsOptimized="True"/>
             </Storyboard>
         </Grid.Resources>
         <Grid.RowDefinitions>
@@ -65,18 +65,25 @@
             <sdk:Label Grid.Row="2" Grid.Column="0" Content="Scheduled Date" />
             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
                 <TextBlock Text="{Binding ScheduleDate, StringFormat=\{0:d\}}"/>
-                <Button Margin="10,0,0,0" Content="M" Command="{Binding LoadOrderDetailsVM.EditDateCommand, Source={StaticResource Locator}}"
-                        Name="EditDateButton"/>
+                <Button Margin="10,0,0,0" Command="{Binding LoadOrderDetailsVM.EditDateCommand, Source={StaticResource Locator}}"
+                        Name="EditDateButton">
+                    <Image Source="../Resources/Images/calendar.png"></Image>
+                </Button>
                 <Popup IsOpen="True"  HorizontalAlignment="Right" >
                     <Grid Width="0" Height="0" Name="EditDateGrid">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <sdk:Calendar SelectedDate="{Binding LoadOrderDetailsVM.EditDate, Source={StaticResource Locator}, Mode=TwoWay, StringFormat=\{0:d\}}" />
-                        <TextBox Grid.Row="1" Text="{Binding LoadOrderDetailsVM.EditTime, Source={StaticResource Locator}, Mode=TwoWay, StringFormat=\{0:t\}}"/>
-                        <Button Name="SaveDateButton" Grid.Row="2" Content="Save" Command="{Binding LoadOrderDetailsVM.SaveDateCommand, Source={StaticResource Locator}}"/>
+                        <Grid.Effect>
+                            <DropShadowEffect Direction="250" BlurRadius="8" ShadowDepth="8" Opacity="1" Color="{StaticResource BlackColor}"/>
+                        </Grid.Effect>
+                        <Grid  VerticalAlignment="Top" HorizontalAlignment="Left" Background="{StaticResource BackgroundBrush}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <sdk:Calendar SelectedDate="{Binding LoadOrderDetailsVM.EditDate, Source={StaticResource Locator}, Mode=TwoWay, StringFormat=\{0:d\}}" />
+                            <TextBox Margin="0 -2 0 0" Grid.Row="1" Text="{Binding LoadOrderDetailsVM.EditTime, Source={StaticResource Locator}, Mode=TwoWay, StringFormat=\{0:t\}}"/>
+                            <Button Name="SaveDateButton" Grid.Row="2" Content="Save" Command="{Binding LoadOrderDetailsVM.SaveDateCommand, Source={StaticResource Locator}}"/>
+                        </Grid>
                     </Grid>
                 </Popup>
             </StackPanel>

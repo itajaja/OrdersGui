@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
@@ -233,12 +234,12 @@ namespace Hylasoft.OrdersGui.ViewModel
             FullfillOrderCommand = new RelayCommand<Order>(order =>
                 Messenger.Default.Send(new GoToLodMessage
                 {
-                    Mode = DetailMode.Fullfill, //todo right mode here
+                    Mode = DetailMode.Fullfill,
                     Order = order
                 }), order => order != null && (order.OrderType == OrderType.Load && order.OrderStatus == OrderStatus.Released || order.OrderType == OrderType.Unload && order.OrderStatus == OrderStatus.Approved));
             //todo implement
-            EnterSealsCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
-            ReleaseCommand = new RelayCommand<Order>(order => { }, order => order != null && order.OrderType == OrderType.Load);
+            EnterSealsCommand = new RelayCommand<Order>(order => { MessageBox.Show("implement"); }, order => order != null && order.OrderType == OrderType.Load);
+            ReleaseCommand = new RelayCommand<Order>(order => { MessageBox.Show("implement"); }, order => order != null && order.OrderType == OrderType.Load);
 
             _commandList = new List<RelayCommand>{
                 ClearStatusFilerCommand, AddAllStatusFilterCommand,

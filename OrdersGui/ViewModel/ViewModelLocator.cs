@@ -24,6 +24,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             SimpleIoc.Default.Register<LoadOrderDetailsVM>(false);
             SimpleIoc.Default.Register<CreateOrderVM>(false);
             SimpleIoc.Default.Register<AssignTruckVM>(false);
+            SimpleIoc.Default.Register<AssignCompartmentsVM>(false);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -48,6 +49,12 @@ namespace Hylasoft.OrdersGui.ViewModel
         public AssignTruckVM AssignTruckVM
         {
             get { return ServiceLocator.Current.GetInstance<AssignTruckVM>(); }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public AssignCompartmentsVM AssignCompartmentsVM
+        {
+            get { throw new System.NotImplementedException(); }
         }
 
         /// <summary>

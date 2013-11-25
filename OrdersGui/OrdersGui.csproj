@@ -136,6 +136,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Messages\Copy of GoToAtMessage.cs" />
     <Compile Include="Messages\GoToAtMessage.cs" />
     <Compile Include="Messages\ErrorMessage.cs" />
     <Compile Include="Messages\GoToCreateOrderMessage.cs" />
@@ -187,11 +188,15 @@
     <Compile Include="Utils\EnumList.cs" />
     <Compile Include="Utils\TrulyObservableCollection.cs" />
     <Compile Include="ViewModel\AssignTruckVM.cs" />
+    <Compile Include="ViewModel\AssignCompartmentsVM.cs" />
     <Compile Include="ViewModel\CreateOrderVM.cs" />
     <Compile Include="ViewModel\LoadOrderDetailsVM.cs" />
     <Compile Include="ViewModel\LoadOrderManagerVM.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Controls\DataGridTextColumnEx.cs" />
+    <Compile Include="View\AssignCompartments.xaml.cs">
+      <DependentUpon>AssignCompartments.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AssignTruck.xaml.cs">
       <DependentUpon>AssignTruck.xaml</DependentUpon>
     </Compile>
@@ -247,6 +252,10 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AssignCompartments.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AssignTruck.xaml">
       <SubType>Form</SubType>

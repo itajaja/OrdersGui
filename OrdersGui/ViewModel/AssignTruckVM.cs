@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel.Channels;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -53,6 +54,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         }
 
         public RelayCommand GoBackCommand { get; private set; }
+        public RelayCommand AssignTruckCommand { get; private set; }
 
         public AssignTruckVM(IDataService ds, LoadOrderDetailsVM lodVM)
         {
@@ -76,6 +78,13 @@ namespace Hylasoft.OrdersGui.ViewModel
                 Messenger.Default.Send(new GoToAtMessage(true));
                 lodVM.Mode = _cachedMode;
                 Reset();
+            });
+            AssignTruckCommand = new RelayCommand(() =>
+            {
+                var confirm = MessageBox.Show("Are you sure you want to change the current truck?","Confirm",MessageBoxButton.OKCancel);
+                if (confirm != MessageBoxResult.OK)
+                    return;
+                //assign truck
             });
             Reset();
         }

@@ -30,12 +30,20 @@ namespace Hylasoft.OrdersGui.View
                 else
                     ToAt.Begin();
             });
+            Messenger.Default.Register<GoToAcMessage>(this, m =>
+            {
+                if (m.GoBack)
+                    GoBack.Begin();
+                else
+                    ToAc.Begin();
+            });
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             Width = ActualWidth;
             SlideAnimation1.To = -ActualWidth;
+            SlideAnimation2.To = -ActualWidth;
             SizeChanged -= OnSizeChanged;
         }
     }

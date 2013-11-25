@@ -27,6 +27,13 @@
                         </DiscreteObjectKeyFrame.Value>
                     </DiscreteObjectKeyFrame>
                 </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AssignCompartmentsView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                    <DiscreteObjectKeyFrame KeyTime="0:0:00.0">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AssignTruckView" Storyboard.TargetProperty="(UIElement.Visibility)">
                     <DiscreteObjectKeyFrame KeyTime="0:0:00">
                         <DiscreteObjectKeyFrame.Value>
@@ -36,8 +43,39 @@
                 </ObjectAnimationUsingKeyFrames>
                 <DoubleAnimation x:Name="SlideAnimation1" Duration="0:0:00.2"  To="{Binding ElementName=MainPageControl, Path=Width}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="DetailsContentGrid"  d:IsOptimized="True" />
             </Storyboard>
+            <Storyboard x:Name="ToAc">
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DetailsView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                    <DiscreteObjectKeyFrame KeyTime="0:0:00.2">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AssignTruckView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                    <DiscreteObjectKeyFrame KeyTime="0:0:00.0">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AssignCompartmentsView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                    <DiscreteObjectKeyFrame KeyTime="0:0:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                <DoubleAnimation x:Name="SlideAnimation2" Duration="0:0:00.2"  To="{Binding ElementName=MainPageControl, Path=Width}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="DetailsContentGrid"  d:IsOptimized="True" />
+            </Storyboard>
             <Storyboard x:Name="GoBack">
                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AssignTruckView" Storyboard.TargetProperty="(UIElement.Visibility)">
+                    <DiscreteObjectKeyFrame KeyTime="0:0:00.2">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AssignCompartmentsView" Storyboard.TargetProperty="(UIElement.Visibility)">
                     <DiscreteObjectKeyFrame KeyTime="0:0:00.2">
                         <DiscreteObjectKeyFrame.Value>
                             <Visibility>Collapsed</Visibility>
@@ -222,6 +260,11 @@
                     <CompositeTransform TranslateX="{Binding ElementName=DetailsControl, Path=Width}"/>
                 </view:AssignTruck.RenderTransform>
             </view:AssignTruck>
+            <view:AssignCompartments Name="AssignCompartmentsView">
+                <view:AssignCompartments.RenderTransform>
+                    <CompositeTransform TranslateX="{Binding ElementName=DetailsControl, Path=Width}"/>
+                </view:AssignCompartments.RenderTransform>
+            </view:AssignCompartments>
         </Grid>
     </Grid>
 </UserControl>

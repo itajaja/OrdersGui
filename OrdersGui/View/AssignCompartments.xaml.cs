@@ -1,12 +1,11 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace Hylasoft.OrdersGui.View
 {
     /// <summary>
     /// Description for AssignCompartments.
     /// </summary>
-    public partial class AssignCompartments : UserControl
+    public partial class AssignCompartments
     {
         /// <summary>
         /// Initializes a new instance of the AssignCompartments class.
@@ -14,6 +13,8 @@ namespace Hylasoft.OrdersGui.View
         public AssignCompartments()
         {
             InitializeComponent();
+            Visibility = Visibility.Visible;
+            Visibility = Visibility.Collapsed;            
         }
     }
 }

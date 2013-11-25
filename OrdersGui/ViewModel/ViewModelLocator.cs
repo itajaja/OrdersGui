@@ -54,7 +54,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public AssignCompartmentsVM AssignCompartmentsVM
         {
-            get { throw new System.NotImplementedException(); }
+            get { return ServiceLocator.Current.GetInstance<AssignCompartmentsVM>(); }
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
@@ -114,14 +113,20 @@ namespace Hylasoft.OrdersGui.ViewModel
                 Messenger.Default.Send(new GoToLomMessage());
                 Reset();
             });
-            AssignCompartmentCommand = new RelayCommand(() => MessageBox.Show("assign comp"),
-                () => Order != null && Order.OrderStatus != OrderStatus.Ready);
-            AssignTruckCommand = new RelayCommand(() =>
-            {
-                Messenger.Default.Send(new GoToAtMessage(false));
-                Messenger.Default.Send(new OpenCloseEditDateMessage(false));
-            },
-                () => Order != null && Mode == DetailMode.Prepare && Order != null);
+            AssignCompartmentCommand = new RelayCommand(
+                () =>
+                {
+                    Messenger.Default.Send(new GoToAcMessage(false));
+                    Messenger.Default.Send(new OpenCloseEditDateMessage(false));
+                },
+                () => Order != null && Order.OrderStatus != OrderStatus.Ready && Mode == DetailMode.Prepare);
+            AssignTruckCommand = new RelayCommand(
+                () =>
+                {
+                    Messenger.Default.Send(new GoToAtMessage(false));
+                    Messenger.Default.Send(new OpenCloseEditDateMessage(false));
+                },
+                () => Order != null && Mode == DetailMode.Prepare);
             FulfillOrderCommand = new RelayCommand(() => MessageBox.Show("fullfill"),
                 () => Order != null && Mode == DetailMode.Fullfill);
             EditDateCommand = new RelayCommand(

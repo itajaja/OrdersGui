@@ -17,7 +17,6 @@ namespace Hylasoft.OrdersGui.ViewModel
     public sealed class AssignTruckVM : ViewModelBase
     {
         private readonly IDataService _dataservice;
-        private SessionData _sessionData;
         private DetailMode _cachedMode;
 
         private Order _order;
@@ -53,6 +52,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                     {
                         Compartments = new TrulyObservableCollection<Compartment>(list);
                     }));
+                RefreshCommands();
             }
         }
         
@@ -94,7 +94,6 @@ namespace Hylasoft.OrdersGui.ViewModel
         public AssignTruckVM(IDataService ds, LoadOrderDetailsVM lodVM)
         {
             _dataservice = ds;
-            _dataservice.GetSessionData((data, exception) => _sessionData = data);
             _dataservice.GetContainers((data, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() =>Containers = data));
             Messenger.Default.Register<GoToAtMessage>(this, message =>
             {
@@ -120,8 +119,9 @@ namespace Hylasoft.OrdersGui.ViewModel
                 var confirm = MessageBox.Show("Are you sure you want to change the current truck?","Confirm",MessageBoxButton.OKCancel);
                 if (confirm != MessageBoxResult.OK)
                     return;
-                //assign truck
-            });
+                GoBackCommand.Execute(null);
+                //todo assign truck
+            },() => Container != null);
             Reset();
         }
 

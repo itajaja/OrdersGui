@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ServiceModel.Channels;
+using System.Linq;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -65,10 +65,10 @@ namespace Hylasoft.OrdersGui.ViewModel
             {
                 if (!message.GoBack)
                 {
-                    Order = lodVM.Order;
+                    Order = lodVM.Order.Clone();
                     Compartments = lodVM.Compartments;
-                    Container = lodVM.Container;
-                    OrderCompartments = lodVM.OrderCompartments;
+                    Container = lodVM.Container.Clone();
+                    OrderCompartments = new TrulyObservableCollection<OrderCompartment>(lodVM.OrderCompartments.Select(o => o.Clone()));
                     _cachedMode = lodVM.Mode;
                     lodVM.Mode = DetailMode.View;
                 }
@@ -91,6 +91,7 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         private void RefreshCommands()
         {
+            AssignTruckCommand.RaiseCanExecuteChanged();
         }
 
         public void Reset()

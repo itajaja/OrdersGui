@@ -169,6 +169,11 @@ namespace Hylasoft.OrdersGui.Model
         }
 
         #endregion
+
+        public Order Clone()
+        {
+            return (Order)MemberwiseClone();
+        }
     }
 
 

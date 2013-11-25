@@ -93,5 +93,10 @@ namespace Hylasoft.OrdersGui.Model
 
         #endregion
 
+        public Container Clone()
+        {
+            return (Container)MemberwiseClone();
+        }
+
     }
 }

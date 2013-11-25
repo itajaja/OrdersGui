@@ -66,5 +66,10 @@ namespace Hylasoft.OrdersGui.Model
                 return Double.NaN;
             }
         }
+
+        public OrderProduct Clone()
+        {
+            return (OrderProduct)MemberwiseClone();
+        }
     }
 }

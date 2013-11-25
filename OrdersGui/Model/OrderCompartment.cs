@@ -67,6 +67,11 @@ namespace Hylasoft.OrdersGui.Model
             get { return _tank; }
             set { SetField(ref _tank, value, "Tank"); }
         }
+
+        public OrderCompartment Clone()
+        {
+            return (OrderCompartment) MemberwiseClone();
+        }
     }
 
     public enum LoadingCompartmentStatus

@@ -35,7 +35,7 @@
                     <sdk:DataGrid.Columns>
                         <sdk:DataGridTextColumn Header="Container number" Binding="{Binding ContainerNo}"/>
                         <sdk:DataGridTextColumn Header="Capacity" Binding="{Binding Capacity}" />
-                        <sdk:DataGridTextColumn Header="Gross Weight" Binding="{Binding GrossWeight}" />
+<!--                        <sdk:DataGridTextColumn Header="Gross Weight" Binding="{Binding GrossWeight}" />-->
                         <sdk:DataGridTextColumn Header="Compartments" Binding="{Binding CompartmentsCount}" />
                     </sdk:DataGrid.Columns>
                 </sdk:DataGrid>

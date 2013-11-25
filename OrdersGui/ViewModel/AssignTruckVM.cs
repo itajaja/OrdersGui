@@ -18,6 +18,8 @@ namespace Hylasoft.OrdersGui.ViewModel
     {
         private readonly IDataService _dataservice;
         private DetailMode _cachedMode;
+        private double _targetQtySum;
+        private int _productsCount;
 
         private Order _order;
         public Order Order
@@ -37,7 +39,18 @@ namespace Hylasoft.OrdersGui.ViewModel
         public TrulyObservableCollection<Compartment> Compartments
         {
             get { return _compartments; }
-            set { Set("Compartments", ref _compartments, value); }
+            set
+            {
+                Set("Compartments", ref _compartments, value);
+                RefreshCommands();
+            }
+        }
+
+        private string _errorString;
+        public string ErrorString
+        {
+            get { return _errorString; }
+            set { Set("ErrorString", ref _errorString, value); }
         }
 
         private Container _container;
@@ -47,8 +60,9 @@ namespace Hylasoft.OrdersGui.ViewModel
             set
             {
                 Set("Container", ref _container, value);
+                Compartments = null;
                 if (_container != null)
-                    _dataservice.GetCompartments(_container.ContainerId, (list, exception) =>DispatcherHelper.CheckBeginInvokeOnUI( () =>
+                    _dataservice.GetCompartments(_container.ContainerId, (list, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() =>
                     {
                         Compartments = new TrulyObservableCollection<Compartment>(list);
                     }));
@@ -101,6 +115,8 @@ namespace Hylasoft.OrdersGui.ViewModel
                     return;
                 Order = lodVM.Order.Clone();
                 Compartments = lodVM.Compartments;
+                _targetQtySum = lodVM.OrderProducts.Sum(o => o.TargetQty);
+                _productsCount = lodVM.OrderProducts.Count;
                 if (lodVM.Container != null)
                     Container = lodVM.Container.Clone();
                 if (lodVM.OrderCompartments != null)
@@ -116,13 +132,36 @@ namespace Hylasoft.OrdersGui.ViewModel
             });
             AssignTruckCommand = new RelayCommand(() =>
             {
-                var confirm = MessageBox.Show("Are you sure you want to change the current truck?","Confirm",MessageBoxButton.OKCancel);
+                var confirm = MessageBox.Show("Are you sure you want to change the current truck?", "Confirm", MessageBoxButton.OKCancel);
                 if (confirm != MessageBoxResult.OK)
                     return;
                 GoBackCommand.Execute(null);
                 //todo assign truck
-            },() => Container != null);
+            }, IsContainerOk);
             Reset();
+        }
+
+        private bool IsContainerOk()
+        {
+            if (Container == null)
+            {
+                ErrorString = "Please select a Container.";
+                return false;                
+            }
+            if (Container.Capacity < _targetQtySum)
+            {
+                ErrorString = "Container capacity is not sufficient.\n" +
+                "Load Order Product Target Qty sum is " + _targetQtySum + ".";
+                return false;
+            }
+            if (Compartments == null)
+                return false;
+            if (Compartments.Count < _productsCount)
+            {
+                ErrorString = "The number of compartments is less than the number of products (" + _productsCount + ").";
+            }
+            ErrorString = null;
+            return true;
         }
 
         private void RefreshCommands()
@@ -136,6 +175,8 @@ namespace Hylasoft.OrdersGui.ViewModel
             OrderCompartments = null;
             Compartments = null;
             Container = null;
+            _targetQtySum = 0;
+            _productsCount = 0;
         }
     }
 

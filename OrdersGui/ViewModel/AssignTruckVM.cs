@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -55,7 +56,8 @@ namespace Hylasoft.OrdersGui.ViewModel
             {
                 Set("Containers", ref _containers, value);
                 ContainersView = new PagedCollectionView(_containers);
-                ContainersView.Filter = o => ((Container)o).ContainerNo.Contains(ContainerFilter);
+                ContainersView.Filter = o =>
+                    CultureInfo.CurrentCulture.CompareInfo.IndexOf(((Container)o).ContainerNo, ContainerFilter, CompareOptions.IgnoreCase) >= 0;
             }
         }
 

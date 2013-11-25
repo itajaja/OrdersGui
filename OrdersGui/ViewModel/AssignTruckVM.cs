@@ -159,6 +159,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             if (Compartments.Count < _productsCount)
             {
                 ErrorString = "The number of compartments is less than the number of products (" + _productsCount + ").";
+                return false;
             }
             ErrorString = null;
             return true;

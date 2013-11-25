@@ -45,7 +45,15 @@ namespace Hylasoft.OrdersGui.ViewModel
         public Container Container
         {
             get { return _container; }
-            set { Set("Container", ref _container, value); }
+            set
+            {
+                Set("Container", ref _container, value);
+                if (_container != null)
+                    _dataservice.GetCompartments(_container.ContainerId, (list, exception) =>DispatcherHelper.CheckBeginInvokeOnUI( () =>
+                    {
+                        Compartments = new TrulyObservableCollection<Compartment>(list);
+                    }));
+            }
         }
         
         private IList<Container> _containers;

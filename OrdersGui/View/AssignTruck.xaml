@@ -30,7 +30,8 @@
                 </Grid.RowDefinitions>
                 <TextBox Text="{Binding ContainerFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Image Grid.Row="0" HorizontalAlignment="Right" Source="../Resources/Images/find.png" IsHitTestVisible="False" Margin="10,0"/>
-                <sdk:DataGrid VerticalScrollBarVisibility="Hidden" Grid.Row="1" ItemsSource="{Binding ContainersView}" SelectedItem="{Binding Container, Mode=TwoWay}">
+                <sdk:DataGrid VerticalScrollBarVisibility="Hidden" Grid.Row="1" ItemsSource="{Binding ContainersView}" MouseLeftButtonUp="UpdateTruck"
+                              SelectedItem="{Binding Container, Mode=TwoWay, UpdateSourceTrigger=Explicit}" Name="TruckGrid">
                     <sdk:DataGrid.Columns>
                         <sdk:DataGridTextColumn Header="Container number" Binding="{Binding ContainerNo}"/>
                         <sdk:DataGridTextColumn Header="Capacity" Binding="{Binding Capacity}" />
@@ -51,7 +52,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4">
                     <TextBlock Text="Container Number" FontSize="22" FontFamily="Segoe UI" Margin="0,0,10,10"/>
                     <TextBlock Text="{Binding Container.ContainerNo}" FontSize="22" FontFamily="Segoe UI"/>
                 </StackPanel>

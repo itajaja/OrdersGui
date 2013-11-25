@@ -330,6 +330,7 @@
     <Resource Include="Resources\Images\clear.png" />
     <Resource Include="Resources\Images\Check.png" />
     <Resource Include="Resources\Images\calendar.png" />
+    <Resource Include="Resources\Images\find.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.wsdl" />
     <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.xsd">

@@ -132,12 +132,12 @@
             </StackPanel>
             <sdk:Label Grid.Row="2" Grid.Column="2" Content="Truck No" />
             <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding TruckNo}" />
-            <sdk:Label Grid.Row="2" Grid.Column="4" Content="Container No" />
-            <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
+            <sdk:Label Grid.Row="3" Grid.Column="2" Content="Container No" />
+            <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding LoadOrderDetailsVM.Container.ContainerNo, Source={StaticResource Locator}}" />
             <sdk:Label Grid.Row="1" Grid.Column="2" Content="Compartments" />
             <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding LoadOrderDetailsVM.Container.CompartmentsCount, Source={StaticResource Locator}}" />
-            <sdk:Label Grid.Row="3" Grid.Column="2" Content="Po Number" />
-            <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding PoNumber}"/>
+            <sdk:Label Grid.Row="2" Grid.Column="4" Content="Po Number" />
+            <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding PoNumber}"/>
             <sdk:Label Grid.Row="3" Grid.Column="4" Content="Load Rack" x:Name="LoadRackTextBlock"
                        Visibility="{Binding OrderType, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
             <Grid Grid.Row="3" Grid.Column="5" Visibility="{Binding OrderType, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}">

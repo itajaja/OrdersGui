@@ -74,7 +74,10 @@
             </Grid.ColumnDefinitions>
             <StackPanel  Orientation="Horizontal">
                 <sdk:Label Content="{Binding OrderNumberFilter, Source={StaticResource Strings}}" />
-                <TextBox Margin="5,0,10,0" Width="150" Text="{Binding OrderNoFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Grid Margin="5,0,10,0" >
+                    <TextBox  Text="{Binding OrderNoFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150"/>
+                    <Image HorizontalAlignment="Right" Source="../Resources/Images/find.png" IsHitTestVisible="False"  Margin="10,0"/>
+                </Grid>
                 <Button Name="OrderStatusFilterButton" Content="{Binding OrderStatusFilter, Source={StaticResource Strings}}" Click="OrderStatusFilterButton_Click" />
                 <Button Name="DateFilterButton" Content="{Binding DateFilter, Source={StaticResource Strings}}" Click="DateFilterButton_Click" />
                 <Button Name="CreateOrderButton" Content="{Binding CreateOrder, Source={StaticResource Strings}}" Click="CreateOrderButton_Click" />

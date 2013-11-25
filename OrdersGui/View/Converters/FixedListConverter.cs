@@ -31,4 +31,8 @@ namespace Hylasoft.OrdersGui.View.Converters
     public class OrderCompFixedListConverter : FixedListConverter<OrderCompartment>
     {
     }
+
+    public class CompFixedListConverter : FixedListConverter<Compartment>
+    {
+    }
 }

@@ -38,6 +38,7 @@
             <converters:OrderStatusToStringConverter x:Key="OrderStatusToString" />
             <converters:OrderProductFixedListConverter x:Key="OrderProdFixedList"/>
             <converters:OrderCompFixedListConverter x:Key="OrderCompFixedList"/>
+            <converters:CompFixedListConverter x:Key="CompFixedList"/>
             <converters:EnumToVisibleConverter x:Key="EnumToVisible"/>
             <converters:StringToBoolConverter x:Key="StringToBool"/>
             <converters:StringToVisibleConverter x:Key="StringToVisible"/>

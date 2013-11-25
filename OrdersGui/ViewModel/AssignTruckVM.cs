@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -50,7 +51,31 @@ namespace Hylasoft.OrdersGui.ViewModel
         public IList<Container> Containers
         {
             get { return _containers; }
-            set { Set("Containers", ref _containers, value); }
+            set
+            {
+                Set("Containers", ref _containers, value);
+                ContainersView = new PagedCollectionView(_containers);
+                ContainersView.Filter = o => ((Container)o).ContainerNo.Contains(ContainerFilter);
+            }
+        }
+
+        private PagedCollectionView _containersView;
+        public PagedCollectionView ContainersView
+        {
+            get { return _containersView; }
+            set { Set("ContainersView", ref _containersView, value); }
+        }
+
+        private string _containerFilter = "";
+        public string ContainerFilter
+        {
+            get { return _containerFilter; }
+            set
+            {
+                Set("ContainerFilter", ref _containerFilter, value);
+                if (ContainersView != null)
+                    ContainersView.Refresh();
+            }
         }
 
         public RelayCommand GoBackCommand { get; private set; }
@@ -63,15 +88,16 @@ namespace Hylasoft.OrdersGui.ViewModel
             _dataservice.GetContainers((data, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() =>Containers = data));
             Messenger.Default.Register<GoToAtMessage>(this, message =>
             {
-                if (!message.GoBack)
-                {
-                    Order = lodVM.Order.Clone();
-                    Compartments = lodVM.Compartments;
+                if (message.GoBack)
+                    return;
+                Order = lodVM.Order.Clone();
+                Compartments = lodVM.Compartments;
+                if (lodVM.Container != null)
                     Container = lodVM.Container.Clone();
+                if (lodVM.OrderCompartments != null)
                     OrderCompartments = new TrulyObservableCollection<OrderCompartment>(lodVM.OrderCompartments.Select(o => o.Clone()));
-                    _cachedMode = lodVM.Mode;
-                    lodVM.Mode = DetailMode.View;
-                }
+                _cachedMode = lodVM.Mode;
+                lodVM.Mode = DetailMode.View;
             });
             GoBackCommand = new RelayCommand(() =>
             {

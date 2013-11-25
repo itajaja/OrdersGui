@@ -28,9 +28,9 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBox />
+                <TextBox Text="{Binding ContainerFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Image Grid.Row="0" HorizontalAlignment="Right" Source="../Resources/Images/find.png" IsHitTestVisible="False" Margin="10,0"/>
-                <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding Containers}" >
+                <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding ContainersView}" SelectedItem="{Binding Container, Mode=TwoWay}">
                     <sdk:DataGrid.Columns>
                         <sdk:DataGridTextColumn Header="Container number" Binding="{Binding ContainerNo}"/>
                         <sdk:DataGridTextColumn Header="Capacity" Binding="{Binding Capacity}" />

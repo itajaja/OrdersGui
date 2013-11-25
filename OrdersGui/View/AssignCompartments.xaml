@@ -8,15 +8,44 @@
              mc:Ignorable="d ignore" d:DesignWidth="1000" d:DesignHeight="400"
              DataContext="{Binding AssignCompartmentsVM, Source={StaticResource Locator}}">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Margin="0,0,0,20" Orientation="Horizontal">
             <Button Margin="0,0,15,0" Command="{Binding GoBackCommand}">
                 <Image Source="/OrdersGui;component/Resources/Images/back.png"/>
             </Button>
             <sdk:Label Style="{StaticResource TitleStyle}" Content="Assign Compartments" />
         </StackPanel>
+        <sdk:DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding OrderCompartments, Converter={StaticResource OrderCompFixedList}, ConverterParameter=5}">
+            <sdk:DataGrid.Columns>
+                <sdk:DataGridTextColumn Binding="{Binding SeqNo}" Header="Seq. #" />
+                <sdk:DataGridTextColumn Binding="{Binding Compartment.CompartmentNo}" Header="Comp. #"/>
+                <sdk:DataGridTextColumn Binding="{Binding Compartment.Capacity}" Header="Capacity (GAL)"/>
+                <sdk:DataGridTextColumn Binding="{Binding OrderProduct.Material.MaterialName}" Header="Product" Width="*"/>
+                <sdk:DataGridTextColumn Binding="{Binding Tank.TankName}" Header="Tank"/>
+                <sdk:DataGridTextColumn Binding="{Binding TargetQty}" Header="Target Qty (GAL)"/>
+                <sdk:DataGridTextColumn Binding="{Binding ActualQty}" Header="Actual Qty (GAL)"/>
+                <sdk:DataGridTextColumn Binding="{Binding RackArm.ArmName}" Header="Arm"/>
+                <sdk:DataGridTextColumn Binding="{Binding CompartmentStatus}" Header="Compartment Status"/>
+                <sdk:DataGridTextColumn Binding="{Binding OrderProduct}" Header="Batch Number"/>
+                <sdk:DataGridTemplateColumn>
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button BorderBrush="Transparent" Background="Transparent">
+<!--                                Command="{Binding CreateOrderVM.ClearRowCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"-->
+                                <Image Source="../Resources/Images/clear.png"></Image>
+                            </Button>
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+            </sdk:DataGrid.Columns>
+        </sdk:DataGrid>
     </Grid>
 </UserControl>

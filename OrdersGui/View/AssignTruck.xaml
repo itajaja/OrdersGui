@@ -53,8 +53,14 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4">
-                    <TextBlock Text="Container Number" FontSize="22" FontFamily="Segoe UI" Margin="0,0,10,10"/>
-                    <TextBlock Text="{Binding Container.ContainerNo}" FontSize="22" FontFamily="Segoe UI"/>
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource BasicTextBlockStyle}">
+                            <Setter Property="FontFamily" Value="{StaticResource FontStyle2}" />
+                            <Setter Property="FontSize" Value="22" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="Container Number" Margin="0,0,10,10"/>
+                    <TextBlock Text="{Binding Container.ContainerNo}"/>
                 </StackPanel>
                 <TextBlock Text="Capacity:" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0"/>
                 <TextBlock Text="{Binding Container.Capacity}" Grid.Row="1" Grid.Column="1" Margin="0,0,25,0" Width="100"/>

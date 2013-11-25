@@ -68,7 +68,7 @@
         <Grid Grid.Row="1" Margin="0,10" DataContext="{Binding Order}">
             <Grid.Resources>
                 <Style TargetType="sdk:Label" BasedOn="{StaticResource BasicLabelStyle}">
-                    <Setter Property="FontFamily" Value="Segoe UI" />
+                    <Setter Property="FontFamily" Value="{StaticResource FontStyle2}" />
                     <Setter Property="HorizontalContentAlignment" Value="Right"/>
                     <Setter Property="Margin" Value="0,0,10,0" />
                 </Style>

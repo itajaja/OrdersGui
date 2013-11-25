@@ -30,7 +30,7 @@
                 </Grid.RowDefinitions>
                 <TextBox Text="{Binding ContainerFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Image Grid.Row="0" HorizontalAlignment="Right" Source="../Resources/Images/find.png" IsHitTestVisible="False" Margin="10,0"/>
-                <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding ContainersView}" SelectedItem="{Binding Container, Mode=TwoWay}">
+                <sdk:DataGrid VerticalScrollBarVisibility="Hidden" Grid.Row="1" ItemsSource="{Binding ContainersView}" SelectedItem="{Binding Container, Mode=TwoWay}">
                     <sdk:DataGrid.Columns>
                         <sdk:DataGridTextColumn Header="Container number" Binding="{Binding ContainerNo}"/>
                         <sdk:DataGridTextColumn Header="Capacity" Binding="{Binding Capacity}" />
@@ -56,7 +56,7 @@
                     <TextBlock Text="{Binding Container.ContainerNo}" FontSize="22" FontFamily="Segoe UI"/>
                 </StackPanel>
                 <TextBlock Text="Capacity:" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0"/>
-                <TextBlock Text="{Binding Container.Capacity}" Grid.Row="1" Grid.Column="1" Margin="0,0,45,0"/>
+                <TextBlock Text="{Binding Container.Capacity}" Grid.Row="1" Grid.Column="1" Margin="0,0,25,0" Width="100"/>
                 <TextBlock Text="Truck:" Grid.Row="1" Grid.Column="2" Margin="0,0,10,0"/>
                 <TextBox Text="{Binding Order.TruckNo, Mode=TwoWay}" Grid.Row="1" Grid.Column="3" Width="150"/>
 <!--                <TextBlock Text="Gross Weight:" Grid.Row="1" Grid.Column="2" Margin="0,0,10,0"/>-->

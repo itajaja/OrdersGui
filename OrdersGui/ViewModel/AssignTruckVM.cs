@@ -135,8 +135,11 @@ namespace Hylasoft.OrdersGui.ViewModel
                 var confirm = MessageBox.Show("Are you sure you want to change the current truck?", "Confirm", MessageBoxButton.OKCancel);
                 if (confirm != MessageBoxResult.OK)
                     return;
+                lodVM.Order.TruckNo = Order.TruckNo;
+                lodVM.Order.OrderStatus = OrderStatus.TruckArrived;
+                lodVM.Container = Container;
+                lodVM.OrderCompartments = null;
                 GoBackCommand.Execute(null);
-                //todo assign truck
             }, IsContainerOk);
             Reset();
         }

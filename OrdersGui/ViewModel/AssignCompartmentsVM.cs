@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -87,8 +88,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                     OrderProducts = new TrulyObservableCollection<OrderProduct>(lodVM.OrderProducts.Select(o => o.Clone()));
                 if (lodVM.Container != null)
                     Container = lodVM.Container.Clone();
-                if (lodVM.OrderCompartments != null)
-                    OrderCompartments = new TrulyObservableCollection<OrderCompartment>(lodVM.OrderCompartments.Select(o => o.Clone()));
+                OrderCompartments = CreateCompartments(lodVM.OrderCompartments);
                 _cachedMode = lodVM.Mode;
                 lodVM.Mode = DetailMode.View;
             });
@@ -99,6 +99,23 @@ namespace Hylasoft.OrdersGui.ViewModel
                 Reset();
             });
             Reset();
+        }
+
+        private TrulyObservableCollection<OrderCompartment> CreateCompartments(IEnumerable<OrderCompartment> originalComps)
+        {
+            var comps = new TrulyObservableCollection<OrderCompartment>{
+                new OrderCompartment{SeqNo = SequenceNumber.A},
+                new OrderCompartment{SeqNo = SequenceNumber.B},
+                new OrderCompartment{SeqNo = SequenceNumber.C},
+                new OrderCompartment{SeqNo = SequenceNumber.D},
+                new OrderCompartment{SeqNo = SequenceNumber.E}
+            };
+            if (originalComps == null)
+                return comps;
+            var orderedComps = originalComps.OrderBy(compartment => compartment.SeqNo).ToList();
+            for (int i = 0; i < orderedComps.Count(); i++)
+                comps[i] = orderedComps[i].Clone();
+            return comps;
         }
 
         private void RefreshCommands()

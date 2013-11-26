@@ -3,14 +3,14 @@ using System.Windows.Controls;
 
 namespace Hylasoft.OrdersGui.Controls
 {
-    public class DataGridTemplateColumnEx : DataGridTextColumn
+    public class DataGridTemplateColumnEx : DataGridTemplateColumn
     {
 
         public static readonly DependencyProperty
             VisibilityDependencyProperty = DependencyProperty.Register(
                 "DVisibility",
                 typeof(Visibility),
-                typeof(DataGridTextColumnEx),
+                typeof(DataGridTemplateColumn),
                 new PropertyMetadata(OnDVisibilityChanged));
 
         public Visibility DVisibility
@@ -21,7 +21,7 @@ namespace Hylasoft.OrdersGui.Controls
 
         private static void OnDVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as DataGridTextColumnEx;
+            var control = d as DataGridTemplateColumn;
             var b = (Visibility)e.NewValue;
             control.Visibility = b;
         }

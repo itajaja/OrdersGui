@@ -6,16 +6,18 @@
              xmlns:ignore="http://www.ignore.com"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              xmlns:c="clr-namespace:Hylasoft.OrdersGui.Controls"
+             xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
              mc:Ignorable="d ignore" d:DesignWidth="1200" d:DesignHeight="400"
              DataContext="{Binding AssignCompartmentsVM, Source={StaticResource Locator}}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Margin="0,0,0,20" Orientation="Horizontal">
@@ -24,7 +26,7 @@
             </Button>
             <sdk:Label Style="{StaticResource TitleStyle}" Content="Assign Compartments" />
         </StackPanel>
-        <sdk:DataGrid HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+        <sdk:DataGrid HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" 
                       ItemsSource="{Binding OrderCompartments, Converter={StaticResource OrderCompFixedList}, ConverterParameter=5}">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Binding="{Binding SeqNo}" Header="Seq. #"  />
@@ -99,5 +101,18 @@
                 </sdk:DataGridTemplateColumn>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
+        <ItemsControl Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Completions}" HorizontalAlignment="Left" >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate >
+                    <Grid Width="100" Height="30">
+                        <Border HorizontalAlignment="Left" Width="{Binding Value}" Background="{StaticResource BrownBrush}"/>
+                        <Border Background="{StaticResource GreenBrush}"
+                                Visibility="{Binding Value, Converter={StaticResource StringToVisible},ConverterParameter='100'}"/>
+                        <TextBlock Text="{Binding Key.Material.MaterialName}" VerticalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Assign Compartments"/>
     </Grid>
 </UserControl>

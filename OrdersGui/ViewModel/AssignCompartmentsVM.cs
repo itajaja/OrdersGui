@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -27,7 +28,13 @@ namespace Hylasoft.OrdersGui.ViewModel
         public TrulyObservableCollection<OrderCompartment> OrderCompartments
         {
             get { return _orderCompartments; }
-            set { Set("OrderCompartments", ref _orderCompartments, value); }
+            set
+            {
+                Set("OrderCompartments", ref _orderCompartments, value);
+                RaisePropertyChanged("Completions");
+                if(_orderCompartments != null)
+                    _orderCompartments.CollectionChanged += (sender, args) => RaisePropertyChanged("Completions");
+            }
         }
 
         private TrulyObservableCollection<OrderProduct> _orderProducts;
@@ -88,10 +95,38 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         public RelayCommand GoBackCommand { get; private set; }
 
+        public IDictionary<OrderProduct, double> Completions
+        {
+            get
+            {
+                return OrderProducts != null ? OrderProducts.ToDictionary(p => p, Completion) : null;
+            }
+        }  
+
+        private double Completion(OrderProduct p)
+        {
+            if (OrderCompartments == null)
+                return 0;
+            var current = OrderCompartments.Where(c => c.OrderProduct == p).Sum(c => c.TargetQty);
+            return (current / p.TargetQty) * 100;
+        }
+
         public AssignCompartmentsVM(IDataService ds, LoadOrderDetailsVM lodVM)
         {
             _dataservice = ds;
             ds.GetTanks((list, exception) => Tanks = list);
+            Order = new Order{OrderId = 132};
+            Arms = new List<Arm> { new Arm() };
+            Compartments = new List<Compartment> { new Compartment() };
+            OrderProducts = new TrulyObservableCollection<OrderProduct>{
+                new OrderProduct{Material = new Material{MaterialId = 1,MaterialName = "adw"}, TargetQty = 200},
+                new OrderProduct{Material = new Material{MaterialId = 2,MaterialName = "jjj"}, TargetQty = 200}
+            };
+            OrderCompartments = CreateCompartments(new Collection<OrderCompartment>{
+                new OrderCompartment{TargetQty = 100,OrderProduct = OrderProducts[0]},
+                new OrderCompartment{TargetQty = 200,OrderProduct = OrderProducts[1]}
+            });
+
             Messenger.Default.Register<GoToAcMessage>(this, message =>
             {
                 if (message.GoBack)
@@ -113,7 +148,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                 lodVM.Mode = _cachedMode;
                 Reset();
             });
-            Reset();
+//            Reset();
         }
 
         private TrulyObservableCollection<OrderCompartment> CreateCompartments(IEnumerable<OrderCompartment> originalComps)
@@ -147,5 +182,4 @@ namespace Hylasoft.OrdersGui.ViewModel
             Arms = null;
         }
     }
-
 }

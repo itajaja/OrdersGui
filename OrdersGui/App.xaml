@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="Skins/ComboBoxSkin.xaml" />
                 <ResourceDictionary Source="Skins/DataGridSkin.xaml" />
                 <ResourceDictionary Source="Skins/ContextMenuSkin.xaml" />
+                <ResourceDictionary Source="Skins/ProgressBarSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" />
             <Style TargetType="toolkit:ContextMenu" BasedOn="{StaticResource ContextMenuStyle}" />
@@ -29,6 +30,7 @@
             <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}" />
             <Style TargetType="sdk:DataGrid" BasedOn="{StaticResource DataGridStyle}" />
             <Style TargetType="RadioButton" BasedOn="{StaticResource ButtonStyle}" />
+            <Style TargetType="ProgressBar" BasedOn="{StaticResource ProgressBarStyle}" />
             <res:Strings_en_us x:Key="Strings"/>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <converters:OpcConnectionStatusToColorConverter x:Key="OpcConnectionStatusToColor" />

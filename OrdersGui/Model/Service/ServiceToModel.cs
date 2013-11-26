@@ -276,11 +276,12 @@ namespace Hylasoft.OrdersGui.Model.Service
         private OrderCompartment ConvertOrderCompartment(LoadOrderDetailsCompartments comp, IEnumerable<Compartment> comps = null, IEnumerable<OrderProduct> prods = null)
         {
             var mComp = new OrderCompartment();
-            mComp.ActualQty = comp.ActualQty;
             if (comps != null)
                 mComp.Compartment = comps.FirstOrDefault(c => c.CompartmentNo == comp.CompartmentNo);
             if (prods != null)
                 mComp.OrderProduct = prods.FirstOrDefault(p => p.Material.MaterialCode == comp.MaterialCode);
+            mComp.ActualQty = comp.ActualQty;
+            mComp.BatchNumber = comp.BatchNumber;
             mComp.CompartmentStatus = ConvertCompartmentStatus(comp.CompartmentStatus);
             mComp.NetWeight = comp.NetWeight;
             mComp.RackArm = _arms.FirstOrDefault(a => a.ArmId == comp.LoadArmId);

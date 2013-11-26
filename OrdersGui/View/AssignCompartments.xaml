@@ -34,7 +34,7 @@
                 <sdk:DataGridTextColumn Binding="{Binding ActualQty}" Header="Actual Qty (GAL)"/>
                 <sdk:DataGridTextColumn Binding="{Binding RackArm.ArmName}" Header="Arm"/>
                 <sdk:DataGridTextColumn Binding="{Binding CompartmentStatus}" Header="Compartment Status"/>
-                <sdk:DataGridTextColumn Binding="{Binding OrderProduct}" Header="Batch Number"/>
+                <sdk:DataGridTextColumn Binding="{Binding BatchNumber}" Header="Batch Number"/>
                 <sdk:DataGridTemplateColumn>
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

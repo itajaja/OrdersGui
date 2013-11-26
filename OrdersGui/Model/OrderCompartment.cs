@@ -26,6 +26,13 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _orderProduct, value, "OrderProduct"); }
         }
 
+        private string _batchNumber;
+        public string BatchNumber
+        {
+            get { return _batchNumber; }
+            set { SetField(ref _batchNumber, value, "BatchNumber"); }
+        }
+
         private Arm _rackArm;
         public Arm RackArm
         {

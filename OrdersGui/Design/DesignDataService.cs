@@ -42,12 +42,12 @@ namespace Hylasoft.OrdersGui.Design
 
         public void GetMaterials(Action<IList<Material>, Exception> callback)
         {
-            throw new NotImplementedException();
+            callback(_materials, null);
         }
 
         public void GetTanks(Action<IList<Tank>, Exception> callback)
         {
-            throw new NotImplementedException();
+            callback(_tanks, null);
         }
 
         public void GetCompartments(long containerId, Action<IList<Compartment>, Exception> callback)

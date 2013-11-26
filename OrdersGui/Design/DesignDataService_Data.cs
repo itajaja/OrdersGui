@@ -11,6 +11,8 @@ namespace Hylasoft.OrdersGui.Design
         private readonly IList<Arm> _arms;
         private readonly IList<Order> _orders;
         private readonly SystemInfo _data;
+        private readonly IList<Tank> _tanks;
+        private readonly IList<Material> _materials;
 
         public DesignDataService()
         {
@@ -45,6 +47,28 @@ namespace Hylasoft.OrdersGui.Design
                 PlantFileName = @"ZHI",
                 BatchApiVersion = @"7",
                 MaxTruckWeight = 800000
+            };
+
+            _materials = new List<Material>{
+                new Material{CategoryName = "",MaterialCategory = 1,MaterialCode = "43398E",MaterialFamily = 2,MaterialId = 1,MaterialName = "CASE,1GALLON,SILVER,"},
+                new Material{CategoryName = "",MaterialCategory = 1,MaterialCode = "98550M",MaterialFamily = 2,MaterialId = 2,MaterialName = "SAP Order No.  22006"},
+                new Material{CategoryName = "",MaterialCategory = 1,MaterialCode = "98CA64",MaterialFamily = 2,MaterialId = 3,MaterialName = "SAP Order No.  21982"},
+                new Material{CategoryName = "",MaterialCategory = 2,MaterialCode = "98HC47",MaterialFamily = 1,MaterialId = 4,MaterialName = "CLEAN HIGH MILEAGE 1"},
+                new Material{CategoryName = "",MaterialCategory = 2,MaterialCode = "98HG86",MaterialFamily = 1,MaterialId = 5,MaterialName = "GM GOODWRENCH SYN BL"},
+                new Material{CategoryName = "",MaterialCategory = 2,MaterialCode = "98HG87",MaterialFamily = 1,MaterialId = 6,MaterialName = "GM GOODWRENCH SYN BL"},
+                new Material{CategoryName = "",MaterialCategory = 3,MaterialCode = "98HH21",MaterialFamily = 1,MaterialId = 7,MaterialName = "GM GOODWRENCH SYN BL"},
+                new Material{CategoryName = "",MaterialCategory = 4,MaterialCode = "98HH22",MaterialFamily = 1,MaterialId = 8,MaterialName = "GM GOODWRENCH SYN BL"},
+            };
+
+            _tanks = new List<Tank>{
+                new Tank{Material = _materials[0],ApiGravity = 7,AvailabilityStatus = true,TankName = "0",TankId = 8},
+                new Tank{Material = _materials[1],ApiGravity = 7,AvailabilityStatus = true,TankName = "1",TankId = 1},
+                new Tank{Material = _materials[2],ApiGravity = 7,AvailabilityStatus = true,TankName = "2",TankId = 2},
+                new Tank{Material = _materials[3],ApiGravity = 7,AvailabilityStatus = false,TankName = "3",TankId = 3},
+                new Tank{Material = _materials[4],ApiGravity = 7,AvailabilityStatus = false,TankName = "4",TankId = 4},
+                new Tank{Material = _materials[5],ApiGravity = 7,AvailabilityStatus = false,TankName = "5",TankId = 5},
+                new Tank{Material = _materials[6],ApiGravity = 7,AvailabilityStatus = true,TankName = "6",TankId = 6},
+                new Tank{Material = _materials[7],ApiGravity = 7,AvailabilityStatus = true,TankName = "7",TankId = 7}
             };
 
             _racks = new List<Rack>{

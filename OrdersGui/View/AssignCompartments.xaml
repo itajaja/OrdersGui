@@ -112,9 +112,9 @@
                         <Grid Height="30" Margin="0,5">
                             <ProgressBar Value="{Binding Value}" />
                             <TextBlock Margin="5,0" Text="{Binding Key.Material.MaterialName}" VerticalAlignment="Center" />
-                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                <TextBlock Margin="5,0" Text="{Binding Value}" VerticalAlignment="Center" />
-                                <TextBlock Margin="5,0" Text="%" VerticalAlignment="Center" />
+                            <StackPanel Margin="5,0" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <TextBlock Text="{Binding Value, StringFormat=\{0:N0\}}" VerticalAlignment="Center" />
+                                <TextBlock Text="%" VerticalAlignment="Center" />
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

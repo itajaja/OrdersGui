@@ -277,6 +277,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="APIGravity" type="xs:double" />
       <xs:element minOccurs="0" name="ActualQty" type="xs:double" />
+      <xs:element minOccurs="0" name="BatchNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Capacity" type="xs:int" />
       <xs:element minOccurs="0" name="CompartmentNo" type="xs:int" />
       <xs:element minOccurs="0" name="CompartmentStatus" type="xs:int" />

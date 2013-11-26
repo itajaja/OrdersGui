@@ -778,6 +778,8 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
         
         private double ActualQtyField;
         
+        private string BatchNumberField;
+        
         private int CapacityField;
         
         private int CompartmentNoField;
@@ -848,6 +850,19 @@ namespace Hylasoft.OrdersGui.NonTransactionalFunctions {
                 if ((this.ActualQtyField.Equals(value) != true)) {
                     this.ActualQtyField = value;
                     this.RaisePropertyChanged("ActualQty");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BatchNumber {
+            get {
+                return this.BatchNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BatchNumberField, value) != true)) {
+                    this.BatchNumberField = value;
+                    this.RaisePropertyChanged("BatchNumber");
                 }
             }
         }

@@ -79,8 +79,7 @@
                     </sdk:DataGrid.Columns>
                 </sdk:DataGrid>
                 <Button Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Left"  Grid.ColumnSpan="5" Content="Select this Truck" Command="{Binding AssignTruckCommand}"/>
-                <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,10" Text="{Binding ErrorString}"
-                           FontSize="18" FontFamily="{StaticResource FontStyle2}" Foreground="{StaticResource BrownBrush}"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,10" Text="{Binding ErrorString}" Style="{StaticResource ErrorTextBlockStyle}"/>
             </Grid>
         </Grid>
     </Grid>

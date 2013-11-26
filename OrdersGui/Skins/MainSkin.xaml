@@ -52,6 +52,11 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
     </Style>
+    <Style TargetType="TextBlock" x:Key="ErrorTextBlockStyle" BasedOn="{StaticResource BasicTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource FontStyle2}"/>
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Foreground" Value="{StaticResource BrownBrush}" />
+    </Style>
     <Style TargetType="TextBox" x:Key="BasicTextBoxStyle">
         <Setter Property="FontFamily" Value="{StaticResource FontStyle2}"/>
         <Setter Property="FontSize" Value="16" />

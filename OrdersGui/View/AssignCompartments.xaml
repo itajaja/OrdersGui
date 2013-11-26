@@ -6,7 +6,7 @@
              xmlns:ignore="http://www.ignore.com"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              xmlns:c="clr-namespace:Hylasoft.OrdersGui.Controls"
-             mc:Ignorable="d ignore" d:DesignWidth="1000" d:DesignHeight="400"
+             mc:Ignorable="d ignore" d:DesignWidth="1200" d:DesignHeight="400"
              DataContext="{Binding AssignCompartmentsVM, Source={StaticResource Locator}}">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,10 +24,10 @@
             </Button>
             <sdk:Label Style="{StaticResource TitleStyle}" Content="Assign Compartments" />
         </StackPanel>
-        <sdk:DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+        <sdk:DataGrid HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                       ItemsSource="{Binding OrderCompartments, Converter={StaticResource OrderCompFixedList}, ConverterParameter=5}">
             <sdk:DataGrid.Columns>
-                <sdk:DataGridTextColumn Binding="{Binding SeqNo}" Header="Seq. #" />
+                <sdk:DataGridTextColumn Binding="{Binding SeqNo}" Header="Seq. #"  />
                 <sdk:DataGridTemplateColumn Header="Comp. #">
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -36,8 +36,8 @@
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
-                <sdk:DataGridTextColumn Binding="{Binding Compartment.Capacity}" Header="Capacity (GAL)"/>
-                <sdk:DataGridTemplateColumn Header="Product" Width="*">
+                <sdk:DataGridTextColumn Binding="{Binding Compartment.Capacity}" Header="Capacity (GAL)" />
+                <sdk:DataGridTemplateColumn Header="Product" Width="220">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding OrderProduct, Mode=TwoWay}"  
@@ -45,7 +45,7 @@
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>
-                <sdk:DataGridTemplateColumn  Header="Tank">
+                <sdk:DataGridTemplateColumn  Header="Tank" Width="80">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <sdk:AutoCompleteBox SelectedItem="{Binding Tank, Mode=TwoWay}" ValueMemberPath="TankName" MinimumPopulateDelay="300" MinimumPrefixLength="2"
@@ -59,22 +59,22 @@
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>
-                <sdk:DataGridTemplateColumn Header="Target Qty (GAL)">
+                <sdk:DataGridTemplateColumn Header="Target Qty (GAL)" Width="SizeToHeader">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBox Text="{Binding TargetQty, Mode=TwoWay}" />
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>
-                <c:DataGridTemplateColumnEx  Header="Actual Qty (GAL)"
-                                        DVisibility="{Binding AssignCompartmentsVM.Order.LoadRack.RackName, Source={StaticResource Locator}, Converter={StaticResource StringToVisible}, ConverterParameter=East}">
+                <c:DataGridTemplateColumnEx  Header="Actual Qty (GAL)" Width="SizeToHeader"
+                                             DVisibility="{Binding AssignCompartmentsVM.Order.LoadRack.RackName, Source={StaticResource Locator}, Converter={StaticResource StringToVisible}, ConverterParameter=East}">
                     <c:DataGridTemplateColumnEx.CellTemplate>
                         <DataTemplate>
                             <TextBox Text="{Binding ActualQty, Mode=TwoWay}" />
                         </DataTemplate>
                     </c:DataGridTemplateColumnEx.CellTemplate>
                 </c:DataGridTemplateColumnEx>
-                <c:DataGridTemplateColumnEx Header="Arm"
+                <c:DataGridTemplateColumnEx Header="Arm" Width="60"
                                         DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -83,9 +83,9 @@
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </c:DataGridTemplateColumnEx>
-                <c:DataGridTextColumnEx Binding="{Binding CompartmentStatus}" Header="Compartment Status"
-                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
-                <c:DataGridTextColumnEx Binding="{Binding BatchNumber}" Header="Batch Number"
+<!--                <c:DataGridTextColumnEx Binding="{Binding CompartmentStatus}" Header="Compartment Status"-->
+<!--                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>-->
+                <c:DataGridTextColumnEx Binding="{Binding BatchNumber}" Header="Batch Number" Width="SizeToHeader"
                                         DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Unload}"/>
                 <sdk:DataGridTemplateColumn>
                     <sdk:DataGridTemplateColumn.CellTemplate>

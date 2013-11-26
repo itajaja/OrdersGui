@@ -26,7 +26,7 @@
             </Button>
             <sdk:Label Style="{StaticResource TitleStyle}" Content="Assign Compartments" />
         </StackPanel>
-        <sdk:DataGrid HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" 
+        <sdk:DataGrid Grid.Row="1" Grid.Column="0" 
                       ItemsSource="{Binding OrderCompartments, Converter={StaticResource OrderCompFixedList}, ConverterParameter=5}">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Binding="{Binding SeqNo}" Header="Seq. #"  />
@@ -39,7 +39,7 @@
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
                 <sdk:DataGridTextColumn Binding="{Binding Compartment.Capacity}" Header="Capacity (GAL)" />
-                <sdk:DataGridTemplateColumn Header="Product" Width="220">
+                <sdk:DataGridTemplateColumn Header="Product" Width="270">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding OrderProduct, Mode=TwoWay}"  
@@ -64,7 +64,7 @@
                 <sdk:DataGridTemplateColumn Header="Target Qty (GAL)" Width="SizeToHeader">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding TargetQty, Mode=TwoWay}" />
+                            <TextBox Text="{Binding TargetQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>
@@ -76,7 +76,7 @@
                         </DataTemplate>
                     </c:DataGridTemplateColumnEx.CellTemplate>
                 </c:DataGridTemplateColumnEx>
-                <c:DataGridTemplateColumnEx Header="Arm" Width="60"
+                <c:DataGridTemplateColumnEx Header="Arm" Width="100"
                                         DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -101,18 +101,27 @@
                 </sdk:DataGridTemplateColumn>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
-        <ItemsControl Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Completions}" HorizontalAlignment="Left" >
-            <ItemsControl.ItemTemplate>
-                <DataTemplate >
-                    <Grid Width="100" Height="30">
-                        <Border HorizontalAlignment="Left" Width="{Binding Value}" Background="{StaticResource BrownBrush}"/>
-                        <Border Background="{StaticResource GreenBrush}"
-                                Visibility="{Binding Value, Converter={StaticResource StringToVisible},ConverterParameter='100'}"/>
-                        <TextBlock Text="{Binding Key.Material.MaterialName}" VerticalAlignment="Center" />
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Grid Grid.Row="2" Grid.Column="0" Margin="0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ItemsControl  ItemsSource="{Binding Completions}" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate >
+                        <Grid Height="30" Margin="0,5">
+                            <ProgressBar Value="{Binding Value}" />
+                            <TextBlock Margin="5,0" Text="{Binding Key.Material.MaterialName}" VerticalAlignment="Center" />
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                <TextBlock Margin="5,0" Text="{Binding Value}" VerticalAlignment="Center" />
+                                <TextBlock Margin="5,0" Text="%" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Grid.Column="1" Text="{Binding ErrorString}" Margin="10,0" Style="{StaticResource ErrorTextBlockStyle}"/>
+        </Grid>
         <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Assign Compartments"/>
     </Grid>
 </UserControl>

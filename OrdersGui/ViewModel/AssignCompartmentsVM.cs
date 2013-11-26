@@ -115,18 +115,6 @@ namespace Hylasoft.OrdersGui.ViewModel
         {
             _dataservice = ds;
             ds.GetTanks((list, exception) => Tanks = list);
-            Order = new Order{OrderId = 132};
-            Arms = new List<Arm> { new Arm() };
-            Compartments = new List<Compartment> { new Compartment() };
-            OrderProducts = new TrulyObservableCollection<OrderProduct>{
-                new OrderProduct{Material = new Material{MaterialId = 1,MaterialName = "adw"}, TargetQty = 200},
-                new OrderProduct{Material = new Material{MaterialId = 2,MaterialName = "jjj"}, TargetQty = 200}
-            };
-            OrderCompartments = CreateCompartments(new Collection<OrderCompartment>{
-                new OrderCompartment{TargetQty = 100,OrderProduct = OrderProducts[0]},
-                new OrderCompartment{TargetQty = 200,OrderProduct = OrderProducts[1]}
-            });
-
             Messenger.Default.Register<GoToAcMessage>(this, message =>
             {
                 if (message.GoBack)
@@ -148,7 +136,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                 lodVM.Mode = _cachedMode;
                 Reset();
             });
-//            Reset();
+            Reset();
         }
 
         private TrulyObservableCollection<OrderCompartment> CreateCompartments(IEnumerable<OrderCompartment> originalComps)

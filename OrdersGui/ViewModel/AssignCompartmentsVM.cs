@@ -37,8 +37,8 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("OrderProducts", ref _orderProducts, value); }
         }
 
-        private TrulyObservableCollection<Compartment> _compartments;
-        public TrulyObservableCollection<Compartment> Compartments
+        private IList<Compartment> _compartments;
+        public IList<Compartment> Compartments
         {
             get { return _compartments; }
             set
@@ -71,21 +71,36 @@ namespace Hylasoft.OrdersGui.ViewModel
                 RefreshCommands();
             }
         }
-        
+
+        private IList<Tank> _tanks;
+        public IList<Tank> Tanks
+        {
+            get { return _tanks; }
+            set { Set("Tanks", ref _tanks, value); }
+        }
+
+        private IList<Arm> _arms;
+        public IList<Arm> Arms
+        {
+            get { return _arms; }
+            set { Set("Arms", ref _arms, value); }
+        }
 
         public RelayCommand GoBackCommand { get; private set; }
 
         public AssignCompartmentsVM(IDataService ds, LoadOrderDetailsVM lodVM)
         {
             _dataservice = ds;
+            ds.GetTanks((list, exception) => Tanks = list);
             Messenger.Default.Register<GoToAcMessage>(this, message =>
             {
                 if (message.GoBack)
                     return;
                 Order = lodVM.Order.Clone();
+                ds.GetArms((arms, exception) => Arms = arms.Where(a => a.Rack == Order.LoadRack).ToList());
                 Compartments = lodVM.Compartments;
                 if (lodVM.OrderProducts != null)
-                    OrderProducts = new TrulyObservableCollection<OrderProduct>(lodVM.OrderProducts.Select(o => o.Clone()));
+                    OrderProducts = lodVM.OrderProducts;
                 if (lodVM.Container != null)
                     Container = lodVM.Container.Clone();
                 OrderCompartments = CreateCompartments(lodVM.OrderCompartments);
@@ -129,6 +144,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             OrderProducts = null;
             Compartments = null;
             Container = null;
+            Arms = null;
         }
     }
 

@@ -24,18 +24,65 @@
             </Button>
             <sdk:Label Style="{StaticResource TitleStyle}" Content="Assign Compartments" />
         </StackPanel>
-        <sdk:DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding OrderCompartments, Converter={StaticResource OrderCompFixedList}, ConverterParameter=5}">
+        <sdk:DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                      ItemsSource="{Binding OrderCompartments, Converter={StaticResource OrderCompFixedList}, ConverterParameter=5}">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Binding="{Binding SeqNo}" Header="Seq. #" />
-                <sdk:DataGridTextColumn Binding="{Binding Compartment.CompartmentNo}" Header="Comp. #"/>
+                <sdk:DataGridTemplateColumn Header="Comp. #">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                            <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding Compartment, Mode=TwoWay}" DisplayMemberPath="CompartmentNo"
+                                      ItemsSource="{Binding AssignCompartmentsVM.Compartments, Source={StaticResource Locator}}" />
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
                 <sdk:DataGridTextColumn Binding="{Binding Compartment.Capacity}" Header="Capacity (GAL)"/>
-                <sdk:DataGridTextColumn Binding="{Binding OrderProduct.Material.MaterialName}" Header="Product" Width="*"/>
-                <sdk:DataGridTextColumn Binding="{Binding Tank.TankName}" Header="Tank"/>
-                <sdk:DataGridTextColumn Binding="{Binding TargetQty}" Header="Target Qty (GAL)"/>
-                <c:DataGridTextColumnEx Binding="{Binding ActualQty}" Header="Actual Qty (GAL)"
-                                        DVisibility="{Binding AssignCompartmentsVM.Order.LoadRack.RackName, Source={StaticResource Locator}, Converter={StaticResource StringToVisible}, ConverterParameter=East}"/>
-                <c:DataGridTextColumnEx Binding="{Binding RackArm.ArmName}" Header="Arm"
-                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
+                <sdk:DataGridTemplateColumn Header="Product" Width="*">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding OrderProduct, Mode=TwoWay}"  
+                                      ItemsSource="{Binding AssignCompartmentsVM.OrderProducts, Source={StaticResource Locator}}" DisplayMemberPath="Material.MaterialName" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTemplateColumn  Header="Tank">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <sdk:AutoCompleteBox SelectedItem="{Binding Tank, Mode=TwoWay}" ValueMemberPath="TankName" MinimumPopulateDelay="300" MinimumPrefixLength="2"
+                                                 ItemsSource="{Binding CreateOrderVM.Tanks, Source={StaticResource Locator}}">
+                                <sdk:AutoCompleteBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TankName}" />
+                                    </DataTemplate>
+                                </sdk:AutoCompleteBox.ItemTemplate>
+                            </sdk:AutoCompleteBox>
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTemplateColumn Header="Target Qty (GAL)">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding TargetQty, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+                <c:DataGridTemplateColumnEx  Header="Actual Qty (GAL)"
+                                        DVisibility="{Binding AssignCompartmentsVM.Order.LoadRack.RackName, Source={StaticResource Locator}, Converter={StaticResource StringToVisible}, ConverterParameter=East}">
+                    <c:DataGridTemplateColumnEx.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding ActualQty, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </c:DataGridTemplateColumnEx.CellTemplate>
+                </c:DataGridTemplateColumnEx>
+                <c:DataGridTemplateColumnEx Header="Arm"
+                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding RackArm, Mode=TwoWay}" DisplayMemberPath="ArmName"
+                                      ItemsSource="{Binding AssignCompartmentsVM.Arms, Source={StaticResource Locator}}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </c:DataGridTemplateColumnEx>
                 <c:DataGridTextColumnEx Binding="{Binding CompartmentStatus}" Header="Compartment Status"
                                         DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
                 <c:DataGridTextColumnEx Binding="{Binding BatchNumber}" Header="Batch Number"

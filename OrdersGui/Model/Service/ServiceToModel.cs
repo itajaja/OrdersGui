@@ -257,7 +257,7 @@ namespace Hylasoft.OrdersGui.Model.Service
             return products.Select(ConvertOrderProduct).ToList();
         }
 
-        private LoadingCompartmentStatus ConvertCompartmentStatus(int compartmentStatus)
+        private LoadingCompartmentStatus? ConvertCompartmentStatus(int compartmentStatus)
         {
             switch (compartmentStatus)
             {
@@ -269,7 +269,7 @@ namespace Hylasoft.OrdersGui.Model.Service
                 case 5:return LoadingCompartmentStatus.Partial;
                 case 6:return LoadingCompartmentStatus.Aborted;
                 case 7:return LoadingCompartmentStatus.Unused;
-                default: throw new ArgumentOutOfRangeException();
+                default: return null;
             }
         }
 
@@ -277,12 +277,15 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             var mComp = new OrderCompartment();
             if (comps != null)
+            {
                 mComp.Compartment = comps.FirstOrDefault(c => c.CompartmentNo == comp.CompartmentNo);
+                if (mComp.Compartment != null)
+                    mComp.CompartmentStatus = ConvertCompartmentStatus(comp.CompartmentStatus);
+            }
             if (prods != null)
                 mComp.OrderProduct = prods.FirstOrDefault(p => p.Material.MaterialCode == comp.MaterialCode);
             mComp.ActualQty = comp.ActualQty;
             mComp.BatchNumber = comp.BatchNumber;
-            mComp.CompartmentStatus = ConvertCompartmentStatus(comp.CompartmentStatus);
             mComp.NetWeight = comp.NetWeight;
             mComp.RackArm = _arms.FirstOrDefault(a => a.ArmId == comp.LoadArmId);
             mComp.SeqNo = (SequenceNumber)comp.SeqNo;

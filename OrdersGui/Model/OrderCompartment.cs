@@ -5,8 +5,8 @@ namespace Hylasoft.OrdersGui.Model
     public class OrderCompartment : NotifyPropertyChanged
     {
 
-        private LoadingCompartmentStatus _compartmentStatus;
-        public LoadingCompartmentStatus CompartmentStatus
+        private LoadingCompartmentStatus? _compartmentStatus;
+        public LoadingCompartmentStatus? CompartmentStatus
         {
             get { return _compartmentStatus; }
             set { SetField(ref _compartmentStatus, value, "CompartmentStatus"); }

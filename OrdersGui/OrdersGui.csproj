@@ -137,7 +137,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Messages\Copy of GoToAtMessage.cs" />
+    <Compile Include="Messages\GoToAcMessage.cs" />
     <Compile Include="Messages\GoToAtMessage.cs" />
     <Compile Include="Messages\ErrorMessage.cs" />
     <Compile Include="Messages\GoToCreateOrderMessage.cs" />

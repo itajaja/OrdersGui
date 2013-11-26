@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ignore="http://www.ignore.com"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:c="clr-namespace:Hylasoft.OrdersGui.Controls"
              mc:Ignorable="d ignore" d:DesignWidth="1000" d:DesignHeight="400"
              DataContext="{Binding AssignCompartmentsVM, Source={StaticResource Locator}}">
     <Grid>
@@ -31,10 +32,14 @@
                 <sdk:DataGridTextColumn Binding="{Binding OrderProduct.Material.MaterialName}" Header="Product" Width="*"/>
                 <sdk:DataGridTextColumn Binding="{Binding Tank.TankName}" Header="Tank"/>
                 <sdk:DataGridTextColumn Binding="{Binding TargetQty}" Header="Target Qty (GAL)"/>
-                <sdk:DataGridTextColumn Binding="{Binding ActualQty}" Header="Actual Qty (GAL)"/>
-                <sdk:DataGridTextColumn Binding="{Binding RackArm.ArmName}" Header="Arm"/>
-                <sdk:DataGridTextColumn Binding="{Binding CompartmentStatus}" Header="Compartment Status"/>
-                <sdk:DataGridTextColumn Binding="{Binding BatchNumber}" Header="Batch Number"/>
+                <c:DataGridTextColumnEx Binding="{Binding ActualQty}" Header="Actual Qty (GAL)"
+                                        DVisibility="{Binding AssignCompartmentsVM.Order.LoadRack.RackName, Source={StaticResource Locator}, Converter={StaticResource StringToVisible}, ConverterParameter=East}"/>
+                <c:DataGridTextColumnEx Binding="{Binding RackArm.ArmName}" Header="Arm"
+                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
+                <c:DataGridTextColumnEx Binding="{Binding CompartmentStatus}" Header="Compartment Status"
+                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>
+                <c:DataGridTextColumnEx Binding="{Binding BatchNumber}" Header="Batch Number"
+                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Unload}"/>
                 <sdk:DataGridTemplateColumn>
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

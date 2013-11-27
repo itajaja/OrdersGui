@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using Hylasoft.OrdersGui.EventMonitor;
 using Hylasoft.OrdersGui.Messages;
-using Hylasoft.OrdersGui.NonTransactionalFunctions;
+using ntf = Hylasoft.OrdersGui.NonTransactionalFunctions;
 using Hylasoft.OrdersGui.Resources;
 
 // ReSharper disable ImplicitlyCapturedClosure
@@ -15,7 +15,7 @@ namespace Hylasoft.OrdersGui.Model.Service
     public partial class DataService : IDataService
     {
         private readonly EventMonitorClient _emClient;
-        private readonly NonTransactionalFunctionsClient _ntfClient;
+        private readonly NonTransactionalFunctions.NonTransactionalFunctionsClient _ntfClient;
 
         // These properties are stored into the dataService because they don't need to be fetched more than once
         private readonly SessionData _sessionData = new SessionData();
@@ -26,6 +26,7 @@ namespace Hylasoft.OrdersGui.Model.Service
         private IList<Tank> _sapTanks;
         private IList<Tank> _tanks;
         private List<Container> _containers;
+        private IList<RebrandedProduct> _rebrandedProducts;
 
         public DataService()
         {
@@ -38,7 +39,7 @@ namespace Hylasoft.OrdersGui.Model.Service
                 _sessionData.OpcStatus = OpcConnectionStatus.Unknown;
                 _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
                 _emClient = new EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
-                _ntfClient = new NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
+                _ntfClient = new ntf.NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
                 InitCallers();
                 Initialize();
             }
@@ -56,6 +57,7 @@ namespace Hylasoft.OrdersGui.Model.Service
         private readonly ManualResetEvent _sapTanksWaiter = new ManualResetEvent(false);
         private readonly ManualResetEvent _containersWaiter = new ManualResetEvent(false);
         private readonly ManualResetEvent _materialsWaiter = new ManualResetEvent(false);
+        private readonly ManualResetEvent _rebrandedProductsWaiter = new ManualResetEvent(false);
         public Exception FaultState { get; private set; }
 
         private void Initialize()
@@ -89,6 +91,13 @@ namespace Hylasoft.OrdersGui.Model.Service
                     CheckAndRethrow(args.Error);
                     _materials = ConvertMaterials(args.Result);
                     _materialsWaiter.Set();
+                    _ntfClient.GetRebrandedProductsCompleted += (sender2, args2) =>
+                    {
+                        CheckAndRethrow(args.Error);
+                        _rebrandedProducts = ConvertRebrandedProducts(args2.Result);
+                        _rebrandedProductsWaiter.Set();
+                    };
+                    _ntfClient.GetRebrandedProductsAsync();
                     _ntfClient.GetWinblendTanksCompleted += (sender2, args2) =>
                     {
                         CheckAndRethrow(args.Error);
@@ -165,6 +174,15 @@ namespace Hylasoft.OrdersGui.Model.Service
             });
         }
 
+        public void GetRebrandedProducts(Action<IList<RebrandedProduct>, Exception> callback)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                WaitforInit();
+                callback(_rebrandedProducts, null);
+            });
+        }
+
         public void GetTanks(Action<IList<Tank>, Exception> callback)
         {
             Task.Factory.StartNew(() =>
@@ -201,7 +219,7 @@ namespace Hylasoft.OrdersGui.Model.Service
                 e => callback(status, e != null ? SlomConnectionStatus.Disconnected : SlomConnectionStatus.Connected, e));
         }
 
-        private AsyncCaller<getContainerCompartmentsCompletedEventArgs> _compartmentsCaller;
+        private AsyncCaller<ntf.getContainerCompartmentsCompletedEventArgs> _compartmentsCaller;
         public void GetCompartments(long containerId, Action<IList<Compartment>, Exception> callback)
         {
             IList<Compartment> comps = null;
@@ -211,7 +229,7 @@ namespace Hylasoft.OrdersGui.Model.Service
                 );
         }
 
-        private AsyncCaller<GetLoadOrdersCompletedEventArgs> _orderCaller;
+        private AsyncCaller<ntf.GetLoadOrdersCompletedEventArgs> _orderCaller;
         public void GetOrders(Action<IList<Order>, Exception> callback)
         {
             IList<Order> orders = null;
@@ -226,22 +244,22 @@ namespace Hylasoft.OrdersGui.Model.Service
 
         private void InitCallers()
         {
-            _orderCaller = new AsyncCaller<GetLoadOrdersCompletedEventArgs>(h => _ntfClient.GetLoadOrdersCompleted += h);
-            _orderProductsCaller = new AsyncCaller<GetLoadOrderProductsCompletedEventArgs>(h => _ntfClient.GetLoadOrderProductsCompleted += h);
-            _orderCompartmentsCaller = new AsyncCaller<getLoadOrderDetailsCompartmentsCompletedEventArgs>(h => _ntfClient.getLoadOrderDetailsCompartmentsCompleted += h);
-            _compartmentsCaller = new AsyncCaller<getContainerCompartmentsCompletedEventArgs>(h => _ntfClient.getContainerCompartmentsCompleted += h);
+            _orderCaller = new AsyncCaller<ntf.GetLoadOrdersCompletedEventArgs>(h => _ntfClient.GetLoadOrdersCompleted += h);
+            _orderProductsCaller = new AsyncCaller<ntf.GetLoadOrderProductsCompletedEventArgs>(h => _ntfClient.GetLoadOrderProductsCompleted += h);
+            _orderCompartmentsCaller = new AsyncCaller<ntf.getLoadOrderDetailsCompartmentsCompletedEventArgs>(h => _ntfClient.getLoadOrderDetailsCompartmentsCompleted += h);
+            _compartmentsCaller = new AsyncCaller<ntf.getContainerCompartmentsCompletedEventArgs>(h => _ntfClient.getContainerCompartmentsCompleted += h);
             _serverStatusCaller = new AsyncCaller<GetOpcServerStateCompletedEventArgs>(h => _emClient.GetOpcServerStateCompleted += h);
         }
 
-        private AsyncCaller<GetLoadOrderProductsCompletedEventArgs> _orderProductsCaller;
-        private AsyncCaller<getLoadOrderDetailsCompartmentsCompletedEventArgs> _orderCompartmentsCaller;
+        private AsyncCaller<ntf.GetLoadOrderProductsCompletedEventArgs> _orderProductsCaller;
+        private AsyncCaller<ntf.getLoadOrderDetailsCompartmentsCompletedEventArgs> _orderCompartmentsCaller;
         public void GetOrderDetails(long orderId, Action<IList<OrderProduct>, IList<OrderCompartment>, IList<Compartment>, Container, Exception> callback)
         {
             Task.Factory.StartNew(() =>
             {
                 IList<OrderProduct> orderProds = null;
                 IList<OrderCompartment> orderComps = null;
-                IList<LoadOrderDetailsCompartments> orderCompss = null;
+                IList<ntf.LoadOrderDetailsCompartments> orderCompss = null;
                 IList<Compartment> compartments = null;
                 Container container = null;
                 Exception ex = null;
@@ -300,6 +318,7 @@ namespace Hylasoft.OrdersGui.Model.Service
             _sapTanksWaiter.WaitOne();
             _containersWaiter.WaitOne();
             _materialsWaiter.WaitOne();
+            _rebrandedProductsWaiter.WaitOne();
         }
 
     }

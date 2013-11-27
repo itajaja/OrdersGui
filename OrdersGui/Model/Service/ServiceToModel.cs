@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hylasoft.OrdersGui.NonTransactionalFunctions;
+using nt = Hylasoft.OrdersGui.NonTransactionalFunctions;
 
 //This file contains all the method to convert from the service types to the model types. All the Logic for this task should reside here, so that the service are not used outside this class
 namespace Hylasoft.OrdersGui.Model.Service
@@ -9,7 +9,7 @@ namespace Hylasoft.OrdersGui.Model.Service
 
     public partial class DataService
     {
-        private Arm ConvertArm(LoadRackArm arm)
+        private Arm ConvertArm(nt.LoadRackArm arm)
         {
             var mArm = new Arm();
             mArm.ArmId = arm.LoadArmId;
@@ -20,12 +20,12 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mArm;
         }
 
-        private IList<Arm> ConvertArms(IEnumerable<LoadRackArm> arms)
+        private IList<Arm> ConvertArms(IEnumerable<nt.LoadRackArm> arms)
         {
             return arms.Select(ConvertArm).ToList();
         }
 
-        private SystemInfo ConvertSystemInfo(Wb7System system)
+        private SystemInfo ConvertSystemInfo(nt.Wb7System system)
         {
             var vSystem = new SystemInfo();
             vSystem.AutoPrint = system.AutoPrint;
@@ -60,7 +60,7 @@ namespace Hylasoft.OrdersGui.Model.Service
             return vSystem;
         }
 
-        private Order ConvertOrder(LoadOrder order)
+        private Order ConvertOrder(nt.LoadOrder order)
         {
             var mOrder = new Order();
             mOrder.CarrierInstruction = order.CarrierInstruction;
@@ -83,62 +83,62 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mOrder;
         }
 
-        private IList<Order> ConvertOrders(IEnumerable<LoadOrder> orders)
+        private IList<Order> ConvertOrders(IEnumerable<nt.LoadOrder> orders)
         {
             return orders.Select(ConvertOrder).ToList();
         }
 
-        private OrderStatus ConvertOrderStatus(LoadOrderStatus status)
+        private OrderStatus ConvertOrderStatus(nt.LoadOrderStatus status)
         {
             switch (status)
             {
-                case LoadOrderStatus.IDLE:
+                case nt.LoadOrderStatus.IDLE:
                     return OrderStatus.Idle;
-                case LoadOrderStatus.READY:
+                case nt.LoadOrderStatus.READY:
                     return OrderStatus.Ready;
-                case LoadOrderStatus.TRUCK_ARRIVED:
+                case nt.LoadOrderStatus.TRUCK_ARRIVED:
                     return OrderStatus.TruckArrived;
-                case LoadOrderStatus.READY_FOR_RELEASE:
+                case nt.LoadOrderStatus.READY_FOR_RELEASE:
                     return OrderStatus.ReadyForRelease;
-                case LoadOrderStatus.RELEASE_IN_PROGRESS:
+                case nt.LoadOrderStatus.RELEASE_IN_PROGRESS:
                     return OrderStatus.ReleaseInProgress;
-                case LoadOrderStatus.RELEASED:
+                case nt.LoadOrderStatus.RELEASED:
                     return OrderStatus.Released;
-                case LoadOrderStatus.RELEASE_ERROR:
+                case nt.LoadOrderStatus.RELEASE_ERROR:
                     return OrderStatus.ReleaseError;
-                case LoadOrderStatus.RUNNING:
+                case nt.LoadOrderStatus.RUNNING:
                     return OrderStatus.Running;
-                case LoadOrderStatus.STOPPED:
+                case nt.LoadOrderStatus.STOPPED:
                     return OrderStatus.Stopped;
-                case LoadOrderStatus.COMPLETED:
+                case nt.LoadOrderStatus.COMPLETED:
                     return OrderStatus.Completed;
-                case LoadOrderStatus.ABORTED:
+                case nt.LoadOrderStatus.ABORTED:
                     return OrderStatus.Aborted;
-                case LoadOrderStatus.CANCELLED:
+                case nt.LoadOrderStatus.CANCELLED:
                     return OrderStatus.Cancelled;
-                case LoadOrderStatus.SUSPENDED:
+                case nt.LoadOrderStatus.SUSPENDED:
                     return OrderStatus.Suspended;
-                case LoadOrderStatus.APPROVED:
+                case nt.LoadOrderStatus.APPROVED:
                     return OrderStatus.Approved;
-                case LoadOrderStatus.REJECTED:
+                case nt.LoadOrderStatus.REJECTED:
                     return OrderStatus.Rejected;
-                case LoadOrderStatus.WAITING_FOR_SEALS:
+                case nt.LoadOrderStatus.WAITING_FOR_SEALS:
                     return OrderStatus.WaitingForSeals;
-                case LoadOrderStatus.END_FILLING:
+                case nt.LoadOrderStatus.END_FILLING:
                     return OrderStatus.EndFilling;
-                case LoadOrderStatus.REPORT_READY:
+                case nt.LoadOrderStatus.REPORT_READY:
                     return OrderStatus.ReportReady;
-                case LoadOrderStatus.REPORT_RETRY:
+                case nt.LoadOrderStatus.REPORT_RETRY:
                     return OrderStatus.ReportRetry;
-                case LoadOrderStatus.UPDATE_DONE:
+                case nt.LoadOrderStatus.UPDATE_DONE:
                     return OrderStatus.UpdateDone;
-                case LoadOrderStatus.SETUP:
+                case nt.LoadOrderStatus.SETUP:
                     return OrderStatus.Setup;
-                case LoadOrderStatus.INSPECTION_FAILED:
+                case nt.LoadOrderStatus.INSPECTION_FAILED:
                     return OrderStatus.InspectionFailed;
-                case LoadOrderStatus.PENDING_APPROVAL:
+                case nt.LoadOrderStatus.PENDING_APPROVAL:
                     return OrderStatus.PendingApproval;
-                case LoadOrderStatus.SAP_UPDATE_DONE:
+                case nt.LoadOrderStatus.SAP_UPDATE_DONE:
                     return OrderStatus.SapUpdateDone;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -176,7 +176,7 @@ namespace Hylasoft.OrdersGui.Model.Service
             }
         }
 
-        private Material ConvertMaterial(NonTransactionalFunctions.Material material)
+        private Material ConvertMaterial(nt.Material material)
         {
             var mMaterial = new Material();
             mMaterial.CategoryName = material.CategoryName;
@@ -189,12 +189,12 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mMaterial;
         }
 
-        private IList<Material> ConvertMaterials(IEnumerable<NonTransactionalFunctions.Material> orders)
+        private IList<Material> ConvertMaterials(IEnumerable<nt.Material> orders)
         {
             return orders.Select(ConvertMaterial).ToList();
         }
 
-        private Tank ConvertTank(NonTransactionalFunctions.Tank tank)
+        private Tank ConvertTank(nt.Tank tank)
         {
             var mTank = new Tank();
             mTank.ApiGravity = tank.APIGravity;
@@ -206,12 +206,12 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mTank;
         }
 
-        private IList<Tank> ConvertTanks(IEnumerable<NonTransactionalFunctions.Tank> orders)
+        private IList<Tank> ConvertTanks(IEnumerable<nt.Tank> orders)
         {
             return orders.Select(ConvertTank).ToList();
         }
 
-        private Container ConvertContainer(NonTransactionalFunctions.Container cont)
+        private Container ConvertContainer(nt.Container cont)
         {
             var mCont = new Container();
             mCont.Capacity = cont.Capacity;
@@ -223,12 +223,12 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mCont;
         }
 
-        private IList<Container> ConvertContainers(IEnumerable<NonTransactionalFunctions.Container> containers)
+        private IList<Container> ConvertContainers(IEnumerable<nt.Container> containers)
         {
             return containers.Select(ConvertContainer).ToList();
         }
 
-        private Compartment ConvertCompartment(NonTransactionalFunctions.Compartment comp)
+        private Compartment ConvertCompartment(nt.Compartment comp)
         {
             var mComp = new Compartment();
             mComp.Capacity = comp.Capacity;
@@ -237,12 +237,12 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mComp;
         }
 
-        private IList<Compartment> ConvertCompartments(IEnumerable<NonTransactionalFunctions.Compartment> compartments)
+        private IList<Compartment> ConvertCompartments(IEnumerable<nt.Compartment> compartments)
         {
             return compartments.Select(ConvertCompartment).ToList();
         }
 
-        private OrderProduct ConvertOrderProduct(LoadOrderProduct product)
+        private OrderProduct ConvertOrderProduct(nt.LoadOrderProduct product)
         {
             var mProduct = new OrderProduct();
             mProduct.Material = _materials.FirstOrDefault(m => m.MaterialCode == product.MaterialCode);
@@ -252,7 +252,7 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mProduct;
         }
 
-        private IList<OrderProduct> ConvertOrderProducts(IEnumerable<LoadOrderProduct> products)
+        private IList<OrderProduct> ConvertOrderProducts(IEnumerable<nt.LoadOrderProduct> products)
         {
             return products.Select(ConvertOrderProduct).ToList();
         }
@@ -273,7 +273,7 @@ namespace Hylasoft.OrdersGui.Model.Service
             }
         }
 
-        private OrderCompartment ConvertOrderCompartment(LoadOrderDetailsCompartments comp, IEnumerable<Compartment> comps = null, IEnumerable<OrderProduct> prods = null)
+        private OrderCompartment ConvertOrderCompartment(nt.LoadOrderDetailsCompartments comp, IEnumerable<Compartment> comps = null, IEnumerable<OrderProduct> prods = null)
         {
             var mComp = new OrderCompartment();
             if (comps != null)
@@ -294,9 +294,23 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mComp;
         }
 
-        private IList<OrderCompartment> ConvertOrderCompartments(IEnumerable<LoadOrderDetailsCompartments> compartments, IEnumerable<Compartment> comps = null, IEnumerable<OrderProduct> prods = null)
+        private IList<OrderCompartment> ConvertOrderCompartments(IEnumerable<nt.LoadOrderDetailsCompartments> compartments, IEnumerable<Compartment> comps = null, IEnumerable<OrderProduct> prods = null)
         {
             return compartments.Select(c => ConvertOrderCompartment(c,comps,prods)).ToList();
+        }
+
+        private RebrandedProduct ConvertRebrandedProduct(nt.RebrandedProduct product)
+        {
+            var mproduct = new RebrandedProduct();
+            mproduct.MaterialCode = product.MaterialCode;
+            mproduct.MaterialId = product.MaterialId;
+            mproduct.Parent = _materials.FirstOrDefault(m => m.MaterialCode == product.MaterialCode);
+            return mproduct;
+        }
+
+        private IList<RebrandedProduct> ConvertRebrandedProducts(IEnumerable<nt.RebrandedProduct> products)
+        {
+            return products.Select(ConvertRebrandedProduct).ToList();
         }
     }
 }

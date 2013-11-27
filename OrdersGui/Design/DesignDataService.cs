@@ -45,6 +45,11 @@ namespace Hylasoft.OrdersGui.Design
             callback(_materials, null);
         }
 
+        public void GetRebrandedProducts(Action<IList<RebrandedProduct>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
         public void GetTanks(Action<IList<Tank>, Exception> callback)
         {
             callback(_tanks, null);

@@ -147,6 +147,7 @@
     <Compile Include="Model\Arm.cs" />
     <Compile Include="Model\Compartment.cs" />
     <Compile Include="Model\Container.cs" />
+    <Compile Include="Model\RebrandedProduct.cs" />
     <Compile Include="Model\Material.cs" />
     <Compile Include="Model\OrderCompartment.cs" />
     <Compile Include="Model\OrderProduct.cs" />

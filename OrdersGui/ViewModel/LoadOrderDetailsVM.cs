@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
@@ -10,14 +11,12 @@ using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
-using Hylasoft.OrdersGui.Utils;
 
 namespace Hylasoft.OrdersGui.ViewModel
 {
     public sealed class LoadOrderDetailsVM : ViewModelBase
     {
         private readonly IDataService _dataservice;
-        private SessionData _sessionData;
 
         private IList<Rack> _racks;
 
@@ -35,22 +34,22 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("Order", ref _order, value); }
         }
 
-        private TrulyObservableCollection<OrderProduct> _orderProducts;
-        public TrulyObservableCollection<OrderProduct> OrderProducts
+        private IList<OrderProduct> _orderProducts;
+        public IList<OrderProduct> OrderProducts
         {
             get { return _orderProducts; }
             set { Set("OrderProducts", ref _orderProducts, value); }
         }
 
-        private TrulyObservableCollection<OrderCompartment> _orderCompartments;
-        public TrulyObservableCollection<OrderCompartment> OrderCompartments
+        private IList<OrderCompartment> _orderCompartments;
+        public IList<OrderCompartment> OrderCompartments
         {
             get { return _orderCompartments; }
             set { Set("OrderCompartments", ref _orderCompartments, value); }
         }
 
-        private TrulyObservableCollection<Compartment> _compartments;
-        public TrulyObservableCollection<Compartment> Compartments
+        private IList<Compartment> _compartments;
+        public IList<Compartment> Compartments
         {
             get { return _compartments; }
             set { Set("Compartments", ref _compartments, value); }
@@ -89,7 +88,6 @@ namespace Hylasoft.OrdersGui.ViewModel
         public LoadOrderDetailsVM(IDataService ds)
         {
             _dataservice = ds;
-            _dataservice.GetSessionData((data, exception) => _sessionData = data);
             _dataservice.GetRacks((list, exception) => _racks = list);
             Messenger.Default.Register<GoToLodMessage>(this, o =>
             {
@@ -99,11 +97,11 @@ namespace Hylasoft.OrdersGui.ViewModel
                     (orderProds, orderComps, comps, container, error) => DispatcherHelper.CheckBeginInvokeOnUI(() =>
                     {
                         if (orderProds != null)
-                            OrderProducts = new TrulyObservableCollection<OrderProduct>(orderProds);
+                            OrderProducts = new ObservableCollection<OrderProduct>(orderProds);
                         if (orderComps != null)
                         {
-                            OrderCompartments = new TrulyObservableCollection<OrderCompartment>(orderComps.OrderBy(c => c.SeqNo));
-                            Compartments = new TrulyObservableCollection<Compartment>(comps);
+                            OrderCompartments = new ObservableCollection<OrderCompartment>(orderComps.OrderBy(c => c.SeqNo));
+                            Compartments = new ObservableCollection<Compartment>(comps);
                             Container = container;
                         }
                     }));

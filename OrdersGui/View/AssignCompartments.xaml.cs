@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using GalaSoft.MvvmLight.Messaging;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.ViewModel;
@@ -32,6 +36,12 @@ namespace Hylasoft.OrdersGui.View
         {
             var selected = OrderCompsGrid.SelectedItem as OrderCompartment;
             Messenger.Default.Send(new UpdateQtyMessage { OrderComp = selected });
+        }
+
+        private void FrameworkElement_OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            ((ComboBox)sender).ClearValue(Selector.SelectedItemProperty);
+            ((ComboBox)sender).ClearValue(ItemsControl.ItemsSourceProperty);
         }
     }
 }

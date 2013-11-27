@@ -25,8 +25,7 @@
             </Button>
             <sdk:Label Style="{StaticResource TitleStyle}" Content="Assign Compartments" />
         </StackPanel>
-        <sdk:DataGrid Grid.Row="1" Grid.Column="0" Name="OrderCompsGrid"
-                      ItemsSource="{Binding OrderCompartments}">
+        <sdk:DataGrid Grid.Row="1" Grid.Column="0" Name="OrderCompsGrid" ItemsSource="{Binding OrderCompartments}">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Binding="{Binding SeqNo}" Header="Seq. #"  />
                 <sdk:DataGridTemplateColumn Header="Comp. #">
@@ -75,12 +74,12 @@
                         </DataTemplate>
                     </c:DataGridTemplateColumnEx.CellTemplate>
                 </c:DataGridTemplateColumnEx>
-                <c:DataGridTemplateColumnEx Header="Arm" Width="100"
+                <c:DataGridTemplateColumnEx Header="Arm" Width="100"  
                                         DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding RackArm, Mode=TwoWay}" DisplayMemberPath="ArmName"
-                                      ItemsSource="{Binding AssignCompartmentsVM.Arms, Source={StaticResource Locator}}" />
+                                      ItemsSource="{Binding AssignCompartmentsVM.Arms, Source={StaticResource Locator}}" Unloaded="FrameworkElement_OnUnloaded"  />
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </c:DataGridTemplateColumnEx>

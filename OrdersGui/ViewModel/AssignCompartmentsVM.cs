@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -30,12 +31,20 @@ namespace Hylasoft.OrdersGui.ViewModel
             get { return _orderCompartments; }
             set
             {
+                if(_orderCompartments != null)
+                    _orderCompartments.CollectionChanged -= RaiseCompletions;
                 Set("OrderCompartments", ref _orderCompartments, value);
                 RaisePropertyChanged("Completions");
-                if(_orderCompartments != null)
-                    _orderCompartments.CollectionChanged += (sender, args) => RaisePropertyChanged("Completions");
+                if (_orderCompartments != null)
+                    _orderCompartments.CollectionChanged += RaiseCompletions;
             }
         }
+
+        private void RaiseCompletions(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            RaisePropertyChanged("Completions");
+        }
+
 
         private TrulyObservableCollection<OrderProduct> _orderProducts;
         public TrulyObservableCollection<OrderProduct> OrderProducts
@@ -103,12 +112,27 @@ namespace Hylasoft.OrdersGui.ViewModel
             }
         }  
 
+        /// <summary>
+        /// Returns how much of the quota has been inserted for a product in %
+        /// </summary>
+        /// <param name="p">the selected product</param>
+        /// <returns>the percentage of the inserted amount</returns>
         private double Completion(OrderProduct p)
         {
+            return (1 - (AmountLeft(p) / p.TargetQty)) * 100;
+        }
+
+        /// <summary>
+        /// Returns the amount left to insert to reach the target quantity
+        /// </summary>
+        /// <param name="p">the selected product</param>
+        /// <returns>The amount left</returns>
+        private double AmountLeft(OrderProduct p)
+        {
             if (OrderCompartments == null)
-                return 0;
+                return p.TargetQty;
             var current = OrderCompartments.Where(c => c.OrderProduct == p).Sum(c => c.TargetQty);
-            return (current / p.TargetQty) * 100;
+            return p.TargetQty - current;
         }
 
         public AssignCompartmentsVM(IDataService ds, LoadOrderDetailsVM lodVM)
@@ -120,7 +144,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                 if (message.GoBack)
                     return;
                 Order = lodVM.Order.Clone();
-                ds.GetArms((arms, exception) => Arms = arms.Where(a => a.Rack == Order.LoadRack).ToList());
+                ds.GetArms((arms, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() =>  Arms = arms.Where(a => a.Rack == Order.LoadRack).ToList()));
                 Compartments = lodVM.Compartments;
                 if (lodVM.OrderProducts != null)
                     OrderProducts = lodVM.OrderProducts;
@@ -129,6 +153,22 @@ namespace Hylasoft.OrdersGui.ViewModel
                 OrderCompartments = CreateCompartments(lodVM.OrderCompartments);
                 _cachedMode = lodVM.Mode;
                 lodVM.Mode = DetailMode.View;
+            });
+            Messenger.Default.Register<UpdateQtyMessage>(this, message =>
+            {
+                var orderComp = message.OrderComp;
+                if (orderComp == null || orderComp.OrderProduct == null || orderComp.Compartment == null)
+                    return;
+                orderComp.TargetQty = 0;
+                orderComp.TargetQty = Math.Min(orderComp.Compartment.Capacity, AmountLeft(orderComp.OrderProduct));
+            });
+            Messenger.Default.Register<MoveCompMessage>(this, message =>
+            {
+                var to = message.OrderComp;
+                var from = OrderCompartments.FirstOrDefault(c => to != c && c.Compartment == to.Compartment);
+                if (from != null)
+                    PutInto(from, to.SeqNo, OrderCompartments, true);
+
             });
             GoBackCommand = new RelayCommand(() =>
             {
@@ -151,9 +191,22 @@ namespace Hylasoft.OrdersGui.ViewModel
             if (originalComps == null)
                 return comps;
             var orderedComps = originalComps.OrderBy(compartment => compartment.SeqNo).ToList();
-            for (int i = 0; i < orderedComps.Count(); i++)
-                comps[i] = orderedComps[i].Clone();
+            foreach (var orderComp in orderedComps)
+                PutInto(orderComp.Clone(), orderComp.SeqNo, comps);
             return comps;
+        }
+
+        private void PutInto(OrderCompartment orderComp, SequenceNumber seqNo, IList<OrderCompartment> comps, bool move = false)
+        {
+            var replace = comps.FirstOrDefault(c => c.SeqNo == seqNo);
+            int to = comps.IndexOf(replace);
+            int from = comps.IndexOf(orderComp);
+            if (replace == null)
+                return;
+            if (move && from != -1)
+                comps[from] = new OrderCompartment { SeqNo = orderComp.SeqNo };
+            comps[to] = orderComp;
+            orderComp.SeqNo = seqNo;
         }
 
         private void RefreshCommands()
@@ -169,5 +222,15 @@ namespace Hylasoft.OrdersGui.ViewModel
             Container = null;
             Arms = null;
         }
+    }
+
+    public class UpdateQtyMessage
+    {
+        public OrderCompartment OrderComp { get; set; }
+    }
+
+    public class MoveCompMessage
+    {
+        public OrderCompartment OrderComp { get; set; }
     }
 }

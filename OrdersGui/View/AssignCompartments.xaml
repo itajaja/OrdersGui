@@ -6,7 +6,6 @@
              xmlns:ignore="http://www.ignore.com"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
              xmlns:c="clr-namespace:Hylasoft.OrdersGui.Controls"
-             xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
              mc:Ignorable="d ignore" d:DesignWidth="1200" d:DesignHeight="400"
              DataContext="{Binding AssignCompartmentsVM, Source={StaticResource Locator}}">
     <Grid>
@@ -26,15 +25,15 @@
             </Button>
             <sdk:Label Style="{StaticResource TitleStyle}" Content="Assign Compartments" />
         </StackPanel>
-        <sdk:DataGrid Grid.Row="1" Grid.Column="0" 
-                      ItemsSource="{Binding OrderCompartments, Converter={StaticResource OrderCompFixedList}, ConverterParameter=5}">
+        <sdk:DataGrid Grid.Row="1" Grid.Column="0" Name="OrderCompsGrid"
+                      ItemsSource="{Binding OrderCompartments}">
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Binding="{Binding SeqNo}" Header="Seq. #"  />
                 <sdk:DataGridTemplateColumn Header="Comp. #">
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                            <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding Compartment, Mode=TwoWay}" DisplayMemberPath="CompartmentNo"
-                                      ItemsSource="{Binding AssignCompartmentsVM.Compartments, Source={StaticResource Locator}}" />
+                            <ComboBox Name="CompComboBox" Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding Compartment, Mode=TwoWay}" DisplayMemberPath="CompartmentNo"
+                                      ItemsSource="{Binding AssignCompartmentsVM.Compartments, Source={StaticResource Locator}}" DropDownClosed="CompComboBox_OnDropDownClosed" />
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
@@ -42,7 +41,7 @@
                 <sdk:DataGridTemplateColumn Header="Product" Width="270">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding OrderProduct, Mode=TwoWay}"  
+                            <ComboBox Name="ProductComboBox"  Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding OrderProduct, Mode=TwoWay}" DropDownClosed="ProductComboBox_OnDropDownClosed"
                                       ItemsSource="{Binding AssignCompartmentsVM.OrderProducts, Source={StaticResource Locator}}" DisplayMemberPath="Material.MaterialName" />
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>

@@ -79,7 +79,7 @@
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding RackArm, Mode=TwoWay}" DisplayMemberPath="ArmName"
-                                      ItemsSource="{Binding AssignCompartmentsVM.Arms, Source={StaticResource Locator}}" Unloaded="FrameworkElement_OnUnloaded"  />
+                                      ItemsSource="{Binding AssignCompartmentsVM.Arms, Source={StaticResource Locator}, Mode=OneTime}" />
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </c:DataGridTemplateColumnEx>

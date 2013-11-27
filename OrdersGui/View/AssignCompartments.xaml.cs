@@ -37,11 +37,5 @@ namespace Hylasoft.OrdersGui.View
             var selected = OrderCompsGrid.SelectedItem as OrderCompartment;
             Messenger.Default.Send(new UpdateQtyMessage { OrderComp = selected });
         }
-
-        private void FrameworkElement_OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            ((ComboBox)sender).ClearValue(Selector.SelectedItemProperty);
-            ((ComboBox)sender).ClearValue(ItemsControl.ItemsSourceProperty);
-        }
     }
 }

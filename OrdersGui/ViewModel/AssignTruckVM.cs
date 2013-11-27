@@ -139,6 +139,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                 lodVM.Order.TruckNo = Order.TruckNo;
                 lodVM.Order.OrderStatus = OrderStatus.TruckArrived;
                 lodVM.Container = Container;
+                lodVM.Compartments = Compartments;
                 lodVM.OrderCompartments = null;
                 GoBackCommand.Execute(null);
             }, IsContainerOk);

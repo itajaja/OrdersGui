@@ -206,11 +206,14 @@ namespace Hylasoft.OrdersGui.ViewModel
                     if (message.GoBack)
                         return;
                     Arms = null;
-                    ds.GetArms((arms, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() => Arms = arms.Where(a => a.Rack == Order.LoadRack).ToList()));
-                    OrderCompartments = CreateCompartments(lodVM.OrderCompartments);               
+                    ds.GetArms((arms, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        Arms = arms.Where(a => a.Rack == Order.LoadRack).ToList();
+                        OrderCompartments = CreateCompartments(lodVM.OrderCompartments);
+                        Validate();   
+                    }));           
                     _cachedMode = lodVM.Mode;
                     lodVM.Mode = DetailMode.View;
-                    Validate();
                 });
             Messenger.Default.Register<UpdateQtyMessage>(this,
                 message =>

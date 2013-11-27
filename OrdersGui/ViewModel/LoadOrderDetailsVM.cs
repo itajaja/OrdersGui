@@ -102,7 +102,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                             OrderProducts = new TrulyObservableCollection<OrderProduct>(orderProds);
                         if (orderComps != null)
                         {
-                            OrderCompartments = new TrulyObservableCollection<OrderCompartment>(orderComps);
+                            OrderCompartments = new TrulyObservableCollection<OrderCompartment>(orderComps.OrderBy(c => c.SeqNo));
                             Compartments = new TrulyObservableCollection<Compartment>(comps);
                             Container = container;
                         }

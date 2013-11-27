@@ -30,6 +30,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             get { return _orderCompartments; }
             set
             {
+                RaiseCompletions();
                 Set("OrderCompartments", ref _orderCompartments, value);
                 if (_orderCompartments != null)
                     _orderCompartments.Callback = RaiseCompletions;

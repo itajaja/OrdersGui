@@ -38,8 +38,15 @@ namespace Hylasoft.OrdersGui.Utils
             }
         }
 
+        public Action Callback { get; set; }
+
         void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (Callback != null)
+            {
+                Callback();
+                return;
+            }
             var a = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
             OnCollectionChanged(a);
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -31,16 +30,13 @@ namespace Hylasoft.OrdersGui.ViewModel
             get { return _orderCompartments; }
             set
             {
-                if(_orderCompartments != null)
-                    _orderCompartments.CollectionChanged -= RaiseCompletions;
                 Set("OrderCompartments", ref _orderCompartments, value);
-                RaisePropertyChanged("Completions");
                 if (_orderCompartments != null)
-                    _orderCompartments.CollectionChanged += RaiseCompletions;
+                    _orderCompartments.Callback = RaiseCompletions;
             }
         }
 
-        private void RaiseCompletions(object sender, NotifyCollectionChangedEventArgs e)
+        private void RaiseCompletions()
         {
             RaisePropertyChanged("Completions");
         }

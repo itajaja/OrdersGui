@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using GalaSoft.MvvmLight;
@@ -25,22 +24,22 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("Order", ref _order, value); }
         }
 
-        private TrulyObservableCollection<OrderProduct> _orderProducts;
-        public TrulyObservableCollection<OrderProduct> OrderProducts
+        private IList<OrderProduct> _orderProducts;
+        public IList<OrderProduct> OrderProducts
         {
             get { return _orderProducts; }
             set { Set("OrderProducts", ref _orderProducts, value); }
         }
 
-        private ObservableCollection<Tank> _tanks;
-        public ObservableCollection<Tank> Tanks
+        private IList<Tank> _tanks;
+        public IList<Tank> Tanks
         {
             get { return _tanks; }
             set { Set("Tanks", ref _tanks, value); }
         }
 
-        private ObservableCollection<Material> _materials;
-        public ObservableCollection<Material> Materials
+        private IList<Material> _materials;
+        public IList<Material> Materials
         {
             get { return _materials; }
             set { Set("Materials", ref _materials, value); }
@@ -60,8 +59,8 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("Types", ref _types, value); }
         }
 
-        private ObservableCollection<string> _uoms = new ObservableCollection<string>{"GAL","LB"};
-        public ObservableCollection<string> Uoms
+        private IList<string> _uoms = new List<string> { "GAL", "LB" };
+        public IList<string> Uoms
         {
             get { return _uoms; }
             set { Set("Uoms", ref _uoms, value); }
@@ -74,8 +73,8 @@ namespace Hylasoft.OrdersGui.ViewModel
         public CreateOrderVM(IDataService ds)
         {
             _dataService = ds;
-            _dataService.GetMaterials((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Materials = new ObservableCollection<Material>(item)));
-            _dataService.GetSapTanks((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Tanks = new ObservableCollection<Tank>(item)));
+            _dataService.GetMaterials((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Materials = item));
+            _dataService.GetSapTanks((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Tanks = item));
             CreateOrderCommand = new RelayCommand(() =>
             {
                 if (Validate())
@@ -100,7 +99,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         {
             Order = new Order();
 //            initialize with 5 empty products
-            OrderProducts = new TrulyObservableCollection<OrderProduct>{
+            OrderProducts = new List<OrderProduct>{
                 new OrderProduct{Uom = null},
                 new OrderProduct{Uom = null},
                 new OrderProduct{Uom = null},

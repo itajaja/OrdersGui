@@ -100,10 +100,10 @@
                 </sdk:DataGridTemplateColumn>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
-        <Grid Grid.Row="2" Grid.Column="0" Margin="0,15">
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"/>
-                <ColumnDefinition />
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <ItemsControl  ItemsSource="{Binding Completions}" >
                 <ItemsControl.ItemTemplate>
@@ -121,6 +121,6 @@
             </ItemsControl>
             <TextBlock Grid.Column="1" Text="{Binding ErrorString}" Margin="10,0" Style="{StaticResource ErrorTextBlockStyle}"/>
         </Grid>
-        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Assign Compartments"/>
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{Binding AssignCompartmentCommand}" Content="Assign Compartments"/>
     </Grid>
 </UserControl>

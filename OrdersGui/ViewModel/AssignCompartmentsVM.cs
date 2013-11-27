@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -16,6 +17,7 @@ namespace Hylasoft.OrdersGui.ViewModel
     {
         private readonly IDataService _dataservice;
         private DetailMode _cachedMode;
+        private const double CompletionScale = 100;
 
         private Order _order;
         public Order Order
@@ -30,18 +32,12 @@ namespace Hylasoft.OrdersGui.ViewModel
             get { return _orderCompartments; }
             set
             {
-                RaiseCompletions();
+                Validate();
                 Set("OrderCompartments", ref _orderCompartments, value);
                 if (_orderCompartments != null)
-                    _orderCompartments.Callback = RaiseCompletions;
+                    _orderCompartments.Callback = Validate;
             }
         }
-
-        private void RaiseCompletions()
-        {
-            RaisePropertyChanged("Completions");
-        }
-
 
         private TrulyObservableCollection<OrderProduct> _orderProducts;
         public TrulyObservableCollection<OrderProduct> OrderProducts
@@ -100,6 +96,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         }
 
         public RelayCommand GoBackCommand { get; private set; }
+        public RelayCommand AssignCompartmentCommand { get; private set; }
 
         public IDictionary<OrderProduct, double> Completions
         {
@@ -116,7 +113,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         /// <returns>the percentage of the inserted amount</returns>
         private double Completion(OrderProduct p)
         {
-            return (1 - (AmountLeft(p) / p.TargetQty)) * 100;
+            return (1 - (AmountLeft(p) / p.TargetQty)) * CompletionScale;
         }
 
         /// <summary>
@@ -132,47 +129,93 @@ namespace Hylasoft.OrdersGui.ViewModel
             return p.TargetQty - current;
         }
 
+        private void Validate()
+        {
+            RaisePropertyChanged("Completions");
+            RefreshCommands();
+        }
+
+        private bool CanAssignCompartments()
+        {
+            if (Completions == null && OrderCompartments == null)
+                return false;
+            foreach (var item in Completions.Where(item => item.Value < CompletionScale))
+            {
+                ErrorString = "Quantity for Product " + item.Key.Material.MaterialName + " has to reach the target Quantity.\n" +
+                              "Target Quantity: " + item.Key.TargetQty + "\n" +
+                              "Current Quantity inserted: " + (item.Key.TargetQty - AmountLeft(item.Key));
+                return false;
+            }
+            var usedOrderComps = OrderCompartments.Where(orderComp => orderComp.Compartment != null && orderComp.OrderProduct != null).ToList();
+            foreach (var orderComp in usedOrderComps)
+            {
+                if (orderComp.TargetQty > orderComp.Compartment.Capacity)
+                {
+                    ErrorString = "The quantity inserted for compartment " + orderComp.Compartment.CompartmentNo + " cannot exceed its capacity.\n" +
+                                  "Capacity: " + orderComp.Compartment.Capacity + "\n" +
+                                  "Current Quantity inserted: " + orderComp.TargetQty;
+                    return false;
+                }
+            }
+            if (!OrderCompartments.Take(usedOrderComps.Count).SequenceEqual(usedOrderComps))
+            {
+                ErrorString = "Cannot have holes in the sequence.";
+                return false;
+            };
+            ErrorString = "";
+            return true;
+        }
+
         public AssignCompartmentsVM(IDataService ds, LoadOrderDetailsVM lodVM)
         {
             _dataservice = ds;
             ds.GetTanks((list, exception) => Tanks = list);
-            Messenger.Default.Register<GoToAcMessage>(this, message =>
-            {
-                if (message.GoBack)
-                    return;
-                Order = lodVM.Order.Clone();
-                ds.GetArms((arms, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() =>  Arms = arms.Where(a => a.Rack == Order.LoadRack).ToList()));
-                Compartments = lodVM.Compartments;
-                if (lodVM.OrderProducts != null)
-                    OrderProducts = lodVM.OrderProducts;
-                if (lodVM.Container != null)
-                    Container = lodVM.Container.Clone();
-                OrderCompartments = CreateCompartments(lodVM.OrderCompartments);
-                _cachedMode = lodVM.Mode;
-                lodVM.Mode = DetailMode.View;
-            });
-            Messenger.Default.Register<UpdateQtyMessage>(this, message =>
-            {
-                var orderComp = message.OrderComp;
-                if (orderComp == null || orderComp.OrderProduct == null || orderComp.Compartment == null)
-                    return;
-                orderComp.TargetQty = 0;
-                orderComp.TargetQty = Math.Min(orderComp.Compartment.Capacity, AmountLeft(orderComp.OrderProduct));
-            });
-            Messenger.Default.Register<MoveCompMessage>(this, message =>
-            {
-                var to = message.OrderComp;
-                var from = OrderCompartments.FirstOrDefault(c => to != c && c.Compartment == to.Compartment);
-                if (from != null)
-                    PutInto(from, to.SeqNo, OrderCompartments, true);
-
-            });
-            GoBackCommand = new RelayCommand(() =>
-            {
-                Messenger.Default.Send(new GoToAcMessage(true));
-                lodVM.Mode = _cachedMode;
-                Reset();
-            });
+            Messenger.Default.Register<GoToAcMessage>(this,
+                message => {
+                    if (message.GoBack)
+                        return;
+                    Order = lodVM.Order.Clone();
+                    ds.GetArms((arms, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() => Arms = arms.Where(a => a.Rack == Order.LoadRack).ToList()));
+                    Compartments = lodVM.Compartments;
+                    if (lodVM.OrderProducts != null)
+                        OrderProducts = new TrulyObservableCollection<OrderProduct>(lodVM.OrderProducts);
+                    if (lodVM.Container != null)
+                        Container = lodVM.Container.Clone();
+                    OrderCompartments = CreateCompartments(lodVM.OrderCompartments);
+                    _cachedMode = lodVM.Mode;
+                    lodVM.Mode = DetailMode.View;
+                    Validate();
+                });
+            Messenger.Default.Register<UpdateQtyMessage>(this,
+                message =>
+                {
+                    var orderComp = message.OrderComp;
+                    if (orderComp == null || orderComp.OrderProduct == null || orderComp.Compartment == null)
+                        return;
+                    orderComp.TargetQty = 0;
+                    orderComp.TargetQty = Math.Min(orderComp.Compartment.Capacity, AmountLeft(orderComp.OrderProduct));
+                });
+            Messenger.Default.Register<MoveCompMessage>(this,
+                message =>
+                {
+                    var to = message.OrderComp;
+                    var from = OrderCompartments.FirstOrDefault(c => to != c && c.Compartment == to.Compartment);
+                    if (from != null)
+                        PutInto(from, to.SeqNo, OrderCompartments, true);
+                });
+            AssignCompartmentCommand = new RelayCommand(
+                () =>
+                {
+                    MessageBox.Show("assign");
+                    GoBackCommand.Execute(null);
+                },CanAssignCompartments);
+            GoBackCommand = new RelayCommand(
+                () =>
+                {
+                    Messenger.Default.Send(new GoToAcMessage(true));
+                    lodVM.Mode = _cachedMode;
+                    Reset();
+                });
             Reset();
         }
 
@@ -208,6 +251,7 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         private void RefreshCommands()
         {
+            AssignCompartmentCommand.RaiseCanExecuteChanged();
         }
 
         public void Reset()

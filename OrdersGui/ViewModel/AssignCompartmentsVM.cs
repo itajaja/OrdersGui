@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -19,7 +20,7 @@ namespace Hylasoft.OrdersGui.ViewModel
         private DetailMode _cachedMode;
         private const double CompletionScale = 100;
         private const string InvalidArm = "None";
-        private const string InvalidTank = "Unknown";
+        private const string InvalidTank = "unknown";
 
         private Order _order;
         public Order Order
@@ -64,6 +65,13 @@ namespace Hylasoft.OrdersGui.ViewModel
         {
             get { return _errorString; }
             set { Set("ErrorString", ref _errorString, value); }
+        }
+
+        private string _warningString;
+        public string WarningString
+        {
+            get { return _warningString; }
+            set { Set("WarningString", ref _warningString, value); }
         }
 
         private Container _container;
@@ -139,7 +147,9 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         private bool CanAssignCompartments()
         {
-            if (Completions == null || OrderCompartments == null || Compartments == null)
+            WarningString = "";
+            var warningBuilder = new StringBuilder("");
+            if (Completions == null || OrderCompartments == null || Compartments == null || Order == null)
                 return false;
             foreach (var item in Completions.Where(item => item.Value < CompletionScale))
             {
@@ -158,21 +168,33 @@ namespace Hylasoft.OrdersGui.ViewModel
                                   "Current Quantity inserted: " + orderComp.TargetQty;
                     return false;
                 }
-                if (Order.OrderType == OrderType.Load && (orderComp.RackArm == null || orderComp.RackArm.ArmName == InvalidArm))
+                if (Order.OrderType == OrderType.Load)
                 {
-                    ErrorString = "No arm selected for compartment No. " + orderComp.Compartment.CompartmentNo + ".";
-                    return false;
-                }
-                if (orderComp.TargetQty < 0 && Order.OrderType == OrderType.Load)
-                {
-                    ErrorString = "The quantity set for the compartment No. " + orderComp.Compartment.CompartmentNo + "must be greater than 0.";
-                    return false;
+                    if ((orderComp.RackArm == null || orderComp.RackArm.ArmName == InvalidArm))
+                    {
+                        ErrorString = "No arm selected for compartment No. " + orderComp.Compartment.CompartmentNo + ".";
+                        return false;
+                    }
+                    if (orderComp.RackArm.MaterialFamily != orderComp.OrderProduct.Material.MaterialFamily)
+                    {
+                        warningBuilder.AppendLine(orderComp.OrderProduct.Material.MaterialName + " material family does not match arm " + orderComp.RackArm.ArmName +" material family");
+                    }
+                    if (orderComp.TargetQty < 0)
+                    {
+                        ErrorString = "The quantity set for the compartment No. " + orderComp.Compartment.CompartmentNo + "must be greater than 0.";
+                        return false;
+                    }
                 }
                 if (orderComp.Tank == null)
                 {
                     ErrorString = "The selected tank for compartment No. " + orderComp.Compartment.CompartmentNo + " must be selected.";
                     return false;
                 }
+                if (orderComp.Tank.TankName.ToLower() == InvalidTank)
+                {
+                    warningBuilder.AppendLine("Tank " + InvalidTank + " selected for compartment " + orderComp.Compartment.CompartmentNo);
+                }
+
             }
             if (!OrderCompartments.Take(usedOrderComps.Count).SequenceEqual(usedOrderComps))
             {
@@ -187,6 +209,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                     return false;
                 }
             }
+            WarningString = warningBuilder.ToString();
             ErrorString = "";
             return true;
         }
@@ -232,7 +255,13 @@ namespace Hylasoft.OrdersGui.ViewModel
             AssignCompartmentCommand = new RelayCommand(
                 () =>
                 {
-                    MessageBox.Show("assign");
+                    var dialogString = "Do you wish to confirm?";
+                    if (!string.IsNullOrEmpty(WarningString))
+                        dialogString = "Attention, You have warnings.\n" + dialogString;
+                    MessageBoxResult result = MessageBox.Show(dialogString, "Confirm", MessageBoxButton.OKCancel);
+                    if (result != MessageBoxResult.OK)
+                        return;
+                    MessageBox.Show("confirmed"); //todo implement call
                     GoBackCommand.Execute(null);
                 }, CanAssignCompartments);
             GoBackCommand = new RelayCommand(

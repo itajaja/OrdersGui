@@ -119,7 +119,10 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <TextBlock Grid.Column="1" Text="{Binding ErrorString}" Margin="10,0" Style="{StaticResource ErrorTextBlockStyle}"/>
+            <Grid Grid.Column="1" Margin="10,0">
+                <TextBlock  Text="{Binding ErrorString}"  Style="{StaticResource ErrorTextBlockStyle}"/>
+                <TextBlock  Text="{Binding WarningString}"  Style="{StaticResource ErrorTextBlockStyle}" Foreground="{StaticResource YellowBrush}"/>
+            </Grid>
         </Grid>
         <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{Binding AssignCompartmentCommand}" Content="Assign Compartments"/>
     </Grid>

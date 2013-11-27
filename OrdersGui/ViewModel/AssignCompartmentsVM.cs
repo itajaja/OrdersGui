@@ -253,6 +253,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                         PutInto(from, to.SeqNo, OrderCompartments, true);
                 });
             AssignCompartmentCommand = new RelayCommand(
+                // ReSharper disable once ImplicitlyCapturedClosure
                 () =>
                 {
                     var dialogString = "Do you wish to confirm?";
@@ -261,7 +262,8 @@ namespace Hylasoft.OrdersGui.ViewModel
                     MessageBoxResult result = MessageBox.Show(dialogString, "Confirm", MessageBoxButton.OKCancel);
                     if (result != MessageBoxResult.OK)
                         return;
-                    MessageBox.Show("confirmed"); //todo implement call
+                    lodVM.OrderProducts = OrderProducts;//todo implement call
+                    //todo change order status
                     GoBackCommand.Execute(null);
                 }, CanAssignCompartments);
             GoBackCommand = new RelayCommand(

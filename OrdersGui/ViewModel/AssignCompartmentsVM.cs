@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -16,17 +20,15 @@ namespace Hylasoft.OrdersGui.ViewModel
 {
     public sealed class AssignCompartmentsVM : ViewModelBase
     {
-        private readonly IDataService _dataservice;
+        private readonly LoadOrderDetailsVM _lodVM;
         private DetailMode _cachedMode;
         private const double CompletionScale = 100;
         private const string InvalidArm = "None";
         private const string InvalidTank = "unknown";
 
-        private Order _order;
         public Order Order
         {
-            get { return _order; }
-            set { Set("Order", ref _order, value); }
+            get { return _lodVM.Order; }
         }
 
         private TrulyObservableCollection<OrderCompartment> _orderCompartments;
@@ -42,22 +44,14 @@ namespace Hylasoft.OrdersGui.ViewModel
             }
         }
 
-        private TrulyObservableCollection<OrderProduct> _orderProducts;
-        public TrulyObservableCollection<OrderProduct> OrderProducts
+        public IList<OrderProduct> OrderProducts
         {
-            get { return _orderProducts; }
-            set { Set("OrderProducts", ref _orderProducts, value); }
+            get { return _lodVM.OrderProducts; }
         }
 
-        private IList<Compartment> _compartments;
         public IList<Compartment> Compartments
         {
-            get { return _compartments; }
-            set
-            {
-                Set("Compartments", ref _compartments, value);
-                RefreshCommands();
-            }
+            get { return _lodVM.Compartments; }
         }
 
         private string _errorString;
@@ -74,21 +68,9 @@ namespace Hylasoft.OrdersGui.ViewModel
             set { Set("WarningString", ref _warningString, value); }
         }
 
-        private Container _container;
         public Container Container
         {
-            get { return _container; }
-            set
-            {
-                Set("Container", ref _container, value);
-                Compartments = null;
-                if (_container != null)
-                    _dataservice.GetCompartments(_container.ContainerId, (list, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                    {
-                        Compartments = new TrulyObservableCollection<Compartment>(list);
-                    }));
-                RefreshCommands();
-            }
+            get { return _lodVM.Container; }
         }
 
         private IList<Tank> _tanks;
@@ -216,21 +198,16 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         public AssignCompartmentsVM(IDataService ds, LoadOrderDetailsVM lodVM)
         {
-            _dataservice = ds;
+            _lodVM = lodVM;
             ds.GetTanks((list, exception) => Tanks = list);
             Messenger.Default.Register<GoToAcMessage>(this,
                 message =>
                 {
                     if (message.GoBack)
                         return;
-                    Order = lodVM.Order.Clone();
+                    Arms = null;
                     ds.GetArms((arms, exception) => DispatcherHelper.CheckBeginInvokeOnUI(() => Arms = arms.Where(a => a.Rack == Order.LoadRack).ToList()));
-                    Compartments = lodVM.Compartments;
-                    if (lodVM.OrderProducts != null)
-                        OrderProducts = new TrulyObservableCollection<OrderProduct>(lodVM.OrderProducts);
-                    if (lodVM.Container != null)
-                        Container = lodVM.Container.Clone();
-                    OrderCompartments = CreateCompartments(lodVM.OrderCompartments);
+                    OrderCompartments = CreateCompartments(lodVM.OrderCompartments);               
                     _cachedMode = lodVM.Mode;
                     lodVM.Mode = DetailMode.View;
                     Validate();
@@ -262,7 +239,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                     MessageBoxResult result = MessageBox.Show(dialogString, "Confirm", MessageBoxButton.OKCancel);
                     if (result != MessageBoxResult.OK)
                         return;
-                    lodVM.OrderProducts = OrderProducts;//todo implement call
+                    lodVM.OrderCompartments = new ObservableCollection<OrderCompartment>(OrderCompartments.Where(orderComp => orderComp.Compartment != null && orderComp.OrderProduct != null));//todo implement call
                     //todo change order status
                     GoBackCommand.Execute(null);
                 }, CanAssignCompartments);
@@ -288,8 +265,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             };
             if (originalComps == null)
                 return comps;
-            var orderedComps = originalComps.OrderBy(compartment => compartment.SeqNo).ToList();
-            foreach (var orderComp in orderedComps)
+            foreach (var orderComp in originalComps)
                 PutInto(orderComp.Clone(), orderComp.SeqNo, comps);
             return comps;
         }
@@ -314,12 +290,7 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         public void Reset()
         {
-            Order = null;
             OrderCompartments = null;
-            OrderProducts = null;
-            Compartments = null;
-            Container = null;
-            Arms = null;
         }
     }
 

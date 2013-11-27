@@ -124,6 +124,6 @@
                 <TextBlock  Text="{Binding WarningString}"  Style="{StaticResource ErrorTextBlockStyle}" Foreground="{StaticResource YellowBrush}"/>
             </Grid>
         </Grid>
-        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{Binding AssignCompartmentCommand}" Content="Assign Compartments"/>
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,50" HorizontalAlignment="Center" Command="{Binding AssignCompartmentCommand}" Content="Assign Compartments"/>
     </Grid>
 </UserControl>

@@ -114,7 +114,8 @@ namespace Hylasoft.OrdersGui.ViewModel
                 if (message.GoBack)
                     return;
                 Order = lodVM.Order.Clone();
-                Compartments = new TrulyObservableCollection<Compartment>(lodVM.Compartments);
+                if(lodVM.Compartments != null)
+                    Compartments = new TrulyObservableCollection<Compartment>(lodVM.Compartments);
                 _targetQtySum = lodVM.OrderProducts.Sum(o => o.TargetQty);
                 _productsCount = lodVM.OrderProducts.Count;
                 if (lodVM.Container != null)

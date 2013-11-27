@@ -156,11 +156,34 @@ namespace Hylasoft.OrdersGui.ViewModel
                                   "Current Quantity inserted: " + orderComp.TargetQty;
                     return false;
                 }
+                if (orderComp.RackArm == null && Order.OrderType == OrderType.Load)
+                {
+                    ErrorString = "No arm selected for compartment No. " + orderComp.Compartment.CompartmentNo + ".";
+                    return false;
+                }
+                if (orderComp.TargetQty < 0 && Order.OrderType == OrderType.Load)
+                {
+                    ErrorString = "The quantity set for the compartment No. " + orderComp.Compartment.CompartmentNo + "must be greater than 0.";
+                    return false;
+                }
+                if (orderComp.Tank == null)
+                {
+                    ErrorString = "The selected tank for compartment No. " + orderComp.Compartment.CompartmentNo + " must be selected.";
+                    return false;
+                }
             }
             if (!OrderCompartments.Take(usedOrderComps.Count).SequenceEqual(usedOrderComps))
             {
                 ErrorString = "Cannot have holes in the sequence.";
                 return false;
+            }
+            foreach (var c in Compartments)
+            {
+                if (OrderCompartments.Count(o => o.Compartment == c) > 1)
+                {
+                    ErrorString = "Compartment No. " + c.CompartmentNo + " is selected more than once.";
+                    return false;
+                }
             }
             ErrorString = "";
             return true;

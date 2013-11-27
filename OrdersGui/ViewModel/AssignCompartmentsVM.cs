@@ -104,7 +104,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             {
                 return OrderProducts != null ? OrderProducts.ToDictionary(p => p, Completion) : null;
             }
-        }  
+        }
 
         /// <summary>
         /// Returns how much of the quota has been inserted for a product in %
@@ -161,7 +161,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             {
                 ErrorString = "Cannot have holes in the sequence.";
                 return false;
-            };
+            }
             ErrorString = "";
             return true;
         }
@@ -171,7 +171,8 @@ namespace Hylasoft.OrdersGui.ViewModel
             _dataservice = ds;
             ds.GetTanks((list, exception) => Tanks = list);
             Messenger.Default.Register<GoToAcMessage>(this,
-                message => {
+                message =>
+                {
                     if (message.GoBack)
                         return;
                     Order = lodVM.Order.Clone();
@@ -208,8 +209,9 @@ namespace Hylasoft.OrdersGui.ViewModel
                 {
                     MessageBox.Show("assign");
                     GoBackCommand.Execute(null);
-                },CanAssignCompartments);
+                }, CanAssignCompartments);
             GoBackCommand = new RelayCommand(
+                // ReSharper disable once ImplicitlyCapturedClosure
                 () =>
                 {
                     Messenger.Default.Send(new GoToAcMessage(true));

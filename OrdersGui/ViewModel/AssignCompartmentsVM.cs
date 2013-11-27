@@ -18,6 +18,8 @@ namespace Hylasoft.OrdersGui.ViewModel
         private readonly IDataService _dataservice;
         private DetailMode _cachedMode;
         private const double CompletionScale = 100;
+        private const string InvalidArm = "None";
+        private const string InvalidTank = "Unknown";
 
         private Order _order;
         public Order Order
@@ -137,7 +139,7 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         private bool CanAssignCompartments()
         {
-            if (Completions == null && OrderCompartments == null)
+            if (Completions == null || OrderCompartments == null || Compartments == null)
                 return false;
             foreach (var item in Completions.Where(item => item.Value < CompletionScale))
             {
@@ -156,7 +158,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                                   "Current Quantity inserted: " + orderComp.TargetQty;
                     return false;
                 }
-                if (orderComp.RackArm == null && Order.OrderType == OrderType.Load)
+                if (Order.OrderType == OrderType.Load && (orderComp.RackArm == null || orderComp.RackArm.ArmName == InvalidArm))
                 {
                     ErrorString = "No arm selected for compartment No. " + orderComp.Compartment.CompartmentNo + ".";
                     return false;

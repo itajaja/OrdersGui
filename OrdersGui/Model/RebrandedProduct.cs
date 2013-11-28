@@ -5,6 +5,19 @@ namespace Hylasoft.OrdersGui.Model
 {
     public class RebrandedProduct : Material
     {
+        public RebrandedProduct() { }
+
+        public RebrandedProduct(Material m)
+        {
+            CategoryName = m.CategoryName;
+            DataEntryValue = m.DataEntryValue;
+            MaterialCategory = m.MaterialCategory;
+            MaterialCode = m.MaterialCode;
+            MaterialFamily = m.MaterialFamily;
+            MaterialId = m.MaterialId;
+            MaterialName = m.MaterialName;
+        }
+
         private Material _parent;
         public Material Parent
         {

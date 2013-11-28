@@ -95,8 +95,9 @@ namespace Hylasoft.OrdersGui.Model.Service
                         var rebrandedProducts = ConvertRebrandedProducts(args2.Result);
                         foreach (var rebrandedProduct in rebrandedProducts)
                         {
-                            _materials.Remove(_materials.FirstOrDefault(m => m.MaterialId == rebrandedProduct.MaterialId));
-                            _materials.Add(rebrandedProduct);
+                            var remove = _materials.SingleOrDefault(m => m.MaterialId == rebrandedProduct.MaterialId);
+                            _materials.Remove(remove);
+                            _materials.Add(new RebrandedProduct(remove){Parent = rebrandedProduct.Parent});
                         }
                     };
                     _ntfClient.GetRebrandedProductsAsync();

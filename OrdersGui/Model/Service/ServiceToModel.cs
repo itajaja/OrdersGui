@@ -247,6 +247,8 @@ namespace Hylasoft.OrdersGui.Model.Service
             var mProduct = new OrderProduct();
             mProduct.Material = _materials.FirstOrDefault(m => m.MaterialCode == product.MaterialCode);
             mProduct.SourceTank = _tanks.FirstOrDefault(t => t.TankName == product.SourceTank);
+            if (mProduct.SourceTank != null && mProduct.Material != null) //chose a default one
+                mProduct.Material.FindTanks(_tanks).FirstOrDefault();
             mProduct.TargetQty = product.TargetQty;
             mProduct.Uom = product.UoM;
             return mProduct;

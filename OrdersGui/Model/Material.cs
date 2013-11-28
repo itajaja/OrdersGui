@@ -1,10 +1,13 @@
-﻿using Hylasoft.OrdersGui.Model.Service;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Hylasoft.OrdersGui.Model.Service;
+using Hylasoft.OrdersGui.ViewModel;
 
 namespace Hylasoft.OrdersGui.Model
 {
     public class Material : NotifyPropertyChanged
     {
-        public const int RebrandedFamily = 2;
+        public const int RebrandedCategory = 2;
 
         private string _categoryName;
         public string CategoryName
@@ -53,6 +56,16 @@ namespace Hylasoft.OrdersGui.Model
         {
             get { return _materialName; }
             set { SetField(ref _materialName, value, "MaterialName"); }
+        }
+
+        /// <summary>
+        /// Find all the tanks that can contain the material
+        /// </summary>
+        /// <param name="tanks">The entire list of tanks</param>
+        /// <returns>The tanks that can contain the material</returns>
+        public virtual IList<Tank> FindTanks(IList<Tank> tanks)
+        {
+            return tanks.Where(t => t.Material == this || t.TankName.ToLower() == AssignCompartmentsVM.UnknownTank).ToList();
         }
 
         #region Equality code

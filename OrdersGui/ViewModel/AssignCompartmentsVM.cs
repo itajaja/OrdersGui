@@ -217,10 +217,13 @@ namespace Hylasoft.OrdersGui.ViewModel
                 message =>
                 {
                     var orderComp = message.OrderComp;
-                    if (orderComp == null || orderComp.OrderProduct == null || orderComp.Compartment == null)
+                    if (orderComp == null || orderComp.OrderProduct == null)
+                        return;
+                    orderComp.Tank = orderComp.OrderProduct.SourceTank;
+                    orderComp.RackArm = Arms.FirstOrDefault(a => a.MaterialFamily == orderComp.OrderProduct.Material.MaterialFamily);
+                    if (orderComp.Compartment == null)
                         return;
                     orderComp.TargetQty = 0;
-                    orderComp.Tank = orderComp.OrderProduct.SourceTank;
                     orderComp.TargetQty = Math.Min(orderComp.Compartment.Capacity, AmountLeft(orderComp.OrderProduct));
                 });
             Messenger.Default.Register<MoveCompMessage>(this,
@@ -343,7 +346,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             {
                 if (OrderProduct == null || OrderProduct.SourceTank == null)
                     return new List<Tank>();
-                return _allTanks.Where(t => t.Material == OrderProduct.Material || t.TankName.ToLower() == AssignCompartmentsVM.UnknownTank).ToList();
+                return OrderProduct.Material.FindTanks(_allTanks).ToList();
             }
         }
     }

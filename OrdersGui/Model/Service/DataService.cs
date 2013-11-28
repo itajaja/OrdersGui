@@ -26,7 +26,6 @@ namespace Hylasoft.OrdersGui.Model.Service
         private IList<Tank> _sapTanks;
         private IList<Tank> _tanks;
         private List<Container> _containers;
-        private IList<RebrandedProduct> _rebrandedProducts;
 
         public DataService()
         {
@@ -57,7 +56,6 @@ namespace Hylasoft.OrdersGui.Model.Service
         private readonly ManualResetEvent _sapTanksWaiter = new ManualResetEvent(false);
         private readonly ManualResetEvent _containersWaiter = new ManualResetEvent(false);
         private readonly ManualResetEvent _materialsWaiter = new ManualResetEvent(false);
-        private readonly ManualResetEvent _rebrandedProductsWaiter = new ManualResetEvent(false);
         public Exception FaultState { get; private set; }
 
         private void Initialize()
@@ -94,8 +92,12 @@ namespace Hylasoft.OrdersGui.Model.Service
                     _ntfClient.GetRebrandedProductsCompleted += (sender2, args2) =>
                     {
                         CheckAndRethrow(args.Error);
-                        _rebrandedProducts = ConvertRebrandedProducts(args2.Result);
-                        _rebrandedProductsWaiter.Set();
+                        var rebrandedProducts = ConvertRebrandedProducts(args2.Result);
+                        foreach (var rebrandedProduct in rebrandedProducts)
+                        {
+                            _materials.Remove(_materials.FirstOrDefault(m => m.MaterialId == rebrandedProduct.MaterialId));
+                            _materials.Add(rebrandedProduct);
+                        }
                     };
                     _ntfClient.GetRebrandedProductsAsync();
                     _ntfClient.GetWinblendTanksCompleted += (sender2, args2) =>
@@ -171,15 +173,6 @@ namespace Hylasoft.OrdersGui.Model.Service
             {
                 WaitforInit();
                 callback(_materials, null);
-            });
-        }
-
-        public void GetRebrandedProducts(Action<IList<RebrandedProduct>, Exception> callback)
-        {
-            Task.Factory.StartNew(() =>
-            {
-                WaitforInit();
-                callback(_rebrandedProducts, null);
             });
         }
 
@@ -318,7 +311,6 @@ namespace Hylasoft.OrdersGui.Model.Service
             _sapTanksWaiter.WaitOne();
             _containersWaiter.WaitOne();
             _materialsWaiter.WaitOne();
-            _rebrandedProductsWaiter.WaitOne();
         }
 
     }

@@ -1,29 +1,28 @@
-﻿using System.ServiceModel.Channels;
-using Hylasoft.OrdersGui.Model.Service;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Hylasoft.OrdersGui.Model
 {
-    public class RebrandedProduct : NotifyPropertyChanged
+    public class RebrandedProduct : Material
     {
-        private string _materialCode;
-        public string MaterialCode
-        {
-            get { return _materialCode; }
-            set { SetField(ref _materialCode, value, "MaterialCode"); }
-        }
-
-        private int _materialId;
-        public int MaterialId
-        {
-            get { return _materialId; }
-            set { SetField(ref _materialId, value, "MaterialId"); }
-        }
-
         private Material _parent;
         public Material Parent
         {
             get { return _parent; }
             set { SetField(ref _parent, value, "Parent"); }
+        }
+
+        /// <summary>
+        /// Find all the tanks that can contain the material (looking also through parents)
+        /// </summary>
+        /// <param name="tanks">The entire list of tanks</param>
+        /// <returns>The tanks that can contain the material</returns>
+        public override IList<Tank> FindTanks(IList<Tank> tanks)
+        {
+            IEnumerable<Tank> p = base.FindTanks(tanks);
+            if (Parent != null)
+                p = p.Union(Parent.FindTanks(tanks));
+            return p.ToList();
         }
 
         #region Equality code
@@ -45,7 +44,7 @@ namespace Hylasoft.OrdersGui.Model
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _materialId == other._materialId;
+            return MaterialId == other.MaterialId;
         }
 
         public static bool operator ==(RebrandedProduct left, RebrandedProduct right)

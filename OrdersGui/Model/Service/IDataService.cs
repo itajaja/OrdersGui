@@ -12,7 +12,6 @@ namespace Hylasoft.OrdersGui.Model.Service
         void GetOrders(Action<IList<Order>, Exception> callback);
         void GetServerStatus(Action<OpcConnectionStatus, SlomConnectionStatus, Exception> callback);
         void GetMaterials(Action<IList<Material>, Exception> callback);
-        void GetRebrandedProducts(Action<IList<RebrandedProduct>, Exception> callback);
         void GetTanks(Action<IList<Tank>, Exception> callback);
         void GetSapTanks(Action<IList<Tank>, Exception> callback);
         void GetCompartments(long containerId, Action<IList<Compartment>, Exception> callback);

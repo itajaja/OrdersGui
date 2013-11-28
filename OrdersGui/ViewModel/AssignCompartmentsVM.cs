@@ -259,7 +259,9 @@ namespace Hylasoft.OrdersGui.ViewModel
                     if (result != MessageBoxResult.OK)
                         return;
                     lodVM.OrderCompartments = new ObservableCollection<OrderCompartment>(OrderCompartments.Where(orderComp => orderComp.Compartment != null && orderComp.OrderProduct != null));//todo implement call
-                    //todo change order status
+                    if(Order.OrderStatus == OrderStatus.TruckArrived)
+                        Order.OrderStatus = OrderStatus.ReadyForRelease;
+                    //todo call to change order status
                     GoBackCommand.Execute(null);
                 }, CanAssignCompartments);
             GoBackCommand = new RelayCommand(

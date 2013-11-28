@@ -29,13 +29,13 @@
             <sdk:DataGrid.Columns>
                 <sdk:DataGridTextColumn Binding="{Binding SeqNo}" Header="Seq. #"  />
                 <sdk:DataGridTemplateColumn Header="Comp. #">
-                        <sdk:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
                             <ComboBox Name="CompComboBox" Background="Transparent" BorderBrush="Transparent" SelectedItem="{Binding Compartment, Mode=TwoWay}" DisplayMemberPath="CompartmentNo"
                                       ItemsSource="{Binding AssignCompartmentsVM.Compartments, Source={StaticResource Locator}}" DropDownClosed="CompComboBox_OnDropDownClosed" />
-                            </DataTemplate>
-                        </sdk:DataGridTemplateColumn.CellTemplate>
-                    </sdk:DataGridTemplateColumn>
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
                 <sdk:DataGridTextColumn Binding="{Binding Compartment.Capacity}" Header="Capacity (GAL)" />
                 <sdk:DataGridTemplateColumn Header="Product" Width="270">
                     <sdk:DataGridTemplateColumn.CellTemplate>
@@ -78,10 +78,17 @@
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </c:DataGridTemplateColumnEx>
-<!--                <c:DataGridTextColumnEx Binding="{Binding CompartmentStatus}" Header="Compartment Status"-->
-<!--                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>-->
-                <c:DataGridTextColumnEx Binding="{Binding BatchNumber}" Header="Batch Number" Width="SizeToHeader"
-                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Unload}"/>
+                <!--                needed?-->
+                <!--                <c:DataGridTextColumnEx Binding="{Binding CompartmentStatus}" Header="Compartment Status"-->
+                <!--                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Load}"/>-->
+                <c:DataGridTemplateColumnEx Header="Batch Number" Width="SizeToHeader"
+                                        DVisibility="{Binding AssignCompartmentsVM.Order.OrderType, Source={StaticResource Locator}, Converter={StaticResource EnumToVisible}, ConverterParameter=Unload}">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding BatchNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </c:DataGridTemplateColumnEx>
                 <sdk:DataGridTemplateColumn>
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

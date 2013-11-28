@@ -31,6 +31,7 @@
             <Style TargetType="sdk:DataGrid" BasedOn="{StaticResource DataGridStyle}" />
             <Style TargetType="RadioButton" BasedOn="{StaticResource ButtonStyle}" />
             <Style TargetType="ProgressBar" BasedOn="{StaticResource ProgressBarStyle}" />
+            <Style TargetType="HyperlinkButton" BasedOn="{StaticResource HyperLinkStyle}" />
             <res:Strings_en_us x:Key="Strings"/>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <converters:OpcConnectionStatusToColorConverter x:Key="OpcConnectionStatusToColor" />

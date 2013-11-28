@@ -86,6 +86,7 @@ namespace Hylasoft.OrdersGui.ViewModel
 
         public RelayCommand GoBackCommand { get; private set; }
         public RelayCommand AssignCompartmentCommand { get; private set; }
+        public RelayCommand<OrderCompartment> ClearRowCommand { get; private set; }
 
         public IDictionary<OrderProduct, double> Completions
         {
@@ -230,6 +231,20 @@ namespace Hylasoft.OrdersGui.ViewModel
                     if (from != null)
                         PutInto(from, to.SeqNo, OrderCompartments, true);
                 });
+            ClearRowCommand = new RelayCommand<OrderCompartment>(o =>
+            {
+                //clear the row keeping only the seq no
+                o.ActualQty = 0;
+                o.BatchNumber = null;
+                o.Compartment = null;
+                o.CompartmentStatus = null;
+                o.NetWeight = 0;
+                o.OrderProduct = null;
+                o.RackArm = null;
+                o.Tank = null;
+                o.TargetQty = 0;
+                Validate();
+            });
             AssignCompartmentCommand = new RelayCommand(
                 // ReSharper disable once ImplicitlyCapturedClosure
                 () =>

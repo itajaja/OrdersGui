@@ -85,8 +85,7 @@
                 <sdk:DataGridTemplateColumn>
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button BorderBrush="Transparent" Background="Transparent">
-<!--                                Command="{Binding CreateOrderVM.ClearRowCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"-->
+                            <Button BorderBrush="Transparent" Background="Transparent"  Command="{Binding AssignCompartmentsVM.ClearRowCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}">
                                 <Image Source="../Resources/Images/clear.png"></Image>
                             </Button>
                         </DataTemplate>

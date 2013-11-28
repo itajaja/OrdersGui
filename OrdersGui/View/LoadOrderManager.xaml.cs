@@ -62,5 +62,13 @@ namespace Hylasoft.OrdersGui.View
                 OrdersGrid.SelectedItem = row.DataContext;
             GridContextMenu.DataContext = OrdersGrid.SelectedItem;
         }
+
+        private void ReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ReportGrid.Opacity >= 1)
+                CloseFilter.Begin();
+            else
+                OpenReports.Begin();
+        }
     }
 }

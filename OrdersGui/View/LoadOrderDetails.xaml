@@ -251,6 +251,7 @@
                     Visibility="{Binding Mode, Converter={StaticResource EnumToVisible}, ConverterParameter='Prepare,Fullfill'}">
                     <Button Content="Assign Truck" Command="{Binding AssignTruckCommand}"/>
                     <Button Content="Assign Compartments" Command="{Binding AssignCompartmentCommand}"/>
+                    <!--                    todo implement-->
                     <Button Content="Fullfill Order" Command="{Binding FulfillOrderCommand}"
                     Visibility="{Binding Mode, Converter={StaticResource EnumToVisible}, ConverterParameter='Fullfill'}"/>
                 </StackPanel>

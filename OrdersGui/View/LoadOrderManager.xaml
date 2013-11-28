@@ -228,13 +228,13 @@
                     </StackPanel.Resources>
                     <TextBlock Text="{Binding ElementName=OrdersGrid, Path=SelectedItem.OrderNo, StringFormat='Reports for order {0}',
                         FallbackValue='Please select an order from the list'}"/>
-                    <HyperlinkButton Content="Order Summary" />
-                    <HyperlinkButton Content="Sample Label"  />
-                    <HyperlinkButton Content="Weight Ticket" />
-                    <HyperlinkButton Content="Truck Inspection" />
+                    <HyperlinkButton Content="Order Summary" Command="{Binding OrderSummaryCommand}" CommandParameter="{Binding SelectedItem, ElementName=OrdersGrid}" />
+                    <HyperlinkButton Content="Sample Label"  Command="{Binding SampleLabelCommand}" CommandParameter="{Binding SelectedItem, ElementName=OrdersGrid}"/>
+                    <HyperlinkButton Content="Weight Ticket" Command="{Binding WeightTicketCommand}" CommandParameter="{Binding SelectedItem, ElementName=OrdersGrid}"/>
+                    <HyperlinkButton Content="Truck Inspection" Command="{Binding TruckInspectionCommand}" CommandParameter="{Binding SelectedItem, ElementName=OrdersGrid}"/>
                     <TextBlock Text="{Binding DateFilter, StringFormat='Reports for {0:M}', FallbackValue='Please select a date from the filter'}"/>
-                    <HyperlinkButton Content="Pending Orders" />
-                    <HyperlinkButton Content="Daily Demand"  />
+                    <HyperlinkButton Content="Pending Orders" Command="{Binding PendingOrdersCommand}" CommandParameter="{Binding DateFilter}"/>
+                    <HyperlinkButton Content="Daily Demand"  Command="{Binding DailyDemandCommand}" CommandParameter="{Binding DateFilter}"/>
                 </StackPanel>
             </Grid>
         </Border>

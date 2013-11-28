@@ -61,6 +61,15 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://localhost:64463/Web/DailyDemandReport.aspx?Date={0}.
+        /// </summary>
+        public static string DailyDemandUrl {
+            get {
+                return ResourceManager.GetString("DailyDemandUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to http://localhost:64463/EventMonitor.svc.
         /// </summary>
         public static string EmConnectionString {
@@ -75,6 +84,51 @@ namespace Hylasoft.OrdersGui.Resources {
         public static string NtfConnectionString {
             get {
                 return ResourceManager.GetString("NtfConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://localhost:64463/Web/OrderSummary.aspx?id={0}.
+        /// </summary>
+        public static string OrderSummaryUrl {
+            get {
+                return ResourceManager.GetString("OrderSummaryUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://localhost:64463/Web/PendingOrder.aspx?Date={0}.
+        /// </summary>
+        public static string PendingOrdersUrl {
+            get {
+                return ResourceManager.GetString("PendingOrdersUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://localhost:64463/Web/Receipts.aspx?id={0}.
+        /// </summary>
+        public static string SampleLabelUrl {
+            get {
+                return ResourceManager.GetString("SampleLabelUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://localhost:64463/Web/TruckInspection.aspx?id={0}.
+        /// </summary>
+        public static string TruckInspectionUrl {
+            get {
+                return ResourceManager.GetString("TruckInspectionUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://localhost:64463/Web/WeightTicket.aspx?id={0}.
+        /// </summary>
+        public static string WeightTicketUrl {
+            get {
+                return ResourceManager.GetString("WeightTicketUrl", resourceCulture);
             }
         }
     }

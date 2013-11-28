@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Browser;
 using System.Windows.Data;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
@@ -12,6 +13,7 @@ using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
+using Hylasoft.OrdersGui.Resources;
 using Hylasoft.OrdersGui.Utils;
 
 namespace Hylasoft.OrdersGui.ViewModel
@@ -98,6 +100,30 @@ namespace Hylasoft.OrdersGui.ViewModel
                     OrdersView.Refresh();
             }
         }
+
+        private readonly RelayCommand<Order> _orderSummaryCommand = new RelayCommand<Order>(
+                order => HtmlPage.Window.Navigate(new Uri(string.Format(Configuration.OrderSummaryUrl, order.OrderId)), "blank"),
+                order => order != null);
+        private readonly RelayCommand<Order> _sampleLabelCommand = new RelayCommand<Order>(
+                order => HtmlPage.Window.Navigate(new Uri(string.Format(Configuration.SampleLabelUrl, order.OrderId)), "blank"),
+                order => order != null);
+        private readonly RelayCommand<Order> _weightTicketCommand = new RelayCommand<Order>(
+                order => HtmlPage.Window.Navigate(new Uri(string.Format(Configuration.WeightTicketUrl, order.OrderId)), "blank"),
+                order => order != null);
+        private readonly RelayCommand<Order> _truckInspectionCommand = new RelayCommand<Order>(
+                order => HtmlPage.Window.Navigate(new Uri(string.Format(Configuration.TruckInspectionUrl, order.OrderId)), "blank"),
+                order => order != null);
+        private readonly RelayCommand<DateTime> _dailyDemandCommand = new RelayCommand<DateTime>(
+                date => HtmlPage.Window.Navigate(new Uri(string.Format(Configuration.DailyDemandUrl, date.ToShortDateString())), "blank"));
+        private readonly RelayCommand<DateTime> _pendingOrdersCommand = new RelayCommand<DateTime>(
+                date => HtmlPage.Window.Navigate(new Uri(string.Format(Configuration.PendingOrdersUrl, date.ToShortDateString())), "blank"));
+        public RelayCommand<Order> OrderSummaryCommand { get { return _orderSummaryCommand; } }
+        public RelayCommand<Order> SampleLabelCommand { get { return _sampleLabelCommand; } }
+        public RelayCommand<Order> WeightTicketCommand { get { return _weightTicketCommand; } }
+        public RelayCommand<Order> TruckInspectionCommand { get { return _truckInspectionCommand; } }
+        public RelayCommand<DateTime> DailyDemandCommand { get { return _dailyDemandCommand; } }
+        public RelayCommand<DateTime> PendingOrdersCommand { get { return _pendingOrdersCommand; } }
+
 
         public RelayCommand ClearStatusFilerCommand { get; private set; }
         public RelayCommand AddAllStatusFilterCommand { get; private set; }

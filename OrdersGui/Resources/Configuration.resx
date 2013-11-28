@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DailyDemandUrl" xml:space="preserve">
+    <value>http://localhost:64463/Web/DailyDemandReport.aspx?Date={0}</value>
+  </data>
   <data name="EmConnectionString" xml:space="preserve">
     <value>http://localhost:64463/EventMonitor.svc</value>
   </data>
   <data name="NtfConnectionString" xml:space="preserve">
     <value>http://localhost:64463/NonTransactionalFunctions.svc</value>
+  </data>
+  <data name="OrderSummaryUrl" xml:space="preserve">
+    <value>http://localhost:64463/Web/OrderSummary.aspx?id={0}</value>
+  </data>
+  <data name="PendingOrdersUrl" xml:space="preserve">
+    <value>http://localhost:64463/Web/PendingOrder.aspx?Date={0}</value>
+  </data>
+  <data name="SampleLabelUrl" xml:space="preserve">
+    <value>http://localhost:64463/Web/Receipts.aspx?id={0}</value>
+  </data>
+  <data name="TruckInspectionUrl" xml:space="preserve">
+    <value>http://localhost:64463/Web/TruckInspection.aspx?id={0}</value>
+  </data>
+  <data name="WeightTicketUrl" xml:space="preserve">
+    <value>http://localhost:64463/Web/WeightTicket.aspx?id={0}</value>
   </data>
 </root>

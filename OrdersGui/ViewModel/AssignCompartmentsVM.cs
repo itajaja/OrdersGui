@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -23,16 +20,16 @@ namespace Hylasoft.OrdersGui.ViewModel
         private readonly LoadOrderDetailsVM _lodVM;
         private DetailMode _cachedMode;
         private const double CompletionScale = 100;
-        private const string InvalidArm = "None";
-        private const string InvalidTank = "unknown";
-
+        public const string InvalidArm = "None";
+        public const string UnknownTank = "unknown";
+        
         public Order Order
         {
             get { return _lodVM.Order; }
         }
 
-        private TrulyObservableCollection<OrderCompartment> _orderCompartments;
-        public TrulyObservableCollection<OrderCompartment> OrderCompartments
+        private TrulyObservableCollection<OrderCompartmentTanks> _orderCompartments;
+        public TrulyObservableCollection<OrderCompartmentTanks> OrderCompartments
         {
             get { return _orderCompartments; }
             set
@@ -172,9 +169,9 @@ namespace Hylasoft.OrdersGui.ViewModel
                     ErrorString = "The selected tank for compartment No. " + orderComp.Compartment.CompartmentNo + " must be selected.";
                     return false;
                 }
-                if (orderComp.Tank.TankName.ToLower() == InvalidTank)
+                if (orderComp.Tank.TankName.ToLower() == UnknownTank)
                 {
-                    warningBuilder.AppendLine("Tank " + InvalidTank + " selected for compartment " + orderComp.Compartment.CompartmentNo);
+                    warningBuilder.AppendLine("Tank " + UnknownTank + " selected for compartment " + orderComp.Compartment.CompartmentNo);
                 }
 
             }
@@ -222,6 +219,7 @@ namespace Hylasoft.OrdersGui.ViewModel
                     if (orderComp == null || orderComp.OrderProduct == null || orderComp.Compartment == null)
                         return;
                     orderComp.TargetQty = 0;
+                    orderComp.Tank = orderComp.OrderProduct.SourceTank;
                     orderComp.TargetQty = Math.Min(orderComp.Compartment.Capacity, AmountLeft(orderComp.OrderProduct));
                 });
             Messenger.Default.Register<MoveCompMessage>(this,
@@ -257,23 +255,23 @@ namespace Hylasoft.OrdersGui.ViewModel
             Reset();
         }
 
-        private TrulyObservableCollection<OrderCompartment> CreateCompartments(IEnumerable<OrderCompartment> originalComps)
+        private TrulyObservableCollection<OrderCompartmentTanks> CreateCompartments(IEnumerable<OrderCompartment> originalComps)
         {
-            var comps = new TrulyObservableCollection<OrderCompartment>{
-                new OrderCompartment{SeqNo = SequenceNumber.A},
-                new OrderCompartment{SeqNo = SequenceNumber.B},
-                new OrderCompartment{SeqNo = SequenceNumber.C},
-                new OrderCompartment{SeqNo = SequenceNumber.D},
-                new OrderCompartment{SeqNo = SequenceNumber.E}
+            var comps = new TrulyObservableCollection<OrderCompartmentTanks>{
+                new OrderCompartmentTanks{SeqNo = SequenceNumber.A},
+                new OrderCompartmentTanks{SeqNo = SequenceNumber.B},
+                new OrderCompartmentTanks{SeqNo = SequenceNumber.C},
+                new OrderCompartmentTanks{SeqNo = SequenceNumber.D},
+                new OrderCompartmentTanks{SeqNo = SequenceNumber.E}
             };
             if (originalComps == null)
                 return comps;
             foreach (var orderComp in originalComps)
-                PutInto(orderComp.Clone(), orderComp.SeqNo, comps);
+                PutInto(new OrderCompartmentTanks(orderComp,Tanks), orderComp.SeqNo, comps);
             return comps;
         }
 
-        private void PutInto(OrderCompartment orderComp, SequenceNumber seqNo, IList<OrderCompartment> comps, bool move = false)
+        private void PutInto(OrderCompartmentTanks orderComp, SequenceNumber seqNo, IList<OrderCompartmentTanks> comps, bool move = false)
         {
             var replace = comps.FirstOrDefault(c => c.SeqNo == seqNo);
             int to = comps.IndexOf(replace);
@@ -281,7 +279,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             if (replace == null)
                 return;
             if (move && from != -1)
-                comps[from] = new OrderCompartment { SeqNo = orderComp.SeqNo };
+                comps[from] = new OrderCompartmentTanks { SeqNo = orderComp.SeqNo };
             comps[to] = orderComp;
             orderComp.SeqNo = seqNo;
         }
@@ -294,6 +292,39 @@ namespace Hylasoft.OrdersGui.ViewModel
         public void Reset()
         {
             OrderCompartments = null;
+        }
+    }
+
+    public class OrderCompartmentTanks : OrderCompartment
+    {
+        public OrderCompartmentTanks(){}
+
+        public OrderCompartmentTanks(OrderCompartment orderComp, IList<Tank> allTanks)
+        {
+            ActualQty = orderComp.ActualQty;
+            BatchNumber = orderComp.BatchNumber;
+            Compartment = orderComp.Compartment;
+            CompartmentStatus = orderComp.CompartmentStatus;
+            NetWeight = orderComp.NetWeight;
+            OrderProduct = orderComp.OrderProduct;
+            RackArm = orderComp.RackArm;
+            SeqNo = orderComp.SeqNo;
+            Tank = orderComp.Tank;
+            TargetQty = orderComp.TargetQty;
+            _allTanks = allTanks;
+        }
+
+        
+
+        private readonly IList<Tank> _allTanks;
+        public IList<Tank> Tanks
+        {
+            get
+            {
+                if (OrderProduct == null || OrderProduct.SourceTank == null)
+                    return _allTanks;
+                return _allTanks.Where(t => t.Material == OrderProduct.Material || t.TankName.ToLower() == AssignCompartmentsVM.UnknownTank).ToList();
+            }
         }
     }
 

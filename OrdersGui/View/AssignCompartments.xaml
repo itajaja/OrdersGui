@@ -48,14 +48,9 @@
                 <sdk:DataGridTemplateColumn  Header="Tank" Width="80">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <sdk:AutoCompleteBox SelectedItem="{Binding Tank, Mode=TwoWay}" ValueMemberPath="TankName" MinimumPopulateDelay="300" MinimumPrefixLength="2"
-                                                 ItemsSource="{Binding CreateOrderVM.Tanks, Source={StaticResource Locator}}">
-                                <sdk:AutoCompleteBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding TankName}" />
-                                    </DataTemplate>
-                                </sdk:AutoCompleteBox.ItemTemplate>
-                            </sdk:AutoCompleteBox>
+                            <ComboBox SelectedItem="{Binding Tank, Mode=TwoWay}" DisplayMemberPath="TankName" Background="Transparent" BorderBrush="Transparent"
+                                      ItemsSource="{Binding Tanks}">
+                            </ComboBox>
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>

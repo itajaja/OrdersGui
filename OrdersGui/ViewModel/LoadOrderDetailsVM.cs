@@ -111,63 +111,58 @@ namespace Hylasoft.OrdersGui.ViewModel
                 Messenger.Default.Send(new GoToLomMessage());
                 Reset();
             });
-            AssignCompartmentCommand = new RelayCommand(
-                () =>
-                {
-                    Messenger.Default.Send(new GoToAcMessage(false));
-                    Messenger.Default.Send(new OpenCloseEditDateMessage(false));
-                },
-                () => Order != null && Order.OrderStatus != OrderStatus.Ready && Mode == DetailMode.Prepare);
-            AssignTruckCommand = new RelayCommand(
-                () =>
-                {
-                    Messenger.Default.Send(new GoToAtMessage(false));
-                    Messenger.Default.Send(new OpenCloseEditDateMessage(false));
-                },
+            AssignCompartmentCommand = new RelayCommand(() =>
+            {
+                Messenger.Default.Send(new GoToAcMessage(false));
+                Messenger.Default.Send(new OpenCloseEditDateMessage(false));
+            },
+                () => Order != null && Container != null && Compartments != null && Order.OrderStatus != OrderStatus.Ready && Mode == DetailMode.Prepare);
+            AssignTruckCommand = new RelayCommand(() =>
+            {
+                Messenger.Default.Send(new GoToAtMessage(false));
+                Messenger.Default.Send(new OpenCloseEditDateMessage(false));
+            },
                 () => Order != null && Mode == DetailMode.Prepare);
             FulfillOrderCommand = new RelayCommand(() => MessageBox.Show("fullfill"),
                 () => Order != null && Mode == DetailMode.Fullfill);
-            EditDateCommand = new RelayCommand(
-                () =>
+            EditDateCommand = new RelayCommand(() =>
+            {
+                if (_isEditingDate)
                 {
-                    if (_isEditingDate)
-                    {
-                        Messenger.Default.Send(new OpenCloseEditDateMessage(false));
-                        _isEditingDate = false;
-                        return;
-                    }
-                    _isEditingDate = true;
-                    var currDate = Order.ScheduleDate;
-                    EditDate = currDate;
-                    EditTime = currDate;
-                    Messenger.Default.Send(new OpenCloseEditDateMessage(true));
-                },
+                    Messenger.Default.Send(new OpenCloseEditDateMessage(false));
+                    _isEditingDate = false;
+                    return;
+                }
+                _isEditingDate = true;
+                var currDate = Order.ScheduleDate;
+                EditDate = currDate;
+                EditTime = currDate;
+                Messenger.Default.Send(new OpenCloseEditDateMessage(true));
+            },
                 () => Order != null && Mode == DetailMode.Edit);
-            SaveDateCommand = new RelayCommand(
-                () =>
+            SaveDateCommand = new RelayCommand(() =>
+            {
+                var newDate = new DateTime(EditDate.Year, EditDate.Month, EditDate.Day, EditTime.Hour, EditTime.Minute, 0);
+                var confirm = MessageBox.Show("Are you sure to change date and time?\nFrom: " + Order.ScheduleDate + "\nTo: " + newDate, "Change Rack", MessageBoxButton.OKCancel);
+                if (confirm == MessageBoxResult.OK)
                 {
-                    var newDate = new DateTime(EditDate.Year, EditDate.Month, EditDate.Day, EditTime.Hour, EditTime.Minute, 0);
-                    var confirm = MessageBox.Show("Are you sure to change date and time?\nFrom: " + Order.ScheduleDate + "\nTo: " + newDate, "Change Rack", MessageBoxButton.OKCancel);
-                    if (confirm == MessageBoxResult.OK)
-                    {
-                        Order.ScheduleDate = newDate;
-                        Messenger.Default.Send(new OpenCloseEditDateMessage(false));
-                        _isEditingDate = false;
-                    }
-                },
+                    Order.ScheduleDate = newDate;
+                    Messenger.Default.Send(new OpenCloseEditDateMessage(false));
+                    _isEditingDate = false;
+                }
+            },
                 () => Order != null && Mode == DetailMode.Edit);
-            ChangeRackCommand = new RelayCommand<string>(
-                s =>
-                {
-                    var currentRack = Order.LoadRack;
-                    var newRack = _racks.First(r => r.RackName == s);
-                    if (currentRack == newRack)
-                        return;
-                    var confirm = MessageBox.Show("Are you sure to change rack from " + currentRack.RackName + " to " + s + "?", "Change Rack", MessageBoxButton.OKCancel);
-                    if (confirm == MessageBoxResult.OK)
-                        Order.LoadRack = newRack;
-                },
-                s => Order != null && !String.IsNullOrEmpty(s) && Mode != DetailMode.View && Order.OrderType == OrderType.Load);
+            ChangeRackCommand = new RelayCommand<string>(s =>
+            {
+                var currentRack = Order.LoadRack;
+                var newRack = _racks.First(r => r.RackName == s);
+                if (currentRack == newRack)
+                    return;
+                var confirm = MessageBox.Show("Are you sure to change rack from " + currentRack.RackName + " to " + s + "?", "Change Rack", MessageBoxButton.OKCancel);
+                if (confirm == MessageBoxResult.OK)
+                    Order.LoadRack = newRack;
+            },
+                s => Order != null && !String.IsNullOrEmpty(s) && Mode != DetailMode.View && Order.OrderType == OrderType.Load && Container == null);
             var t = new DispatcherTimer();
             t.Interval = TimeSpan.FromSeconds(1);
             t.Tick += (_, __) => RefreshCommands();

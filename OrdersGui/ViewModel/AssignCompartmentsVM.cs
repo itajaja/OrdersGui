@@ -273,11 +273,11 @@ namespace Hylasoft.OrdersGui.ViewModel
         private TrulyObservableCollection<OrderCompartmentTanks> CreateCompartments(IEnumerable<OrderCompartment> originalComps)
         {
             var comps = new TrulyObservableCollection<OrderCompartmentTanks>{
-                new OrderCompartmentTanks{SeqNo = SequenceNumber.A},
-                new OrderCompartmentTanks{SeqNo = SequenceNumber.B},
-                new OrderCompartmentTanks{SeqNo = SequenceNumber.C},
-                new OrderCompartmentTanks{SeqNo = SequenceNumber.D},
-                new OrderCompartmentTanks{SeqNo = SequenceNumber.E}
+                new OrderCompartmentTanks(Tanks){SeqNo = SequenceNumber.A},
+                new OrderCompartmentTanks(Tanks){SeqNo = SequenceNumber.B},
+                new OrderCompartmentTanks(Tanks){SeqNo = SequenceNumber.C},
+                new OrderCompartmentTanks(Tanks){SeqNo = SequenceNumber.D},
+                new OrderCompartmentTanks(Tanks){SeqNo = SequenceNumber.E}
             };
             if (originalComps == null)
                 return comps;
@@ -294,7 +294,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             if (replace == null)
                 return;
             if (move && from != -1)
-                comps[from] = new OrderCompartmentTanks { SeqNo = orderComp.SeqNo };
+                comps[from] = new OrderCompartmentTanks(Tanks){ SeqNo = orderComp.SeqNo };
             comps[to] = orderComp;
             orderComp.SeqNo = seqNo;
         }
@@ -312,9 +312,17 @@ namespace Hylasoft.OrdersGui.ViewModel
 
     public class OrderCompartmentTanks : OrderCompartment
     {
-        public OrderCompartmentTanks(){}
+        public OrderCompartmentTanks(IList<Tank> allTanks)
+        {
+            _allTanks = allTanks;
+            PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "OrderProduct")
+                    OnPropertyChanged("Tanks");
+            };
+        }
 
-        public OrderCompartmentTanks(OrderCompartment orderComp, IList<Tank> allTanks)
+        public OrderCompartmentTanks(OrderCompartment orderComp, IList<Tank> allTanks) : this(allTanks)
         {
             ActualQty = orderComp.ActualQty;
             BatchNumber = orderComp.BatchNumber;
@@ -326,10 +334,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             SeqNo = orderComp.SeqNo;
             Tank = orderComp.Tank;
             TargetQty = orderComp.TargetQty;
-            _allTanks = allTanks;
         }
-
-        
 
         private readonly IList<Tank> _allTanks;
         public IList<Tank> Tanks
@@ -337,7 +342,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             get
             {
                 if (OrderProduct == null || OrderProduct.SourceTank == null)
-                    return _allTanks;
+                    return new List<Tank>();
                 return _allTanks.Where(t => t.Material == OrderProduct.Material || t.TankName.ToLower() == AssignCompartmentsVM.UnknownTank).ToList();
             }
         }

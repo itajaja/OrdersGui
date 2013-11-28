@@ -4,6 +4,8 @@ namespace Hylasoft.OrdersGui.Model
 {
     public class Material : NotifyPropertyChanged
     {
+        public const int RebrandedFamily = 2;
+
         private string _categoryName;
         public string CategoryName
         {
@@ -32,7 +34,7 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _materialCode, value, "MaterialCode"); }
         }
 
-        private int _materialFamily; //todo maybe ref
+        private int _materialFamily;
         public int MaterialFamily
         {
             get { return _materialFamily; }

@@ -80,7 +80,20 @@ namespace Hylasoft.OrdersGui.ViewModel
             CreateOrderCommand = new RelayCommand(() =>
             {
                 if (Validate())
-                    MessageBox.Show("implement"); //todo implement
+                {
+                    Messenger.Default.Send(new StartLoadingMessage("Creating order...", false));
+                    _dataService.CreateOrder(Order, OrderProducts.Where(product => !IsEmptyProduct(product)).ToList(), e => DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        if (e != null)
+                            Messenger.Default.Send(new ErrorMessage(e, "Unable to create order"));
+                        else
+                        {
+                            MessageBox.Show("Order successfully created");
+                            GoBackCommand.Execute(null);
+                        }
+                        Messenger.Default.Send(new LoadingCompleteMessage());
+                    }));
+                }
             });
             GoBackCommand = new RelayCommand(() =>
             {

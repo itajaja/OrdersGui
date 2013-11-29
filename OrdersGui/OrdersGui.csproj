@@ -187,6 +187,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\TransactionalFunctions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Utils\EnumList.cs" />
     <Compile Include="Utils\TrulyObservableCollection.cs" />
     <Compile Include="ViewModel\AssignTruckVM.cs" />
@@ -341,11 +346,28 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\TransactionalFunctions\TransactionalFunctions.wsdl" />
+    <None Include="Service References\TransactionalFunctions\TransactionalFunctions.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TransactionalFunctions\TransactionalFunctions1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TransactionalFunctions\TransactionalFunctions2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <Resource Include="Resources\Images\up.png" />
     <Resource Include="Resources\Images\clear.png" />
     <Resource Include="Resources\Images\Check.png" />
     <Resource Include="Resources\Images\calendar.png" />
     <Resource Include="Resources\Images\find.png" />
+    <None Include="Service References\TransactionalFunctions\TransactionalFunctions.disco" />
+    <None Include="Service References\TransactionalFunctions\configuration91.svcinfo" />
+    <None Include="Service References\TransactionalFunctions\configuration.svcinfo" />
+    <None Include="Service References\TransactionalFunctions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.wsdl" />
     <None Include="Service References\NonTransactionalFunctions\NonTransactionalFunctions.xsd">
@@ -385,6 +407,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\EventMonitor\" />
     <WCFMetadataStorage Include="Service References\NonTransactionalFunctions\" />
+    <WCFMetadataStorage Include="Service References\TransactionalFunctions\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\EventMonitor\configuration91.svcinfo" />

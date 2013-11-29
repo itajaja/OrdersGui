@@ -139,6 +139,9 @@
   <data name="SampleLabelUrl" xml:space="preserve">
     <value>http://localhost:64463/Web/Receipts.aspx?id={0}</value>
   </data>
+  <data name="TfConnectionString" xml:space="preserve">
+    <value>http://localhost:64463/TransactionalFunctions.svc</value>
+  </data>
   <data name="TruckInspectionUrl" xml:space="preserve">
     <value>http://localhost:64463/Web/TruckInspection.aspx?id={0}</value>
   </data>

@@ -124,6 +124,15 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://localhost:64463/TransactionalFunctions.svc.
+        /// </summary>
+        public static string TfConnectionString {
+            get {
+                return ResourceManager.GetString("TfConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to http://localhost:64463/Web/TruckInspection.aspx?id={0}.
         /// </summary>
         public static string TruckInspectionUrl {

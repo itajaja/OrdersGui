@@ -10,6 +10,10 @@
                     maxReceivedMessageSize="2147483647">
                     <security mode="None" />
                 </binding>
+                <binding name="BasicHttpBinding_ITransactionalFunctions" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
             </basicHttpBinding>
         </bindings>
         <client>
@@ -20,6 +24,10 @@
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_INonTransactionalFunctions"
                 contract="NonTransactionalFunctions.INonTransactionalFunctions"
                 name="BasicHttpBinding_INonTransactionalFunctions" />
+            <endpoint address="http://localhost:64463/TransactionalFunctions.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ITransactionalFunctions"
+                contract="TransactionalFunctions.ITransactionalFunctions"
+                name="BasicHttpBinding_ITransactionalFunctions" />
         </client>
     </system.serviceModel>
 </configuration>

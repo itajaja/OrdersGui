@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/EventMonitorService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EventMonitorService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="UserException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExceptionMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserException" nillable="true" type="tns:UserException" />
+  <xs:complexType name="ArrayOfLoadOrderDetailsCompartments">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LoadOrderDetailsCompartments" nillable="true" type="tns:LoadOrderDetailsCompartments" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLoadOrderDetailsCompartments" nillable="true" type="tns:ArrayOfLoadOrderDetailsCompartments" />
+  <xs:complexType name="LoadOrderDetailsCompartments">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="APIGravity" type="xs:double" />
+      <xs:element minOccurs="0" name="ActualQty" type="xs:double" />
+      <xs:element minOccurs="0" name="BatchNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Capacity" type="xs:int" />
+      <xs:element minOccurs="0" name="CompartmentNo" type="xs:int" />
+      <xs:element minOccurs="0" name="CompartmentStatus" type="xs:int" />
+      <xs:element minOccurs="0" name="ContainerId" type="xs:long" />
+      <xs:element minOccurs="0" name="ContainerNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoadArmId" type="xs:int" />
+      <xs:element minOccurs="0" name="LoadArmName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoadArmNo" type="xs:int" />
+      <xs:element minOccurs="0" name="LoadRackId" type="xs:int" />
+      <xs:element minOccurs="0" name="LoadRackName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoadRackStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NetWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      <xs:element minOccurs="0" name="OrderNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SeqNo" type="xs:int" />
+      <xs:element minOccurs="0" name="SourceTank" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TankAvailabilityStatus" type="xs:int" />
+      <xs:element minOccurs="0" name="TankId" type="xs:int" />
+      <xs:element minOccurs="0" name="TankMaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TankMaterialId" type="xs:int" />
+      <xs:element minOccurs="0" name="TankName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TargetQty" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoadOrderDetailsCompartments" nillable="true" type="tns:LoadOrderDetailsCompartments" />
+  <xs:complexType name="ArrayOfSAPLoadOrderCompartmentSeal">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SAPLoadOrderCompartmentSeal" nillable="true" type="tns:SAPLoadOrderCompartmentSeal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSAPLoadOrderCompartmentSeal" nillable="true" type="tns:ArrayOfSAPLoadOrderCompartmentSeal" />
+  <xs:complexType name="SAPLoadOrderCompartmentSeal">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompartmentNo" type="xs:int" />
+      <xs:element minOccurs="0" name="ContainerId" type="xs:long" />
+      <xs:element minOccurs="0" name="MaterialCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaterialName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      <xs:element minOccurs="0" name="SealNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoEight" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoElleven" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoFive" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoFour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoNine" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoOne" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoSeven" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoSix" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoTen" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoThree" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoTwelve" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SealNoTwo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SeqNo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SAPLoadOrderCompartmentSeal" nillable="true" type="tns:SAPLoadOrderCompartmentSeal" />
+</xs:schema>

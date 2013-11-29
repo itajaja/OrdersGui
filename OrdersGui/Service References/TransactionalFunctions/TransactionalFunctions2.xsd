@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:64463/TransactionalFunctions.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EventMonitorService" />
+  <xs:element name="AssignTruckToLoadOrderProducts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadOrderId" type="xs:long" />
+        <xs:element minOccurs="0" name="containerId" type="xs:long" />
+        <xs:element minOccurs="0" name="TruckNo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignTruckToLoadOrderProductsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrintAssignTruckToLoadOrderProducts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadOrderId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrintAssignTruckToLoadOrderProductsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignTruckCompartmentsLoadOrderProducts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="loadOrderCompartments" nillable="true" type="q1:ArrayOfLoadOrderDetailsCompartments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignTruckCompartmentsLoadOrderProductsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateLoadOrderCompartmentAndProductRelationships">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="loadOrderCompartments" nillable="true" type="q2:ArrayOfLoadOrderDetailsCompartments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateLoadOrderCompartmentAndProductRelationshipsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertLoadOrderCompartmentSeals">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EventMonitorService" minOccurs="0" name="SAPLoadOrderCompartmentSeals" nillable="true" type="q3:ArrayOfSAPLoadOrderCompartmentSeal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertLoadOrderCompartmentSealsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrintInsertLoadOrderCompartmentSeals">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrintInsertLoadOrderCompartmentSealsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateRackId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="rackId" type="xs:int" />
+        <xs:element minOccurs="0" name="orderId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateRackIdResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateScheduleDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderId" type="xs:long" />
+        <xs:element minOccurs="0" name="ScheduleDateTime" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateScheduleDateResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeLoadOrderStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderId" type="xs:long" />
+        <xs:element minOccurs="0" name="orderStatus" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeLoadOrderStatusResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="startLoad">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="compartmentId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="startLoadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="startLoadResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExecuteUnloadBookUpdateSP">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExecuteUnloadBookUpdateSPResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ExecuteUnloadBookUpdateSPResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTankBatchNumberFromCompartments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTankBatchNumberFromCompartmentsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateTankBatchNumberFromCompartmentsResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

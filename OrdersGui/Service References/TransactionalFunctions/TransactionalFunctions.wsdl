@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TransactionalFunctions" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:64463/TransactionalFunctions.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:64463/TransactionalFunctions.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EventMonitorService" />
+      <xsd:import schemaLocation="http://localhost:64463/TransactionalFunctions.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITransactionalFunctions_AssignTruckToLoadOrderProducts_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignTruckToLoadOrderProducts" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_AssignTruckToLoadOrderProducts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignTruckToLoadOrderProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_AssignTruckToLoadOrderProducts_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q1:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_PrintAssignTruckToLoadOrderProducts_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrintAssignTruckToLoadOrderProducts" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_PrintAssignTruckToLoadOrderProducts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrintAssignTruckToLoadOrderProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_PrintAssignTruckToLoadOrderProducts_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q2:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_AssignTruckCompartmentsLoadOrderProducts_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignTruckCompartmentsLoadOrderProducts" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_AssignTruckCompartmentsLoadOrderProducts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignTruckCompartmentsLoadOrderProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_AssignTruckCompartmentsLoadOrderProducts_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q3:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_CreateLoadOrderCompartmentAndProductRelationships_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateLoadOrderCompartmentAndProductRelationships" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_CreateLoadOrderCompartmentAndProductRelationships_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateLoadOrderCompartmentAndProductRelationshipsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_CreateLoadOrderCompartmentAndProductRelationships_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q4:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_InsertLoadOrderCompartmentSeals_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertLoadOrderCompartmentSeals" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_InsertLoadOrderCompartmentSeals_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertLoadOrderCompartmentSealsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_InsertLoadOrderCompartmentSeals_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q5:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_PrintInsertLoadOrderCompartmentSeals_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrintInsertLoadOrderCompartmentSeals" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_PrintInsertLoadOrderCompartmentSeals_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrintInsertLoadOrderCompartmentSealsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_PrintInsertLoadOrderCompartmentSeals_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q6:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_UpdateRackId_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRackId" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_UpdateRackId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRackIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_UpdateRackId_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q7:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_UpdateScheduleDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateScheduleDate" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_UpdateScheduleDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateScheduleDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_UpdateScheduleDate_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q8:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_ChangeLoadOrderStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeLoadOrderStatus" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_ChangeLoadOrderStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeLoadOrderStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_ChangeLoadOrderStatus_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q9:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_startLoad_InputMessage">
+    <wsdl:part name="parameters" element="tns:startLoad" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_startLoad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:startLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_startLoad_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q10:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_ExecuteUnloadBookUpdateSP_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExecuteUnloadBookUpdateSP" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_ExecuteUnloadBookUpdateSP_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExecuteUnloadBookUpdateSPResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_ExecuteUnloadBookUpdateSP_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q11:UserException" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_UpdateTankBatchNumberFromCompartments_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTankBatchNumberFromCompartments" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_UpdateTankBatchNumberFromCompartments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTankBatchNumberFromCompartmentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransactionalFunctions_UpdateTankBatchNumberFromCompartments_UserExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/EventMonitorService" name="detail" element="q12:UserException" />
+  </wsdl:message>
+  <wsdl:portType name="ITransactionalFunctions">
+    <wsdl:operation name="AssignTruckToLoadOrderProducts">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/AssignTruckToLoadOrderProducts" message="tns:ITransactionalFunctions_AssignTruckToLoadOrderProducts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/AssignTruckToLoadOrderProductsResponse" message="tns:ITransactionalFunctions_AssignTruckToLoadOrderProducts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/AssignTruckToLoadOrderProductsUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_AssignTruckToLoadOrderProducts_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrintAssignTruckToLoadOrderProducts">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/PrintAssignTruckToLoadOrderProducts" message="tns:ITransactionalFunctions_PrintAssignTruckToLoadOrderProducts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/PrintAssignTruckToLoadOrderProductsResponse" message="tns:ITransactionalFunctions_PrintAssignTruckToLoadOrderProducts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/PrintAssignTruckToLoadOrderProductsUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_PrintAssignTruckToLoadOrderProducts_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignTruckCompartmentsLoadOrderProducts">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/AssignTruckCompartmentsLoadOrderProducts" message="tns:ITransactionalFunctions_AssignTruckCompartmentsLoadOrderProducts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/AssignTruckCompartmentsLoadOrderProductsResponse" message="tns:ITransactionalFunctions_AssignTruckCompartmentsLoadOrderProducts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/AssignTruckCompartmentsLoadOrderProductsUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_AssignTruckCompartmentsLoadOrderProducts_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateLoadOrderCompartmentAndProductRelationships">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/CreateLoadOrderCompartmentAndProductRelationships" message="tns:ITransactionalFunctions_CreateLoadOrderCompartmentAndProductRelationships_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/CreateLoadOrderCompartmentAndProductRelationshipsResponse" message="tns:ITransactionalFunctions_CreateLoadOrderCompartmentAndProductRelationships_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/CreateLoadOrderCompartmentAndProductRelationshipsUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_CreateLoadOrderCompartmentAndProductRelationships_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertLoadOrderCompartmentSeals">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/InsertLoadOrderCompartmentSeals" message="tns:ITransactionalFunctions_InsertLoadOrderCompartmentSeals_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/InsertLoadOrderCompartmentSealsResponse" message="tns:ITransactionalFunctions_InsertLoadOrderCompartmentSeals_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/InsertLoadOrderCompartmentSealsUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_InsertLoadOrderCompartmentSeals_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrintInsertLoadOrderCompartmentSeals">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/PrintInsertLoadOrderCompartmentSeals" message="tns:ITransactionalFunctions_PrintInsertLoadOrderCompartmentSeals_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/PrintInsertLoadOrderCompartmentSealsResponse" message="tns:ITransactionalFunctions_PrintInsertLoadOrderCompartmentSeals_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/PrintInsertLoadOrderCompartmentSealsUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_PrintInsertLoadOrderCompartmentSeals_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRackId">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/UpdateRackId" message="tns:ITransactionalFunctions_UpdateRackId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/UpdateRackIdResponse" message="tns:ITransactionalFunctions_UpdateRackId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/UpdateRackIdUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_UpdateRackId_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateScheduleDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/UpdateScheduleDate" message="tns:ITransactionalFunctions_UpdateScheduleDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/UpdateScheduleDateResponse" message="tns:ITransactionalFunctions_UpdateScheduleDate_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/UpdateScheduleDateUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_UpdateScheduleDate_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeLoadOrderStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/ChangeLoadOrderStatus" message="tns:ITransactionalFunctions_ChangeLoadOrderStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/ChangeLoadOrderStatusResponse" message="tns:ITransactionalFunctions_ChangeLoadOrderStatus_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/ChangeLoadOrderStatusUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_ChangeLoadOrderStatus_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="startLoad">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/startLoad" message="tns:ITransactionalFunctions_startLoad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/startLoadResponse" message="tns:ITransactionalFunctions_startLoad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/startLoadUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_startLoad_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteUnloadBookUpdateSP">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/ExecuteUnloadBookUpdateSP" message="tns:ITransactionalFunctions_ExecuteUnloadBookUpdateSP_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/ExecuteUnloadBookUpdateSPResponse" message="tns:ITransactionalFunctions_ExecuteUnloadBookUpdateSP_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/ExecuteUnloadBookUpdateSPUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_ExecuteUnloadBookUpdateSP_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTankBatchNumberFromCompartments">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransactionalFunctions/UpdateTankBatchNumberFromCompartments" message="tns:ITransactionalFunctions_UpdateTankBatchNumberFromCompartments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransactionalFunctions/UpdateTankBatchNumberFromCompartmentsResponse" message="tns:ITransactionalFunctions_UpdateTankBatchNumberFromCompartments_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITransactionalFunctions/UpdateTankBatchNumberFromCompartmentsUserExceptionFault" name="UserExceptionFault" message="tns:ITransactionalFunctions_UpdateTankBatchNumberFromCompartments_UserExceptionFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ITransactionalFunctions" type="tns:ITransactionalFunctions">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AssignTruckToLoadOrderProducts">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/AssignTruckToLoadOrderProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PrintAssignTruckToLoadOrderProducts">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/PrintAssignTruckToLoadOrderProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AssignTruckCompartmentsLoadOrderProducts">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/AssignTruckCompartmentsLoadOrderProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateLoadOrderCompartmentAndProductRelationships">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/CreateLoadOrderCompartmentAndProductRelationships" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertLoadOrderCompartmentSeals">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/InsertLoadOrderCompartmentSeals" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PrintInsertLoadOrderCompartmentSeals">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/PrintInsertLoadOrderCompartmentSeals" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRackId">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/UpdateRackId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateScheduleDate">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/UpdateScheduleDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeLoadOrderStatus">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/ChangeLoadOrderStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startLoad">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/startLoad" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteUnloadBookUpdateSP">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/ExecuteUnloadBookUpdateSP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTankBatchNumberFromCompartments">
+      <soap:operation soapAction="http://tempuri.org/ITransactionalFunctions/UpdateTankBatchNumberFromCompartments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserExceptionFault">
+        <soap:fault use="literal" name="UserExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TransactionalFunctions">
+    <wsdl:port name="BasicHttpBinding_ITransactionalFunctions" binding="tns:BasicHttpBinding_ITransactionalFunctions">
+      <soap:address location="http://localhost:64463/TransactionalFunctions.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

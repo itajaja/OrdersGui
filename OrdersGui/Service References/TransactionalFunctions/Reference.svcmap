@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9f8bef9c-6b70-4603-8096-c07a611a281e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:64463/transactionalfunctions.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TransactionalFunctions.xsd" MetadataType="Schema" ID="e2d9dbb4-7446-4b29-be33-5d56d5a08e08" SourceId="1" SourceUrl="http://localhost:64463/TransactionalFunctions.svc?xsd=xsd1" />
+    <MetadataFile FileName="TransactionalFunctions.wsdl" MetadataType="Wsdl" ID="be40310c-2a95-4b2d-b08e-d7ce03ed9db6" SourceId="1" SourceUrl="http://localhost:64463/TransactionalFunctions.svc?wsdl" />
+    <MetadataFile FileName="TransactionalFunctions1.xsd" MetadataType="Schema" ID="98a09c4e-905f-4174-97ab-5a7deb870a8a" SourceId="1" SourceUrl="http://localhost:64463/TransactionalFunctions.svc?xsd=xsd2" />
+    <MetadataFile FileName="TransactionalFunctions.disco" MetadataType="Disco" ID="cfa8eba4-5285-44e9-b84a-b3958d4f4f35" SourceId="1" SourceUrl="http://localhost:64463/TransactionalFunctions.svc?disco" />
+    <MetadataFile FileName="TransactionalFunctions2.xsd" MetadataType="Schema" ID="491064f0-659a-4646-af61-0798e704b0ef" SourceId="1" SourceUrl="http://localhost:64463/TransactionalFunctions.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

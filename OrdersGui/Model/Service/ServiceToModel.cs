@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using nt = Hylasoft.OrdersGui.NonTransactionalFunctions;
 
 //This file contains all the method to convert from the service types to the model types. All the Logic for this task should reside here, so that the service are not used outside this class
@@ -333,8 +332,8 @@ namespace Hylasoft.OrdersGui.Model.Service
             var mProduct = new OrderProduct();
             mProduct.Material = _materials.FirstOrDefault(m => m.MaterialCode == product.MaterialCode);
             mProduct.SourceTank = _tanks.FirstOrDefault(t => t.TankName == product.SourceTank);
-            if (mProduct.SourceTank != null && mProduct.Material != null) //chose a default one
-                mProduct.Material.FindTanks(_tanks).FirstOrDefault();
+            if (mProduct.SourceTank == null && mProduct.Material != null) //chose a default one
+                mProduct.SourceTank = mProduct.Material.FindTanks(_tanks).FirstOrDefault();
             mProduct.TargetQty = product.TargetQty;
             mProduct.Uom = product.UoM;
             return mProduct;

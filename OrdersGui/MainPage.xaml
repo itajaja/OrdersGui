@@ -86,7 +86,7 @@
     <UserControl.DataContext>
         <Binding Path="Main" Source="{StaticResource Locator}"/>
     </UserControl.DataContext>
-    <toolkit:BusyIndicator Name="LoadingBusy" BusyContent="Loading">
+    <toolkit:BusyIndicator Name="LoadingBusy" BusyContent="Loading" IsBusy="True">
         <toolkit:BusyIndicator.BusyContentTemplate>
             <DataTemplate>
                 <StackPanel MinWidth="300" MaxWidth="300">
@@ -94,7 +94,7 @@
                         <Style BasedOn="{StaticResource BasicTextBlockStyle}" TargetType="TextBlock" />
                     </StackPanel.Resources>
                     <TextBlock Text="{Binding}" Style="{StaticResource BasicTextBlockStyle}" TextAlignment="Center"/>
-                    <Button Name="CancelLoading" Click="CancelLoading_OnClick" Content="Cancel" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+<!--                    <Button Name="CancelLoading" Click="CancelLoading_OnClick" Content="Cancel" Margin="0,10,0,0" HorizontalAlignment="Center"/>-->
                 </StackPanel>
             </DataTemplate>
         </toolkit:BusyIndicator.BusyContentTemplate>

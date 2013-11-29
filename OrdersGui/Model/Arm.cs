@@ -34,7 +34,7 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _rack, value, "Rack"); }
         }
 
-        private int _materialFamily; //todo model
+        private int _materialFamily;
         public int MaterialFamily
         {
             get { return _materialFamily; }

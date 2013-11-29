@@ -16,6 +16,7 @@ namespace Hylasoft.OrdersGui.ViewModel
     {
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly IDataService _dataService;
+        private LoadOrderManagerVM _lomVM; 
 
         private Order _order;
         public Order Order
@@ -70,9 +71,10 @@ namespace Hylasoft.OrdersGui.ViewModel
         public RelayCommand GoBackCommand { get; private set; }
         public RelayCommand<OrderProduct> ClearRowCommand { get; private set; }
 
-        public CreateOrderVM(IDataService ds)
+        public CreateOrderVM(IDataService ds, LoadOrderManagerVM lomVM)
         {
             _dataService = ds;
+            _lomVM = lomVM;
             _dataService.GetMaterials((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Materials = item));
             _dataService.GetSapTanks((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Tanks = item));
             CreateOrderCommand = new RelayCommand(() =>
@@ -115,7 +117,11 @@ namespace Hylasoft.OrdersGui.ViewModel
                 MessageBox.Show("The order number field cannot be empty.");
                 return false;
             }
-            //todo if (Orders.Any(o => o.OrderNo == order.OrderNo))
+            if (_lomVM.Orders.Any(o => o.OrderNo == Order.OrderNo))
+            {
+                MessageBox.Show("This order number is already in use");
+                return false;
+            }
             var uniqueProductList = new List<string>();
             var validProducts = OrderProducts.Where(product => !IsEmptyProduct(product)).ToList();
             if (validProducts.Count == 0)

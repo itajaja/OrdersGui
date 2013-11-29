@@ -37,7 +37,7 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _customerNo, value, "CustomerNo"); }
         }
 
-        private DateTime _endDate;
+        private DateTime _endDate = DateTime.Today;
         public DateTime EndDate
         {
             get { return _endDate; }
@@ -107,14 +107,14 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _poNumber, value, "PoNumber"); }
         }
 
-        private DateTime _scheduleDate;
+        private DateTime _scheduleDate = DateTime.Today;
         public DateTime ScheduleDate
         {
             get { return _scheduleDate; }
             set { SetField(ref _scheduleDate, value, "ScheduleDate"); }
         }
 
-        private DateTime _startDate;
+        private DateTime _startDate = DateTime.Today;
         public DateTime StartDate
         {
             get { return _startDate; }

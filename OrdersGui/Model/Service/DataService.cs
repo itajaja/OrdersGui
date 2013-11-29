@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
-using Hylasoft.OrdersGui.EventMonitor;
+using em = Hylasoft.OrdersGui.EventMonitor;
 using Hylasoft.OrdersGui.Messages;
 using ntf = Hylasoft.OrdersGui.NonTransactionalFunctions;
+using tf = Hylasoft.OrdersGui.TransactionalFunctions;
 using Hylasoft.OrdersGui.Resources;
 
 // ReSharper disable ImplicitlyCapturedClosure
@@ -14,8 +17,9 @@ namespace Hylasoft.OrdersGui.Model.Service
 {
     public partial class DataService : IDataService
     {
-        private readonly EventMonitorClient _emClient;
-        private readonly NonTransactionalFunctions.NonTransactionalFunctionsClient _ntfClient;
+        private readonly em.EventMonitorClient _emClient;
+        private readonly ntf.NonTransactionalFunctionsClient _ntfClient;
+        private readonly tf.TransactionalFunctionsClient _tfClient;
 
         // These properties are stored into the dataService because they don't need to be fetched more than once
         private readonly SessionData _sessionData = new SessionData();
@@ -31,14 +35,17 @@ namespace Hylasoft.OrdersGui.Model.Service
         {
             try
             {
+                Messenger.Default.Send(new StartLoadingMessage("Connecting...", false));
                 _sessionData = new SessionData();
                 _sessionData.EmConnectionString = Configuration.EmConnectionString;
                 _sessionData.NtfConnectionString = Configuration.NtfConnectionString;
+                _sessionData.TfConnectionString = Configuration.TfConnectionString;
                 _sessionData.User = User.User2; //todo parametric
                 _sessionData.OpcStatus = OpcConnectionStatus.Unknown;
                 _sessionData.SlomStatus = SlomConnectionStatus.Unknown;
-                _emClient = new EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
+                _emClient = new em.EventMonitorClient("BasicHttpBinding_IEventMonitor", _sessionData.EmConnectionString);
                 _ntfClient = new ntf.NonTransactionalFunctionsClient("BasicHttpBinding_INonTransactionalFunctions", _sessionData.NtfConnectionString);
+                _tfClient = new tf.TransactionalFunctionsClient("BasicHttpBinding_ITransactionalFunctions", _sessionData.TfConnectionString);
                 InitCallers();
                 Initialize();
             }
@@ -118,7 +125,7 @@ namespace Hylasoft.OrdersGui.Model.Service
                 };
                 _ntfClient.GetMaterialsAsync();
                 var page = 0;
-                var range = 500;
+                const int range = 500;
                 _containers = new List<Container>();
                 _ntfClient.GetContainersCompleted += (sender, args) =>
                 {
@@ -204,7 +211,7 @@ namespace Hylasoft.OrdersGui.Model.Service
             });
         }
 
-        private AsyncCaller<GetOpcServerStateCompletedEventArgs> _serverStatusCaller;
+        private AsyncCaller<em.GetOpcServerStateCompletedEventArgs> _serverStatusCaller;
         public void GetServerStatus(Action<OpcConnectionStatus, SlomConnectionStatus, Exception> callback)
         {
             var status = OpcConnectionStatus.Unknown;
@@ -242,7 +249,8 @@ namespace Hylasoft.OrdersGui.Model.Service
             _orderProductsCaller = new AsyncCaller<ntf.GetLoadOrderProductsCompletedEventArgs>(h => _ntfClient.GetLoadOrderProductsCompleted += h);
             _orderCompartmentsCaller = new AsyncCaller<ntf.getLoadOrderDetailsCompartmentsCompletedEventArgs>(h => _ntfClient.getLoadOrderDetailsCompartmentsCompleted += h);
             _compartmentsCaller = new AsyncCaller<ntf.getContainerCompartmentsCompletedEventArgs>(h => _ntfClient.getContainerCompartmentsCompleted += h);
-            _serverStatusCaller = new AsyncCaller<GetOpcServerStateCompletedEventArgs>(h => _emClient.GetOpcServerStateCompleted += h);
+            _serverStatusCaller = new AsyncCaller<em.GetOpcServerStateCompletedEventArgs>(h => _emClient.GetOpcServerStateCompleted += h);
+            _createOrderCaller = new AsyncCaller<AsyncCompletedEventArgs>(h => _ntfClient.InsertLoadOrderCompleted += h);
         }
 
         private AsyncCaller<ntf.GetLoadOrderProductsCompletedEventArgs> _orderProductsCaller;
@@ -287,9 +295,13 @@ namespace Hylasoft.OrdersGui.Model.Service
             });
         }
 
-        public void CreateOrder(Action<Exception> callback)
+        private AsyncCaller<AsyncCompletedEventArgs> _createOrderCaller;
+        public void CreateOrder(Order order, IList<OrderProduct> orderProducts, Action<Exception> callback)
         {
-            throw new NotImplementedException();
+            var convertedOrderProduct = new ObservableCollection<ntf.LoadOrderProduct>(ConvertOrderProducts(orderProducts, order.OrderId));
+            order.OrderStatus = OrderStatus.Ready;
+            var convertedOrder = ConvertOrder(order);
+            _createOrderCaller.ExecuteAsync(() => _ntfClient.InsertLoadOrderAsync(convertedOrder, convertedOrderProduct), callback: callback);
         }
 
         private static void CheckAndRethrow(Exception exception)

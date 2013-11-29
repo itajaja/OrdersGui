@@ -45,11 +45,6 @@ namespace Hylasoft.OrdersGui.Design
             callback(_materials, null);
         }
 
-        public void GetRebrandedProducts(Action<IList<RebrandedProduct>, Exception> callback)
-        {
-            throw new NotImplementedException();
-        }
-
         public void GetTanks(Action<IList<Tank>, Exception> callback)
         {
             callback(_tanks, null);
@@ -70,7 +65,7 @@ namespace Hylasoft.OrdersGui.Design
             throw new NotImplementedException();
         }
 
-        public void CreateOrder(Action<Exception> callback)
+        public void CreateOrder(Order order, IList<OrderProduct> orderProducts, Action<Exception> callback)
         {
             throw new NotImplementedException();
         }

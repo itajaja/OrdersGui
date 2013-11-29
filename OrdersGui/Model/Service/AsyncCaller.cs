@@ -23,29 +23,34 @@ namespace Hylasoft.OrdersGui.Model.Service
         }
 
         /// <summary>
-        /// Executes the call. The method returns when after receiving a response
+        /// Executes the call. The method returns after receiving a response
         /// </summary>
         /// <param name="asyncAction">The asynchronous call method</param>
         /// <param name="processCallback">The callback to manipulate the data</param>
         /// <param name="callback">The callback to execute at the end of the call</param>
         public void Execute(Action asyncAction, Action<T> processCallback = null, Action<Exception> callback = null)
         {
+            processCallback = processCallback ?? (_ => { });
+            callback = callback ?? (_ => { });
             try
             {
                 if (asyncAction == null)
                     throw new ArgumentNullException("asyncAction");
-                processCallback = processCallback ?? (_ => { });
-                callback = callback ?? (_ => { });
                 _locker.WaitOne();
                 asyncAction();
                 _waiter.WaitOne();
-                _locker.Set();
                 CheckAndRethrow(_ex);
                 processCallback(_args);
+            }
+            catch
+            {
+                _locker.Set();
+                _waiter.Set();
             }
             finally
             {
                 callback(_ex);
+                _locker.Set();
             }
         }
 

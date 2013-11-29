@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Messages;
@@ -7,6 +8,9 @@ namespace Hylasoft.OrdersGui
 {
     public partial class MainPage
     {
+        //todo is it needed
+        private List<StartLoadingMessage> _loadingStack = new List<StartLoadingMessage>(); 
+        
         public MainPage()
         {
             InitializeComponent();
@@ -18,6 +22,12 @@ namespace Hylasoft.OrdersGui
                 LoadingBusy.IsBusy = false;
                 Rootgrid.Visibility = Visibility.Visible;
             }));
+            Messenger.Default.Register<StartLoadingMessage>(this, message => DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            {
+                LoadingBusy.BusyContent = message.LoadingMessage;
+                LoadingBusy.IsBusy = true;
+//                CancelLoading.Visibility = message.IsStoppable ? Visibility.Visible : Visibility.Collapsed;
+            }));
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -26,6 +36,11 @@ namespace Hylasoft.OrdersGui
             SlideAnimation1.To = -ActualWidth;
             SlideAnimation2.To = -ActualWidth;
             SizeChanged -= OnSizeChanged;
+        }
+
+        private void CancelLoading_OnClick(object sender, RoutedEventArgs e)
+        {
+            LoadingBusy.IsBusy = false;
         }
     }
 }

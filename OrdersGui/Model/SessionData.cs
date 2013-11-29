@@ -32,6 +32,13 @@ namespace Hylasoft.OrdersGui.Model
             set { SetField(ref _ntfConnectionString, value, "NtfConnectionString"); }
         }
 
+        private string _tfConnectionString;
+        public string TfConnectionString
+        {
+            get { return _tfConnectionString; }
+            set { SetField(ref _tfConnectionString, value, "TfConnectionString"); }
+        }
+
         private string _emConnectionString;
         public string EmConnectionString
         {

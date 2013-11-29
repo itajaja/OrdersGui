@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using nt = Hylasoft.OrdersGui.NonTransactionalFunctions;
 
 //This file contains all the method to convert from the service types to the model types. All the Logic for this task should reside here, so that the service are not used outside this class
@@ -88,6 +89,63 @@ namespace Hylasoft.OrdersGui.Model.Service
             return orders.Select(ConvertOrder).ToList();
         }
 
+        private nt.LoadOrderStatus ConvertOrderStatus(OrderStatus status)
+        {
+            switch (status)
+            {
+                case OrderStatus.Idle:
+                    return nt.LoadOrderStatus.IDLE;
+                case OrderStatus.Ready:
+                    return nt.LoadOrderStatus.READY;
+                case OrderStatus.TruckArrived:
+                    return nt.LoadOrderStatus.TRUCK_ARRIVED;
+                case OrderStatus.ReadyForRelease:
+                    return nt.LoadOrderStatus.READY_FOR_RELEASE;
+                case OrderStatus.ReleaseInProgress:
+                    return nt.LoadOrderStatus.RELEASE_IN_PROGRESS;
+                case OrderStatus.Released:
+                    return nt.LoadOrderStatus.RELEASED;
+                case OrderStatus.ReleaseError:
+                    return nt.LoadOrderStatus.RELEASE_ERROR;
+                case OrderStatus.Running:
+                    return nt.LoadOrderStatus.RUNNING;
+                case OrderStatus.Stopped:
+                    return nt.LoadOrderStatus.STOPPED;
+                case OrderStatus.Completed:
+                    return nt.LoadOrderStatus.COMPLETED;
+                case OrderStatus.Aborted:
+                    return nt.LoadOrderStatus.ABORTED;
+                case OrderStatus.Cancelled:
+                    return nt.LoadOrderStatus.CANCELLED;
+                case OrderStatus.Suspended:
+                    return nt.LoadOrderStatus.SUSPENDED;
+                case OrderStatus.Approved:
+                    return nt.LoadOrderStatus.APPROVED;
+                case OrderStatus.Rejected:
+                    return nt.LoadOrderStatus.REJECTED;
+                case OrderStatus.WaitingForSeals:
+                    return nt.LoadOrderStatus.WAITING_FOR_SEALS;
+                case OrderStatus.EndFilling:
+                    return nt.LoadOrderStatus.END_FILLING;
+                case OrderStatus.ReportReady:
+                    return nt.LoadOrderStatus.REPORT_READY;
+                case OrderStatus.ReportRetry:
+                    return nt.LoadOrderStatus.REPORT_RETRY;
+                case OrderStatus.UpdateDone:
+                    return nt.LoadOrderStatus.UPDATE_DONE;
+                case OrderStatus.Setup:
+                    return nt.LoadOrderStatus.SETUP;
+                case OrderStatus.InspectionFailed:
+                    return nt.LoadOrderStatus.INSPECTION_FAILED;
+                case OrderStatus.PendingApproval:
+                    return nt.LoadOrderStatus.PENDING_APPROVAL;
+                case OrderStatus.SapUpdateDone:
+                    return nt.LoadOrderStatus.SAP_UPDATE_DONE;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         private OrderStatus ConvertOrderStatus(nt.LoadOrderStatus status)
         {
             switch (status)
@@ -150,9 +208,37 @@ namespace Hylasoft.OrdersGui.Model.Service
             return (OrderType)Enum.Parse(typeof(OrderType), type, true);
         }
 
+        private string ConvertOrderType(OrderType type)
+        {
+            switch (type)
+            {
+                case OrderType.Load:
+                    return "L";
+                case OrderType.Unload:
+                    return "U";
+                default:
+                    throw new ArgumentOutOfRangeException("type");
+            }
+        }
+
         private DeliveryMethod ConvertDeliveryMethod(string method)
         {
             return (DeliveryMethod)Enum.Parse(typeof(DeliveryMethod), method, true);
+        }
+
+        private string ConvertDeliveryMethod(DeliveryMethod method)
+        {
+            switch (method)
+            {
+                case DeliveryMethod.Road:
+                    return "1";
+                case DeliveryMethod.Rail:
+                    return "20";
+                case DeliveryMethod.Undefined:
+                    return "E1";
+                default:
+                    throw new ArgumentOutOfRangeException("method");
+            }
         }
 
         private OpcConnectionStatus ConvertOpcConnectionStatus(string status)
@@ -223,7 +309,7 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mCont;
         }
 
-        private IList<Container> ConvertContainers(IEnumerable<nt.Container> containers)
+        private IEnumerable<Container> ConvertContainers(IEnumerable<nt.Container> containers)
         {
             return containers.Select(ConvertContainer).ToList();
         }
@@ -310,9 +396,58 @@ namespace Hylasoft.OrdersGui.Model.Service
             return mproduct;
         }
 
-        private IList<RebrandedProduct> ConvertRebrandedProducts(IEnumerable<nt.RebrandedProduct> products)
+        private IEnumerable<RebrandedProduct> ConvertRebrandedProducts(IEnumerable<nt.RebrandedProduct> products)
         {
             return products.Select(ConvertRebrandedProduct).ToList();
+        }
+
+        private nt.LoadOrder ConvertOrder(Order order)
+        {
+            var nOrder = new nt.LoadOrder();
+            nOrder.CarrierInstruction = order.CarrierInstruction;
+            nOrder.CarrierName = order.CarrierName;
+            nOrder.CustomerName = order.CustomerName;
+            nOrder.CustomerNo = order.CustomerNo;
+            nOrder.EndDate = order.EndDate;
+            nOrder.MethodOfDelivery = ConvertDeliveryMethod(order.MethodOfDelivery);
+            nOrder.Note = order.Note;
+            nOrder.OrderId = order.OrderId;
+            nOrder.OrderKey = order.OrderKey;
+            nOrder.OrderNo = order.OrderNo;
+            nOrder.OrderStatus = ConvertOrderStatus(order.OrderStatus);
+            nOrder.OrderType = ConvertOrderType(order.OrderType);
+            nOrder.PONumber = order.PoNumber;
+            nOrder.ScheduleDate = order.ScheduleDate;
+            nOrder.StartDate = order.StartDate;
+            nOrder.TruckNo = order.TruckNo;
+            if (order.LoadRack != null)
+            {
+                nOrder.LoadRackId = order.LoadRack.RackId;
+                nOrder.LoadRackName = order.LoadRack.RackName;
+            }
+            return nOrder;
+        }
+
+        private nt.LoadOrderProduct ConvertOrderProduct(OrderProduct product, long orderId)
+        {
+            var nProduct = new nt.LoadOrderProduct();
+            if (product.Material != null)
+            {
+                nProduct.MaterialCode = product.Material.MaterialCode;
+                nProduct.MaterialFamily = product.Material.MaterialFamily;
+                nProduct.MaterialName = product.Material.MaterialName;
+            }
+            if (product.SourceTank != null)
+                nProduct.SourceTank = product.SourceTank.TankName;
+            nProduct.TargetQty = product.TargetQty;
+            nProduct.OrderId = orderId;
+            nProduct.UoM = product.Uom;
+            return nProduct;
+        }
+
+        private IEnumerable<nt.LoadOrderProduct> ConvertOrderProducts(IEnumerable<OrderProduct> orderProducts, long orderId)
+        {
+            return orderProducts.Select(product => ConvertOrderProduct(product, orderId)).ToList();
         }
     }
 }

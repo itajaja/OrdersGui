@@ -18,6 +18,6 @@ namespace Hylasoft.OrdersGui.Model.Service
         void GetContainers(Action<IList<Container>, Exception> callback);
         void GetOrderDetails(long orderId, Action<IList<OrderProduct>, IList<OrderCompartment>, IList<Compartment>, Container, Exception> callback);
 
-        void CreateOrder(Action<Exception> callback);
+        void CreateOrder(Order order, IList<OrderProduct> orderProducts, Action<Exception> callback);
     }
 }

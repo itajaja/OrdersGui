@@ -6,7 +6,6 @@ using System.Windows.Data;
 
 namespace Hylasoft.OrdersGui.View.Converters
 {
-    //todo redesign
     public class StringToBoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

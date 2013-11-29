@@ -106,6 +106,15 @@ namespace Hylasoft.OrdersGui.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 5.
+        /// </summary>
+        public static string RefreshTime {
+            get {
+                return ResourceManager.GetString("RefreshTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to http://localhost:64463/Web/Receipts.aspx?id={0}.
         /// </summary>
         public static string SampleLabelUrl {

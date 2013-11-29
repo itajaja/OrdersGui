@@ -162,7 +162,7 @@ namespace Hylasoft.OrdersGui.ViewModel
             foreach (var status in EnumList.GetEnumValues<OrderStatus>())
                 OrderStatusFilter.Add(new OrderStatusCheck { Status = status, IsChecked = true });
             var updateTimer = new DispatcherTimer();
-            updateTimer.Interval = TimeSpan.FromSeconds(5); //todo resourcify
+            updateTimer.Interval = TimeSpan.FromSeconds(int.Parse(Configuration.RefreshTime));
             updateTimer.Tick += Reload;
             updateTimer.Start();
             Reload(null, null);

@@ -132,6 +132,10 @@
   <data name="PendingOrdersUrl" xml:space="preserve">
     <value>http://localhost:64463/Web/PendingOrder.aspx?Date={0}</value>
   </data>
+  <data name="RefreshTime" xml:space="preserve">
+    <value>5</value>
+    <comment>Refresh Time for the orders in seconds</comment>
+  </data>
   <data name="SampleLabelUrl" xml:space="preserve">
     <value>http://localhost:64463/Web/Receipts.aspx?id={0}</value>
   </data>

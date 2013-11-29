@@ -48,7 +48,7 @@ namespace Hylasoft.OrdersGui.View
 
         private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
         {
-            Messenger.Default.Send(new GoToCreateOrderMessage()); //todo this should be command
+            Messenger.Default.Send(new GoToCreateOrderMessage());
         }
 
         private void OrdersGrid_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)

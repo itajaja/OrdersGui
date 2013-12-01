@@ -12,9 +12,21 @@ namespace Hylasoft.OrdersGui.Utils
             set { _errorHandler = value; }
         }
 
+        private Action<Action> _runOnUi = DispatcherHelper.CheckBeginInvokeOnUI;
+        public bool RunOnUi
+        {
+            set
+            {
+                if (value)
+                    _runOnUi = DispatcherHelper.CheckBeginInvokeOnUI;
+                else
+                    _runOnUi = action => action();
+            }
+        }
+
         public void HandleResponse(Exception error, Action action)
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            _runOnUi(() =>
             {
                 if (error != null)
                     _errorHandler(error);

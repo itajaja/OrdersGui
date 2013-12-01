@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
+using Hylasoft.OrdersGui.Utils;
 using em = Hylasoft.OrdersGui.EventMonitor;
 using Hylasoft.OrdersGui.Messages;
 using ntf = Hylasoft.OrdersGui.NonTransactionalFunctions;
@@ -67,53 +71,70 @@ namespace Hylasoft.OrdersGui.Model.Service
 
         private void Initialize()
         {
-            //todo exception handling
+            var handler = new ResponseHandler
+            {
+                RunOnUi = false,
+                ErrorHandler = exception => DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                {
+                    var result = MessageBox.Show("A communication error occurred while initializing the communication, Do you want to retry?", "Error", MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK)
+                        Initialize();
+                })
+            };
             Task.Factory.StartNew(() =>
             {
-                _ntfClient.GetSystemInfoCompleted += (sender, args) =>
+                _systemInfoWaiter.Reset();
+                _racksWaiter.Reset();
+                _armsWaiter.Reset();
+                _tanksWaiter.Reset();
+                _sapTanksWaiter.Reset();
+                _containersWaiter.Reset();
+                _materialsWaiter.Reset();
+                Exception e = null;
+                _ntfClient.GetSystemInfoCompleted += (sender, args) => handler.HandleResponse(args.Error, () =>
                 {
-                    CheckAndRethrow(args.Error);
+                    e = e ?? args.Error;
                     _systemInfo = ConvertSystemInfo(args.Result);
                     _systemInfoWaiter.Set();
-                };
+                });
                 _ntfClient.GetSystemInfoAsync();
                 _racks = new List<Rack>{
-                    new Rack{RackId = 0, RackName = "None", RackStatus = 0},
-                    new Rack{RackId = 1, RackName = "North", RackStatus = 0},
-                    new Rack{RackId = 2, RackName = "South", RackStatus = 0},
-                    new Rack{RackId = 3, RackName = "East", RackStatus = 0}
-                };
+                        new Rack{RackId = 0, RackName = "None", RackStatus = 0},
+                        new Rack{RackId = 1, RackName = "North", RackStatus = 0},
+                        new Rack{RackId = 2, RackName = "South", RackStatus = 0},
+                        new Rack{RackId = 3, RackName = "East", RackStatus = 0}
+                    };
                 _racksWaiter.Set();
-                _ntfClient.getLoadRackArmsCompleted += (sender, args) =>
+                _ntfClient.getLoadRackArmsCompleted += (sender, args) => handler.HandleResponse(args.Error, () =>
                 {
-                    CheckAndRethrow(args.Error);
+                    e = e ?? args.Error;
                     _arms = ConvertArms(args.Result);
                     _armsWaiter.Set();
-                };
+                });
                 _ntfClient.getLoadRackArmsAsync();
-                _ntfClient.GetMaterialsCompleted += (sender, args) =>
+                _ntfClient.GetMaterialsCompleted += (sender, args) => handler.HandleResponse(args.Error, () =>
                 {
-                    CheckAndRethrow(args.Error);
+                    e = e ?? args.Error;
                     _materials = ConvertMaterials(args.Result);
                     _materialsWaiter.Set();
-                    _ntfClient.GetRebrandedProductsCompleted += (sender2, args2) =>
+                    _ntfClient.GetRebrandedProductsCompleted += (sender2, args2) => handler.HandleResponse(args.Error, () =>
                     {
-                        CheckAndRethrow(args.Error);
+                        e = e ?? args.Error;
                         var rebrandedProducts = ConvertRebrandedProducts(args2.Result);
                         foreach (var rebrandedProduct in rebrandedProducts)
                         {
                             var remove = _materials.SingleOrDefault(m => m.MaterialId == rebrandedProduct.MaterialId);
                             _materials.Remove(remove);
-                            _materials.Add(new RebrandedProduct(remove){Parent = rebrandedProduct.Parent});
+                            _materials.Add(new RebrandedProduct(remove) { Parent = rebrandedProduct.Parent });
                         }
-                    };
+                    });
                     _ntfClient.GetRebrandedProductsAsync();
-                    _ntfClient.GetWinblendTanksCompleted += (sender2, args2) =>
+                    _ntfClient.GetWinblendTanksCompleted += (sender2, args2) => handler.HandleResponse(args.Error, () =>
                     {
                         CheckAndRethrow(args.Error);
                         _tanks = ConvertTanks(args2.Result);
                         _tanksWaiter.Set();
-                    };
+                    });
                     _ntfClient.GetWinblendTanksAsync();
                     _ntfClient.GetSapTanksCompleted += (sender2, args2) =>
                     {
@@ -122,12 +143,12 @@ namespace Hylasoft.OrdersGui.Model.Service
                         _sapTanksWaiter.Set();
                     };
                     _ntfClient.GetSapTanksAsync();
-                };
+                });
                 _ntfClient.GetMaterialsAsync();
                 var page = 0;
                 const int range = 500;
                 _containers = new List<Container>();
-                _ntfClient.GetContainersCompleted += (sender, args) =>
+                _ntfClient.GetContainersCompleted += (sender, args) => handler.HandleResponse(args.Error, () =>
                 {
                     CheckAndRethrow(args.Error);
                     _containers.AddRange(ConvertContainers(args.Result));
@@ -136,7 +157,7 @@ namespace Hylasoft.OrdersGui.Model.Service
                         _ntfClient.GetContainersAsync("", page, range);
                     else
                         _containersWaiter.Set();
-                };
+                });
                 _ntfClient.GetContainersAsync("", page, range);
                 WaitforInit();
                 Messenger.Default.Send(new LoadingCompleteMessage());

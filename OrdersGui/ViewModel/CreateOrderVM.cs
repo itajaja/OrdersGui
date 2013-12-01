@@ -4,7 +4,6 @@ using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using GalaSoft.MvvmLight.Threading;
 using Hylasoft.OrdersGui.Messages;
 using Hylasoft.OrdersGui.Model;
 using Hylasoft.OrdersGui.Model.Service;
@@ -16,7 +15,8 @@ namespace Hylasoft.OrdersGui.ViewModel
     {
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly IDataService _dataService;
-        private LoadOrderManagerVM _lomVM; 
+        private readonly LoadOrderManagerVM _lomVM;
+        private readonly ResponseHandler _rh = new ResponseHandler{ErrorHandler = e => MessageBox.Show("Operation Failed.\n" + e.GetType() + "\n" + e.Message)};
 
         private Order _order;
         public Order Order
@@ -75,24 +75,20 @@ namespace Hylasoft.OrdersGui.ViewModel
         {
             _dataService = ds;
             _lomVM = lomVM;
-            _dataService.GetMaterials((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Materials = item));
-            _dataService.GetSapTanks((item, error) => DispatcherHelper.CheckBeginInvokeOnUI(() => Tanks = item));
+            _dataService.GetMaterials((item, error) => _rh.HandleResponse(error, () => Materials = item));
+            _dataService.GetSapTanks((item, error) => _rh.HandleResponse(error, () => Tanks = item));
             CreateOrderCommand = new RelayCommand(() =>
             {
                 if (Validate())
                 {
                     Messenger.Default.Send(new StartLoadingMessage("Creating order...", false));
-                    _dataService.CreateOrder(Order, OrderProducts.Where(product => !IsEmptyProduct(product)).ToList(), e => DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                    {
-                        if (e != null)
-                            Messenger.Default.Send(new ErrorMessage(e, "Unable to create order"));
-                        else
+                    _dataService.CreateOrder(Order, OrderProducts.Where(product => !IsEmptyProduct(product)).ToList(),
+                        e => _rh.HandleResponse(e, () =>
                         {
                             MessageBox.Show("Order successfully created");
                             GoBackCommand.Execute(null);
-                        }
-                        Messenger.Default.Send(new LoadingCompleteMessage());
-                    }));
+                        }));
+                    Messenger.Default.Send(new LoadingCompleteMessage());
                 }
             });
             GoBackCommand = new RelayCommand(() =>

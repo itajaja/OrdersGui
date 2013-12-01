@@ -193,6 +193,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Utils\EnumList.cs" />
+    <Compile Include="Utils\ResponseHandler.cs" />
     <Compile Include="Utils\TrulyObservableCollection.cs" />
     <Compile Include="ViewModel\AssignTruckVM.cs" />
     <Compile Include="ViewModel\AssignCompartmentsVM.cs" />

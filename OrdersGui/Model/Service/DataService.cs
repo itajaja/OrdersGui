@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -69,13 +68,18 @@ namespace Hylasoft.OrdersGui.Model.Service
         private readonly ManualResetEvent _materialsWaiter = new ManualResetEvent(false);
         public Exception FaultState { get; private set; }
 
+        private bool _errorState;
         private void Initialize()
         {
+            _errorState = false;
             var handler = new ResponseHandler
             {
                 RunOnUi = false,
                 ErrorHandler = exception => DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
+                    if (_errorState)
+                        return;
+                    _errorState = true;
                     var result = MessageBox.Show("A communication error occurred while initializing the communication, Do you want to retry?", "Error", MessageBoxButton.OKCancel);
                     if (result == MessageBoxResult.OK)
                         Initialize();
